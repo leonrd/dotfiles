@@ -41,10 +41,12 @@ brews=(
   libimobiledevice
   # lua
   # luajit
+  p7zip
   pkg-config
   readline
   rlwrap
   ssh-copy-id
+  tree
   # Install programming related tools
   maven
   nvm
@@ -57,6 +59,19 @@ brews=(
   # switchjdk
   # Install Brew Cask for GUI apps
   caskroom/cask/brew-cask
+)
+
+pips=(
+  # Glances
+)
+
+gems=(
+  cocoapods
+  # travis
+  rails
+)
+
+npms=(
 )
 
 casks=(
@@ -95,19 +110,6 @@ casks=(
   # xquartz
 )
 
-pips=(
-  # Glances
-)
-
-gems=(
-  cocoapods
-  # travis
-  rails
-)
-
-npms=(
-)
-
 ######################################## End of app list ########################################
 set +e
 
@@ -125,6 +127,7 @@ else
   echo "Updating Homebrew ..."
   brew update
 fi
+
 brew doctor
 
 # Upgrade any already-installed formulae.
@@ -166,10 +169,13 @@ if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
   chsh -s "${BREW_PREFIX}/bin/bash";
 fi;
 
-install 'brew cask install --appdir='$HOME'/Applications' ${casks[@]}
+install 'rbenv install'
+install 'nvm install --lts'
+
 install 'pip install' ${pips[@]}
 install 'gem install' ${gems[@]}
 install 'npm install -g' ${npms[@]}
+install 'brew cask install --appdir='$HOME'/Applications' ${casks[@]}
 
 echo "Upgrading ..."
 pip install --upgrade setuptools
@@ -177,7 +183,7 @@ pip install --upgrade pip
 gem update --system
 
 echo "Cleaning up ..."
-brew cleanup
+brew cleanup -s
 brew cask cleanup
 brew linkapps
 
