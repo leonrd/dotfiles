@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Add `~/bin` to the `$PATH`
+export PATH="$HOME/bin:$PATH";
+
+# Add dev tools bin to path
+export DEV_TOOLS_PATH=$HOME/dev/tools/bin
+export PATH=$PATH:$DEV_TOOLS_PATH
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
@@ -43,10 +50,6 @@ export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 # Set nvm home
 export NVM_DIR="$HOME/.nvm"
 . "/usr/local/opt/nvm/nvm.sh"
-
-# Add dev tools bin to path
-export DEV_TOOLS_PATH=$HOME/dev/tools/bin
-export PATH=$PATH:$DEV_TOOLS_PATH
 
 export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
