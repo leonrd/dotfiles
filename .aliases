@@ -24,6 +24,9 @@ else # macOS `ls`
 	export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
 fi
 
+# List all files colorized
+alias ll="ls -laF ${colorflag}"
+
 # List all files colorized in long format
 alias l="ls -lF ${colorflag}"
 
@@ -146,3 +149,6 @@ alias reload="exec ${SHELL} -l"
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
+
+alias ohmyzsh="subl ~/.oh-my-zsh"
+alias zshconfig="subl ~/.zshrc"
