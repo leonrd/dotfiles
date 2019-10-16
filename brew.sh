@@ -7,7 +7,7 @@ brews=(
   # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
   findutils
   # Install GNU `sed`, overwriting the built-in `sed`.
-  gnu-sed --with-default-names
+  'gnu-sed --with-default-names'
   # Install a modern version of Bash.
   bash
   bash-completion2
@@ -15,7 +15,7 @@ brews=(
   zsh
   zsh-completions
   # Install `wget` with IRI support.
-  wget --with-iri
+  'wget --with-iri'
   # Install GnuPG to enable PGP-signing commits.
   gnupg
   # Install more recent versions of some macOS tools.
@@ -25,7 +25,7 @@ brews=(
   openssh
   screen
   python
-  vim --with-override-system-vi
+  'vim --with-override-system-vi'
   neovim
   # ruby <- install via rbenv
   # Install font tools.
@@ -36,7 +36,7 @@ brews=(
   # Install other useful binaries.
   git-lfs
   git-flow
-  imagemagick --with-webp
+  'imagemagick --with-webp'
   imagemagick@6
   libimobiledevice
   # lua
@@ -176,7 +176,7 @@ install 'nvm install --lts'
 install 'pip install' ${pips[@]}
 install 'gem install' ${gems[@]}
 install 'npm install -g' ${npms[@]}
-install 'brew cask install --appdir='$HOME'/Applications' ${casks[@]}
+install "brew cask install --appdir='$HOME'/Applications" ${casks[@]}
 
 echo "Upgrading ..."
 pip install --upgrade setuptools
