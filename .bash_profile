@@ -1,3 +1,23 @@
+# Change to zshell if present
+
+zshell_path=
+# Set system zsh if exists
+if [ -x /bin/zsh ]; then
+  zshell_path=/bin/zsh;
+fi
+# Set brew zsh if exists
+if which brew &> /dev/null && [ -x $(brew --prefix)/bin/zsh ]; then
+  zshell_path=$(brew --prefix)/bin/zsh;
+fi
+
+if [ -n "$zshell_path" ]; then
+  case $- in
+    *i*) SHELL=$zshell_path; export SHELL; exec "$zshell_path" -l;;
+  esac
+fi
+
+# No zsh. Continue with bash config
+
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
@@ -46,9 +66,4 @@ complete -W "NSGlobalDomain" defaults;
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
 
-# Run zshell as default
-if which brew &> /dev/null && [ -x $(brew --prefix)/bin/zsh ]; then
-  case $- in
-    *i*) SHELL=$(brew --prefix)/bin/zsh; export SHELL; exec $SHELL -l;;
-  esac
-fi
+
