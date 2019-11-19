@@ -53,6 +53,8 @@ export UPDATE_ZSH_DAYS=7
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(zsh-autosuggestions zsh-navigation-tools osx brew brew-cask git git-flow sublime postgres)
 
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -83,9 +85,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-fpath=(/usr/local/share/zsh-completions $fpath)
-source $ZSH/oh-my-zsh.sh
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
