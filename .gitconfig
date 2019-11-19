@@ -111,6 +111,14 @@
 	# https://git-scm.com/docs/git-update-index#_untracked_cache
 	untrackedCache = true
 
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+
+[mergetool "sourcetree"]
+	cmd = ~/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
 [color]
 
 	# Use colors in Git commands that are capable of colored output when
@@ -140,7 +148,7 @@
 
 	# https://help.github.com/articles/signing-commits-using-gpg/
 	# gpgsign = true
-	template = /Users/leo/.stCommitMsg
+	template = ~/.stCommitMsg
 
 [diff]
 
