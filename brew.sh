@@ -163,6 +163,13 @@ function install {
 
 install 'brew install' ${brews[@]}
 
+# # Requires user password!
+# echo "Setting brew-installed bash as default shell"
+# if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
+#   echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells;
+#   chsh -s "${BREW_PREFIX}/bin/bash";
+# fi;
+
 install 'rbenv install'
 install 'nvm install --lts'
 
@@ -181,13 +188,18 @@ brew cleanup -s
 brew cask cleanup
 brew linkapps
 
-echo "Setting zsh as default shell"
-# Switch to using brew-installed zsh as default shell
-# Requires user password!
-if ! fgrep -q "${BREW_PREFIX}/bin/zsh" /etc/shells; then
-  echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells;
-  chsh -s "${BREW_PREFIX}/bin/zsh";
-fi;
+# # Requires user password!
+# echo "Setting zsh as default shell"
+# if ! fgrep -q "${BREW_PREFIX}/bin/zsh" /etc/shells; then
+#   echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells;
+#   chsh -s "${BREW_PREFIX}/bin/zsh";
+# fi;
+
+if which brew &> /dev/null && [ -x $(brew --prefix)/bin/zsh ]; then
+  case $- in
+    *i*) SHELL=$(brew --prefix)/bin/zsh; export SHELL; exec $SHELL -l;;
+  esac
+fi
 
 for fail in ${fails[@]}
 do

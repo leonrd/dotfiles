@@ -45,3 +45,10 @@ complete -W "NSGlobalDomain" defaults;
 
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
+
+# Run zshell as default
+if which brew &> /dev/null && [ -x $(brew --prefix)/bin/zsh ]; then
+  case $- in
+    *i*) SHELL=$(brew --prefix)/bin/zsh; export SHELL; exec $SHELL -l;;
+  esac
+fi
