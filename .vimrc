@@ -1,8 +1,3 @@
-" Use the Solarized Dark theme
-set background=dark
-colorscheme solarized
-let g:solarized_termtrans=1
-
 " Make Vim more useful
 set nocompatible
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
@@ -104,3 +99,12 @@ if has("autocmd")
 	" Treat .md files as Markdown
 	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
+
+let s:dotvim = fnamemodify(globpath(&rtp, 'vimified.dir'), ':p:h')
+
+" Load vimified/vimrc {{{
+let s:vimrc = expand(s:dotvim . '/vimrc')
+if filereadable(s:vimrc)
+    exec ':so ' . s:vimrc
+endif
+" }}}
