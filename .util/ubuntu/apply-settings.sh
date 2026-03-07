@@ -1,3 +1,6 @@
+# Ask for the administrator password upfront
+sudo -v
+
 # Turn off apt news
 sudo pro config set apt_news=false
 
