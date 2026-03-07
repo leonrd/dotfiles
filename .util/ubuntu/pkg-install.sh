@@ -2,7 +2,6 @@
 
 __dir="$(cd "$(dirname "$0")" && pwd)"
 
-set -x
 set -e
 set -o pipefail
 set -E
