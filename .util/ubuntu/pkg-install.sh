@@ -10,6 +10,7 @@ trap cleanup SIGINT SIGTERM ERR EXIT
 cleanup() {
 	trap - SIGINT SIGTERM ERR EXIT
 
+	rm -f /tmp/git-delta.deb
   ${__dir}/pkg-cleanup.sh
 }
 
