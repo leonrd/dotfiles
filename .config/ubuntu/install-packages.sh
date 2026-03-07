@@ -14,14 +14,17 @@ done 2>/dev/null &
 
 sudo apt-get update -y
 
-sudo apt-get install -y --no-install-recommends less man-db curl wget git vim nano make bash tmux unzip gnupg gnupg2
+sudo apt-get install -y --no-install-recommends \
+	man-db less sed curl wget git vim nano make bash tmux unzip gnupg gnupg2
 
-sudo apt-get install -y --no-install-recommends gnupg gnupg2 ca-certificates
-sudo apt-get install -y --no-install-recommends ssh \
+sudo apt-get install -y --no-install-recommends \
+	ssh \
 	&& sudo systemctl start ssh \
 	&& sudo systemctl enable ssh
 
-sudo apt-get install -y --no-install-recommends zsh fzf jq ripgrep bat git-flow htop dfc sqlite3 imagemagick ffmpeg
+sudo apt-get install -y --no-install-recommends \
+	zsh fzf jq ripgrep bat git-flow htop dfc sqlite3 imagemagick ffmpeg sox \
+	screen rename rlwrap tree watchman
 
 GIT_DELTA_VERSION=0.18.2 
 ARCH=$(dpkg --print-architecture)
