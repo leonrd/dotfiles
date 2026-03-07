@@ -52,15 +52,14 @@ rbenv install
 curl -fsSL https://astral.sh/uv/install.sh | sh
 uv self update
 
-NPM_PREFIX=${NPM_PREFIX:-"$HOME/.npm-global"}
-N_PREFIX=${NPM_PREFIX:-"$HOME/.n"} \
-
 sudo apt-get install -y --no-install-recommends nodejs
-mkdir -p $NPM_PREFIX
-npm config set prefix "$NPM_PREFIX"
-npm install -g n
-n lts
-npm install -g yarn
+NPM_PREFIX=${NPM_PREFIX:-"$HOME/.npm-global"} \
+N_PREFIX=${NPM_PREFIX:-"$HOME/.n"} \
+	mkdir -p $NPM_PREFIX \
+	&& npm config set prefix "$NPM_PREFIX" \
+	&& npm install -g n \
+	&& n lts \
+	&& npm install -g yarn
 
 sudo apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common \
 	&& curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
@@ -118,4 +117,3 @@ sudo add-apt-repository -y ppa:maarten-fonville/android-studio
 sudo apt-get update && sudo apt-get install -y --no-install-recommends android-studio
 
 ./cleanup-packages.sh
-
