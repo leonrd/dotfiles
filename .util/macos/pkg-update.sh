@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
+set -x
+set -e
+set -o pipefail
 set -E
 trap update_packages SIGINT SIGTERM ERR EXIT
 
-update_packages() {
+cleanup() {
 	trap - SIGINT SIGTERM ERR EXIT
+
+  ./pkg-cleanup.sh
 }
 
 usage() {
@@ -81,4 +86,4 @@ if type "brew" &>/dev/null; then
 	brew tap --repair &>/dev/null
 fi
 
-update_packages
+cleanup

@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 
 set -x
+set -e
+set -o pipefail
+set -E
+trap cleanup SIGINT SIGTERM ERR EXIT
+
+cleanup() {
+	trap - SIGINT SIGTERM ERR EXIT
+
+  ./pkg-cleanup.sh
+}
 
 # Ask for the administrator password upfront
 sudo -v
@@ -117,4 +127,4 @@ sudo apt-get install -y --no-install-recommends openjdk-11-jdk
 sudo add-apt-repository -y ppa:maarten-fonville/android-studio
 sudo apt-get update && sudo apt-get install -y --no-install-recommends android-studio
 
-./cleanup-packages.sh
+cleanup

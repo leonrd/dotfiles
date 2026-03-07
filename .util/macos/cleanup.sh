@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+set -o pipefail
 set -E
 trap cleanup SIGINT SIGTERM ERR EXIT
 
@@ -450,7 +452,6 @@ if [ -z "$dry_run" ]; then
   newAvailable=$(df / | tail -1 | awk '{print $4}')
   count=$((newAvailable - oldAvailable))
   bytesToHuman $count
-  cleanup
 else
   count_dry
   unset dry_run
@@ -460,5 +461,6 @@ else
   if [[ $clean_dry_run = "" ]]; then
     exec "$0"
   fi
-  cleanup
 fi
+
+cleanup

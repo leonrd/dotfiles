@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+
+set -x
+set -e
+set -o pipefail
+
 # Ask for the administrator password upfront
 sudo -v
 

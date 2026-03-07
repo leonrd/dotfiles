@@ -1,9 +1,26 @@
 #!/usr/bin/env bash
 
-set +e
+set -x
+set -e
+set -o pipefail
+set -E
+trap cleanup SIGINT SIGTERM ERR EXIT
+
+cleanup() {
+	trap - SIGINT SIGTERM ERR EXIT
+
+  ./pkg-cleanup.sh
+}
 
 # Ask for the administrator password upfront
 sudo -v
+
+# Keep-alive sudo until script has finished
+while true; do
+	sudo -n true
+	sleep 60
+	kill -0 "$$" || exit
+done 2>/dev/null &
 
 # Install XCode command-line tools.
 echo "Installing Xcode Command Line Tools..."
@@ -22,15 +39,13 @@ fi
 
 brew doctor
 
-# Upgrade any already-installed formulae.
-brew upgrade
+echo "Upgrading outdated formulae..."
+brew upgrade --greedy
 
 # Save Homebrew’s installed location.
 BREW_PREFIX=$(brew --prefix)
 
 brew bundle install
-
-brew cleanup -s
 
 if which brew &> /dev/null && [ -x $(brew --prefix)/bin/zsh ]; then
   case $- in
@@ -48,7 +63,7 @@ git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.o
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
 
-echo "Setting zsh as default shell"
+echo "Setting brew zsh as default shell"
 if ! fgrep -q "${BREW_PREFIX}/bin/zsh" /etc/shells; then
   echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells;
   chsh -s "${BREW_PREFIX}/bin/zsh";
@@ -71,4 +86,4 @@ N_PREFIX=${NPM_PREFIX:-"$HOME/.n"} \
 # Install Kitty
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 
-./cleanup-packages.sh
+cleanup
