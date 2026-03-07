@@ -10,8 +10,8 @@ export ANDROID_HOME="$HOME/dev/tools/android-sdk"
 export ANDROID_SDK_ROOT="$HOME/dev/tools/android-sdk"
 export ANDROID_AVD_HOME="$HOME/.android/avd"
 
-export PATH="$HOME/.npm-global/bin:$PATH"
-export PATH="$HOME/.n/bin:$PATH"
+export PATH="$NPM_PREFIX/bin:$PATH"
+export PATH="$N_PREFIX/bin:$PATH"
 
 export DEV_TOOLS_PATH="$HOME/dev/tools/bin"
 export PATH="$DEV_TOOLS_PATH:$PATH"
