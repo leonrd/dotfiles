@@ -22,21 +22,21 @@ To update:
 dotfiles pull
 ```
 
-### Specify the `$PATH`
+### Specify the `${PATH}`
 
-If `~/.path` exists, it will be sourced along with the other files, before any feature testing (such as detecting which version of `ls` is being used) takes place.
+If `${HOME}/.path` exists, it will be sourced along with the other files, before any feature testing (such as detecting which version of `ls` is being used) takes place.
 
-Here’s an example `~/.path` file:
+Here’s an example `${HOME}/.path` file:
 
 ```sh
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 ```
 
 ### Add custom commands without creating a new fork
 
-If `~/.extra` exists, it will be sourced along with the other files. You can use this to add a few custom commands without the need to fork this entire repository, or to add commands you don’t want to commit to a public repository.
+If `${HOME}/.extra` exists, it will be sourced along with the other files. You can use this to add a few custom commands without the need to fork this entire repository, or to add commands you don’t want to commit to a public repository.
 
-You could also use `~/.extra` to override settings, functions and aliases from my dotfiles repository. It’s probably better to fork this repository instead, though.
+You could also use `${HOME}/.extra` to override settings, functions and aliases from my dotfiles repository. It’s probably better to fork this repository instead, though.
 
 ### Install packages
 

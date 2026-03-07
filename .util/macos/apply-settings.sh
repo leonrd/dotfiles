@@ -347,7 +347,7 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 # Show the ~/Library folder
-chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library 2>/dev/null
+chflags nohidden "${HOME}/Library" && xattr -d com.apple.FinderInfo "${HOME}/Library" 2>/dev/null
 
 # Show the /Volumes folder
 #sudo chflags nohidden /Volumes
@@ -433,8 +433,8 @@ defaults write com.apple.dock show-recents -bool false
 find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
 
 # Add iOS & Watch Simulator to Launchpad
-ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "$HOME/Applications/Simulator.app"
-ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "$HOME/Applications/Simulator (Watch).app"
+ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "${HOME}/Applications/Simulator.app"
+ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "${HOME}/Applications/Simulator (Watch).app"
 
 # Add a spacer to the left side of the Dock (where the applications are)
 #defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
@@ -649,7 +649,7 @@ tell application "Terminal"
 	(* Open the custom theme so that it gets added to the list
 	   of available terminal themes (note: this will open two
 	   additional terminal windows). *)
-	do shell script "open '$HOME/.config/macos/Application\ Support/Terminal/" & themeName & ".terminal'"
+	do shell script "open '${HOME}/.config/macos/Application Support/Terminal/" & themeName & ".terminal'"
 
 	(* Wait a little bit to ensure that the custom theme is added. *)
 	delay 1
@@ -828,7 +828,7 @@ defaults write com.google.Chrome.canary PMPrintingExpandedStateForPrint2 -bool t
 ###############################################################################
 
 # Disable signing emails by default
-defaults write ~/Library/Preferences/org.gpgtools.gpgmail SignNewEmailsByDefault -bool false
+defaults write "${HOME}/Library/Preferences/org.gpgtools.gpgmail" SignNewEmailsByDefault -bool false
 
 ###############################################################################
 # SizeUp                                                    #

@@ -1,13 +1,13 @@
-# * ~/.config/shell/path can be used to extend `$PATH`.
-if [ -f "$HOME/.config/shell/path" ]; then
-  source "$HOME/.config/shell/path"
+# * ~/.config/shell/path can be used to extend `${PATH}`.
+if [ -f "${HOME}/.config/shell/path" ]; then
+  source "${HOME}/.config/shell/path"
 else
-	export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+	export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 fi
 
 # * ~/.config/shell/extra can be used for other settings you don’t want to commit.
-for file in ~/.config/shell/{exports,aliases,functions,extra}; do
-	[ -r "$file" ] && [ -f "$file" ] && . "$file";
+for file in "${HOME}/.config/shell"/{exports,aliases,functions,extra}; do
+	[ -r "${file}" ] && [ -f "${file}" ] && . "${file}";
 done;
 unset file;
 
@@ -24,7 +24,7 @@ shopt -s cdspell;
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
 for option in autocd globstar; do
-	shopt -s "$option" 2> /dev/null;
+	shopt -s "${option}" 2> /dev/null;
 done;
 
 if [ $(uname -s) = 'Darwin' ]; then
@@ -53,8 +53,8 @@ else
 	fi
 fi
 
-# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
-[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
+# Add tab completion for SSH hostnames based on ${HOME}/.ssh/config, ignoring wildcards
+[ -e "${HOME}/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" "${HOME}/.ssh/config" | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
 
 # Enable tab completion for `g` by marking it as an alias for `git`
 if type _git &> /dev/null; then
@@ -62,7 +62,7 @@ if type _git &> /dev/null; then
 fi;
 
 # Fzf completion
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f "${HOME}/.fzf.bash" ] && source "${HOME}/.fzf.bash"
 
 # Other
 
@@ -78,7 +78,7 @@ if [ $(uname -s) = 'Darwin' ]; then
 	    if [[ "$1" == "update" ]]; then
 	        curl -sL "https://raw.githubusercontent.com/ajorpheus/homebrew-oclp-patches/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo "OCLP patches restored"
 	    fi
-	    return $ret
+	    return "${ret}"
 	}
 fi
 

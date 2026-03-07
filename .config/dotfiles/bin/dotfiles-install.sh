@@ -1,11 +1,11 @@
 #!/bin/bash
 
-DOTFILES_HOME_DIR=${DOTFILES_HOME_DIR:-$HOME}
+DOTFILES_HOME_DIR="${DOTFILES_HOME_DIR:-${HOME}}"
 
-git clone --separate-git-dir=$DOTFILES_HOME_DIR/.dotfiles.git . $DOTFILES_HOME_DIR/dotfiles-clone-tmp
-rm -r $DOTFILES_HOME_DIR/dotfiles-clone-tmp
+git clone --separate-git-dir="${DOTFILES_HOME_DIR}/.dotfiles.git" . "${DOTFILES_HOME_DIR}/dotfiles-clone-tmp"
+rm -r "${DOTFILES_HOME_DIR}/dotfiles-clone-tmp"
 function dotfiles {
-  git --git-dir=$DOTFILES_HOME_DIR/.dotfiles.git/ --work-tree=$DOTFILES_HOME_DIR $@
+  git --git-dir="${DOTFILES_HOME_DIR}/.dotfiles.git/" --work-tree="${DOTFILES_HOME_DIR}" $@
 }
 dotfiles checkout
 if [ $? = 1 ]; then
@@ -14,9 +14,9 @@ else
   echo "Stashing up pre-existing dot files.";
   dotfiles stash save
 fi;
-dotfiles checkout $DOTFILES_HOME_DIR/
+dotfiles checkout "${DOTFILES_HOME_DIR}/"
 dotfiles config status.showUntrackedFiles no
 
 if [ $(uname -s) = 'Darwin' ]; then
-  $DOTFILES_HOME_DIR/.config/dotfiles/macos/symlink-configs.sh
+  "${DOTFILES_HOME_DIR}/.config/dotfiles/macos"/symlink-configs.sh
 fi

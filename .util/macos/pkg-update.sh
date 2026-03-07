@@ -10,7 +10,7 @@ trap update_packages SIGINT SIGTERM ERR EXIT
 cleanup() {
 	trap - SIGINT SIGTERM ERR EXIT
 
-  ${__dir}/pkg-cleanup.sh
+  "${__dir}"/pkg-cleanup.sh
 }
 
 usage() {
@@ -44,8 +44,8 @@ msg() {
 die() {
 	local msg=$1
 	local code=${2-1} # default exit status 1
-	msg "$msg"
-	exit "$code"
+	msg "${msg}"
+	exit "${code}"
 }
 
 parse_params() {

@@ -8,15 +8,15 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# * ~/.config/shell/path can be used to extend `$PATH`.
-if [ -f "$HOME/.config/shell/path" ]; then
-    . "$HOME/.config/shell/path"
+# * ~/.config/shell/path can be used to extend `${PATH}`.
+if [ -f "${HOME}/.config/shell/path" ]; then
+    . "${HOME}/.config/shell/path"
 else
-	export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+	export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 fi
 
 # * ~/.config/shell/extra can be used for other settings you don’t want to commit.
-for file in $HOME/.config/shell/exports $HOME/.config/shell/aliases $HOME/.config/shell/extra; do
-	[ -r "$file" ] && [ -f "$file" ] && . "$file"
+for file in "${HOME}/.config/shell/exports" "${HOME}/.config/shell/aliases" "${HOME}/.config/shell/extra"; do
+	[ -r "${file}" ] && [ -f "${file}" ] && . "${file}"
 done
 unset file

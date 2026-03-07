@@ -50,9 +50,9 @@ function fs() {
 		local arg=-sh;
 	fi
 	if [[ -n "$@" ]]; then
-		du $arg -- "$@";
+		du ${arg} -- "$@";
 	else
-		du $arg .[^.]* ./*;
+		du ${arg} .[^.]* ./*;
 	fi;
 }
 
@@ -67,7 +67,7 @@ fi;
 # Create a data URL from a file
 function dataurl() {
 	local mimeType=$(file -b --mime-type "$1");
-	if [[ $mimeType == text/* ]]; then
+	if [[ "${mimeType}" == text/* ]]; then
 		mimeType="${mimeType};charset=utf-8";
 	fi
 	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
@@ -76,16 +76,16 @@ function dataurl() {
 # Start an HTTP server from a directory, optionally specifying the port
 function server() {
 	local port="${1:-8000}";
-	$HOME/.config/nginx/serve-dir $port
+	"${HOME}/.config/nginx"/serve-dir "${port}"
 }
 
 # Compare original and gzipped file size
 function gz() {
 	local origsize=$(wc -c < "$1");
 	local gzipsize=$(gzip -c "$1" | wc -c);
-	local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l);
-	printf "orig: %d bytes\n" "$origsize";
-	printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio";
+	local ratio=$(echo "${gzipsize} * 100 / ${origsize}" | bc -l);
+	printf "orig: %d bytes\n" "${origsize}";
+	printf "gzip: %d bytes (%2.2f%%)\n" "${gzipsize}" "${ratio}";
 }
 
 # Run `dig` and display the most useful info

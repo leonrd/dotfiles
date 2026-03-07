@@ -1,22 +1,22 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# If you come from bash you might have to change your `${PATH}`.
+# export PATH="${HOME}/bin:${HOME}/.local/bin:/usr/local/bin:${PATH}"
 
-# * ~/.path can be used to extend `$PATH`.
-if [ -f "$HOME/.config/shell/path" ]; then
-  source "$HOME/.config/shell/path"
+# * ~/.path can be used to extend `${PATH}`.
+if [ -f "${HOME}/.config/shell/path" ]; then
+  source "${HOME}/.config/shell/path"
 else
-	export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+	export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 fi
 
 # * ~/.extra can be used for other settings you don't want to commit.
-for file in ~/.config/shell/{exports,functions,extra}; do
-	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+for file in "${HOME}/.config/shell"/{exports,functions,extra}; do
+	[ -r "${file}" ] && [ -f "${file}" ] && source "${file}";
 done;
 unset file;
 
 # Path to your Oh My Zsh installation.
-if [ -d $HOME/.oh-my-zsh ]; then
-	export ZSH="$HOME/.oh-my-zsh"
+if [ -d "${HOME}/.oh-my-zsh" ]; then
+	export ZSH="${HOME}/.oh-my-zsh"
 
 	# Set name of the theme to load --- if set to "random", it will
 	# load a random theme each time Oh My Zsh is loaded, in which case,
@@ -85,12 +85,12 @@ if [ -d $HOME/.oh-my-zsh ]; then
 	# Example format: plugins=(rails git textmate ruby lighthouse)
 	# Add wisely, as too many plugins slow down shell startup.
 	plugins=(fzf-tab zsh-autosuggestions zsh-navigation-tools git-flow sublime postgres)
-	fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+	fpath+="${ZSH_CUSTOM:-${ZSH:-${HOME}/.oh-my-zsh}/custom}/plugins/zsh-completions/src"
 	if [ $(uname -s) = 'Darwin' ]; then
 		plugins+=(macos brew )
 	fi
 
-	source $ZSH/oh-my-zsh.sh
+	source "${ZSH}/oh-my-zsh.sh"
 else
 	autoload -Uz promptinit
 	promptinit
@@ -126,7 +126,7 @@ fi
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
+# if [[ -n "${SSH_CONNECTION}" ]]; then
 #   export EDITOR='vim'
 # else
 #   export EDITOR='nvim'
@@ -144,11 +144,11 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bold,underline"
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="vim ~/.zshrc"
-# alias ohmyzsh="vim ~/.oh-my-zsh"
+# alias zshconfig="vim ${HOME}/.zshrc"
+# alias ohmyzsh="vim ${HOME}/.oh-my-zsh"
 
-if [ -f "$HOME/.config/shell/aliases" ]; then
-  source "$HOME/.config/shell/aliases"
+if [ -f "${HOME}/.config/shell/aliases" ]; then
+  source "${HOME}/.config/shell/aliases"
 fi
 
 # Input
@@ -170,7 +170,7 @@ bindkey "\e[1;3C" forward-word
 bindkey "\e[3;3~" kill-word
 
 # Fzf completion
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f "${HOME}/.fzf.zsh" ] && source "${HOME}/.fzf.zsh"
 
 # Other
 
@@ -186,7 +186,7 @@ if [ $(uname -s) = 'Darwin' ]; then
 	    if [[ "$1" == "update" ]]; then
 	        curl -sL "https://raw.githubusercontent.com/ajorpheus/homebrew-oclp-patches/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo "OCLP patches restored"
 	    fi
-	    return $ret
+	    return "${ret}"
 	}
 fi
 

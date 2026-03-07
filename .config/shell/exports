@@ -14,7 +14,7 @@ if [ -n "$HISTDIR" ]; then
   else
     shell_name=$(basename $(ps -p $$ -o comm=) 2>/dev/null || basename "$SHELL")
   fi
-  case $shell_name in
+  case "${shell_name}" in
       *bash) export HISTFILE="$HISTDIR/.bash_history" ;;
       *zsh)  export HISTFILE="$HISTDIR/.zsh_history" ;;
       *ksh)  export HISTFILE="$HISTDIR/.sh_history" ;;
@@ -57,14 +57,14 @@ https_proxy=$HTTPS_PROXY
 # Python
 
 # Enable persistent history for `python`.
-export PYTHON_HISTORY="${HISTDIR:-$HOME}/.python_history";
+export PYTHON_HISTORY="${HISTDIR:-${HOME}}/.python_history";
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING='UTF-8';
 
 # Node
 
 # Enable persistent REPL history for `node`.
-export NODE_REPL_HISTORY="${HISTDIR:-$HOME}/.node_history";
+export NODE_REPL_HISTORY="${HISTDIR:-${HOME}}/.node_history";
 # Allow 32³ entries; the default is 1000.
 export NODE_REPL_HISTORY_SIZE='32768';
 # Use sloppy mode by default, matching web browsers.
@@ -78,8 +78,8 @@ if [ $(uname -s) = 'Darwin' ]; then
   # Hide the “default interactive shell is now zsh” warning on macOS.
   export BASH_SILENCE_DEPRECATION_WARNING=1;
   # Set Casks to install into ~/Applications
-  export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications"
+  export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications"
 
   # Chrome
-  export CHROME_EXECUTABLE="$HOME/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  export CHROME_EXECUTABLE="${HOME}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 fi
