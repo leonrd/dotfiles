@@ -34,7 +34,7 @@ wget -q -O /tmp/git-delta.deb \
 && rm /tmp/git-delta.deb
 
 # Install ohmyzsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 mv $HOME/.zshrc $HOME/.zshrc.post-oh-my-zsh
 mv $HOME/.zshrc.pre-oh-my-zsh $HOME/.zshrc
 

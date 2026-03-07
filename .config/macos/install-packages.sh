@@ -39,7 +39,7 @@ if which brew &> /dev/null && [ -x $(brew --prefix)/bin/zsh ]; then
 fi
 
 # Install ohmyzsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 mv ~/.zshrc ~/.zshrc.post-oh-my-zsh
 mv ~/.zshrc.pre-oh-my-zsh ~/.zshrc
 
