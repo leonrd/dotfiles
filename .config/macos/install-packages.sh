@@ -2,6 +2,9 @@
 
 set +e
 
+# Ask for the administrator password upfront
+sudo -v
+
 # Install XCode command-line tools.
 echo "Installing Xcode Command Line Tools..."
 xcode-select --install
@@ -26,11 +29,6 @@ brew upgrade
 BREW_PREFIX=$(brew --prefix)
 
 brew bundle install
-rbenv install
-# pyenv install
-curl -fsSL https://astral.sh/uv/install.sh | sh
-uv self update
-n lts
 
 brew cleanup -s
 
@@ -50,15 +48,31 @@ git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.o
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
 
-# Fix oh-my-zsh warnings
-compaudit | xargs chmod g-w
-
-# Install Kitty
-curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-
-# Requires user password!
 echo "Setting zsh as default shell"
 if ! fgrep -q "${BREW_PREFIX}/bin/zsh" /etc/shells; then
   echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells;
   chsh -s "${BREW_PREFIX}/bin/zsh";
 fi;
+
+# Fix oh-my-zsh warnings
+compaudit | xargs chmod g-w
+
+rbenv install
+
+# pyenv install
+
+curl -fsSL https://astral.sh/uv/install.sh | sh
+uv self update
+
+NPM_PREFIX=${NPM_PREFIX:-"$HOME/.npm-global"} \
+N_PREFIX=${NPM_PREFIX:-"$HOME/.n"} \
+	mkdir -p $NPM_PREFIX \
+	&& npm config set prefix "$NPM_PREFIX" \
+	&& npm install -g n \
+	&& n lts \
+	&& npm install -g yarn
+
+# Install Kitty
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+
+./cleanup-packages.sh
