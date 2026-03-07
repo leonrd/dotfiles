@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+__dir="$(cd "$(dirname "$0")" && pwd)"
+
 set -x
 set -e
 set -o pipefail
@@ -9,7 +11,7 @@ trap cleanup SIGINT SIGTERM ERR EXIT
 cleanup() {
 	trap - SIGINT SIGTERM ERR EXIT
 
-  ./pkg-cleanup.sh
+  ${__dir}/pkg-cleanup.sh
 }
 
 # Ask for the administrator password upfront

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -x
+__dir="$(cd "$(dirname "$0")" && pwd)"
+
 set -e
 set -o pipefail
 set -E
@@ -9,7 +10,7 @@ trap update_packages SIGINT SIGTERM ERR EXIT
 cleanup() {
 	trap - SIGINT SIGTERM ERR EXIT
 
-  ./pkg-cleanup.sh
+  ${__dir}/pkg-cleanup.sh
 }
 
 usage() {
