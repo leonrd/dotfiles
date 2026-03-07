@@ -57,10 +57,6 @@ fi;
 # Fix oh-my-zsh warnings
 compaudit | xargs chmod g-w
 
-rbenv install
-
-# pyenv install
-
 curl -fsSL https://astral.sh/uv/install.sh | sh
 uv self update
 

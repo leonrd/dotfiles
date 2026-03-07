@@ -47,10 +47,8 @@ git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custo
 chsh -s $(which zsh)
 
 sudo apt-get install -y --no-install-recommends rbenv
-rbenv install
 
 # curl https://pyenv.run | bash
-# pyenv install
 
 curl -fsSL https://astral.sh/uv/install.sh | sh
 uv self update
