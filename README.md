@@ -12,6 +12,8 @@ You can clone the repository wherever you want. The `.config/dotfiles/bin/instal
 git clone https://<redacted>/dotfiles.git && cd dotfiles && .config/dotfiles/bin/install.sh
 ```
 
+If there are any conflict with your current home files, it will do a git stash to them. Apply afterwards with `dotfiles stash pop`
+
 To update, `cd` into your local `dotfiles` repository and then:
 
 ```bash
