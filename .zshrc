@@ -15,7 +15,7 @@ done;
 unset file;
 
 # Path to your Oh My Zsh installation.
-if [ -x $HOME/.oh-my-zsh ]; then
+if [ -d $HOME/.oh-my-zsh ]; then
 	export ZSH="$HOME/.oh-my-zsh"
 fi
 
@@ -91,7 +91,7 @@ if [ $(uname -s) = 'Darwin' ]; then
 	plugins+=(macos brew )
 fi
 
-if [ -x $HOME/.oh-my-zsh ]; then
+if [ -d $HOME/.oh-my-zsh ] && [ -f $ZSH/oh-my-zsh.sh ]; then
 	source $ZSH/oh-my-zsh.sh
 fi
 
