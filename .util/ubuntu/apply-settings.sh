@@ -1,10 +1,6 @@
 # Turn off apt news
 sudo pro config set apt_news=false
 
-# Fix audio
-sudo touch /usr/share/pipewire/media-session.d/with-pulseaudio
-systemctl --user restart pipewire-session-manager
-
 # Disable system sounds
 gsettings set org.gnome.desktop.sound event-sounds false
 
