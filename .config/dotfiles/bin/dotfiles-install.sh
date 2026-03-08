@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-DOTFILES_HOME_DIR="${DOTFILES_HOME_DIR:-${HOME}}"
+__dir="$(cd "$(dirname "$0")" && pwd)"
 
-git clone --separate-git-dir="${DOTFILES_HOME_DIR}/.dotfiles.git" . "${DOTFILES_HOME_DIR}/dotfiles-clone-tmp"
+DOTFILES_HOME_DIR="${DOTFILES_HOME_DIR:-${HOME}}"
+DOTFILES_REPO_DIR="$(cd "${__dir}/../../../" && pwd)"
+
+git clone --separate-git-dir="${DOTFILES_HOME_DIR}/.dotfiles.git" "${DOTFILES_REPO_DIR}" "${DOTFILES_HOME_DIR}/dotfiles-clone-tmp"
 rm -r "${DOTFILES_HOME_DIR}/dotfiles-clone-tmp"
 function dotfiles {
   git --git-dir="${DOTFILES_HOME_DIR}/.dotfiles.git/" --work-tree="${DOTFILES_HOME_DIR}" $@
