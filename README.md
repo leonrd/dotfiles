@@ -9,9 +9,17 @@
 You can clone the repository wherever you want. The `.config/dotfiles/bin/install.sh` script will checkout the files to your `${HOME}` folder.
 
 ```sh
-git clone https://<redacted>/dotfiles.git dotfiles/
+git clone https://github.com/leonrd/dotfiles.git dotfiles/
 cd dotfiles/
 .config/dotfiles/bin/install.sh
+```
+
+Or, if you want to install it in a different `${HOME}`:
+
+```sh
+  git clone https://github.com/leonrd/dotfiles.git dotfiles/
+  cd dotfiles/
+  DOTFILES_HOME_DIR="/home/someotheruser" .config/dotfiles/bin/install.sh
 ```
 
 ### Using the bootstrap script url
@@ -27,7 +35,7 @@ Or, if you want to install it in a different `${HOME}`:
 ```sh
   curl -fsSL https://raw.githubusercontent.com/leonrd/dotfiles/refs/heads/main/.config/dotfiles/bin/install.sh \
   | DOTFILES_REPO="https://github.com/leonrd/dotfiles.git" \
-    DOTFILES_HOME_DIR="${HOME}" \
+    DOTFILES_HOME_DIR="/home/someotheruser" \
     sh
 ```
 
