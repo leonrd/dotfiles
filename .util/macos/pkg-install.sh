@@ -76,10 +76,17 @@ compaudit | xargs chmod g-w
 
 echo "Installing rbenv"
 git clone https://github.com/rbenv/rbenv.git "${HOME}/.rbenv"
+git clone https://github.com/rbenv/ruby-build.git "${HOME}/.rbenv/plugins/ruby-build"
+echo "Installing latest ruby via rbenv"
+RUBY_VERSION=$(rbenv install -l | grep -v - | tail -1) \
+	&& rbenv install "${RUBY_VERSION}" \
+	&& rbenv global "${RUBY_VERSION}"
 
 echo "Installing uv"
 curl -fsSL https://astral.sh/uv/install.sh | sh
 uv self update
+echo "Installing latest python via uv"
+uv python install --default
 
 echo "Installing node lts via n script"
 curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | bash -s install lts

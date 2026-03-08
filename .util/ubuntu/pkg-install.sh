@@ -34,6 +34,13 @@ sudo apt-get install -y --no-install-recommends \
 	zsh fzf jq ripgrep bat git-flow htop dfc sqlite3 imagemagick ffmpeg sox \
 	screen rename rlwrap tree watchman
 
+# Install some dependencies
+# ca-certificates: necessary for git-delta and others
+# build-essential, libz-dev, libyaml-dev: necessary for building ruby using rbenv
+sudo apt-get install -y --no-install-recommends \
+	ca-certificates \
+	build-essential libyaml-dev
+
 # Install extra tools
 sudo apt-get install -y --no-install-recommends \
 	gh
@@ -78,10 +85,17 @@ chsh -s $(which zsh)
 
 echo "Installing rbenv"
 git clone https://github.com/rbenv/rbenv.git "${HOME}/.rbenv"
+git clone https://github.com/rbenv/ruby-build.git "${HOME}/.rbenv/plugins/ruby-build"
+echo "Installing latest ruby via rbenv"
+RUBY_VERSION=$(rbenv install -l | grep -v - | tail -1) \
+	&& rbenv install "${RUBY_VERSION}" \
+	&& rbenv global "${RUBY_VERSION}"
 
 echo "Installing uv"
 curl -fsSL https://astral.sh/uv/install.sh | sh
 uv self update
+echo "Installing latest python via uv"
+uv python install --default
 
 echo "Installing node lts via n script"
 curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | bash -s install lts
