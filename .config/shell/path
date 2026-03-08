@@ -27,4 +27,3 @@ export PATH="$ANDROID_SDK_ROOT/platform-tools:${PATH}"
 export PATH="$ANDROID_SDK_ROOT/tools:${PATH}"
 export PATH="$ANDROID_SDK_ROOT/tools/bin:${PATH}"
 export PATH="$ANDROID_SDK_ROOT/emulator:${PATH}"
-
