@@ -17,13 +17,13 @@ git clone --separate-git-dir="${DOTFILES_HOME_DIR}/.dotfiles.git" "${DOTFILES_RE
 rm -rf "${DOTFILES_HOME_DIR}/dotfiles-clone-tmp"
 
 if dotfiles checkout; then
-  echo "Checked out dotfiles."
+  echo "Directory clean. Checking out dotfiles."
 else
   echo "Stashing pre-existing dotfiles."
   dotfiles stash save
-  dotfiles checkout "${DOTFILES_HOME_DIR}/"
 fi
 
+dotfiles checkout "${DOTFILES_HOME_DIR}/"
 dotfiles config status.showUntrackedFiles no
 
 if [ "$(uname -s)" = "Darwin" ]; then
