@@ -14,6 +14,23 @@ cd dotfiles/
 .config/dotfiles/bin/install.sh
 ```
 
+### Using the bootstrap script url
+
+```sh
+  curl -fsSL https://raw.githubusercontent.com/leonrd/dotfiles/refs/heads/main/.config/dotfiles/bin/install.sh \
+  | DOTFILES_REPO="https://github.com/leonrd/dotfiles.git" \
+    sh
+```
+
+Or, if you want to install it in a different `${HOME}`:
+
+```sh
+  curl -fsSL https://raw.githubusercontent.com/leonrd/dotfiles/refs/heads/main/.config/dotfiles/bin/install.sh \
+  | DOTFILES_REPO="https://github.com/leonrd/dotfiles.git" \
+    DOTFILES_HOME_DIR="${HOME}" \
+    sh
+```
+
 If there are any conflict with your current`${HOME}`files, it will do a `git stash` to them. Apply afterwards with `dotfiles stash apply` or `dotfiles stash pop`
 
 ## Updates
