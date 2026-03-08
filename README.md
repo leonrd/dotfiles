@@ -6,10 +6,10 @@
 
 ### Using Git and the bootstrap script
 
-You can clone the repository wherever you want. The bootstrapper script will pull in the latest version and copy the files to your home folder.
+You can clone the repository wherever you want. The `.config/dotfiles/bin/install.sh` script will copy the files to your home folder.
 
 ```bash
-git clone https://<redacted>/dotfiles.git && cd dotfiles && .config/dotfiles/install.sh
+git clone https://<redacted>/dotfiles.git && cd dotfiles && .config/dotfiles/bin/install.sh
 ```
 
 To update, `cd` into your local `dotfiles` repository and then:
