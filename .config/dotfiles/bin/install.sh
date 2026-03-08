@@ -13,7 +13,7 @@ __dir="$(cd "$(dirname "$0")" && pwd)"
 
 DOTFILES_REPO="${DOTFILES_REPO:-$(cd "${__dir}/../../../" && pwd)}"
 
-git clone --separate-git-dir="${DOTFILES_HOME_DIR}/.dotfiles.git" "${DOTFILES_REPO}" "${DOTFILES_HOME_DIR}/dotfiles-clone-tmp"
+git clone --separate-git-dir="${DOTFILES_HOME_DIR}/.dotfiles.git" "${DOTFILES_REPO}" "${DOTFILES_HOME_DIR}/dotfiles-clone-tmp" || exit 1
 rm -rf "${DOTFILES_HOME_DIR}/dotfiles-clone-tmp"
 
 if dotfiles checkout; then
