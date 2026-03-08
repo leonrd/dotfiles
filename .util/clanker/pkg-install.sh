@@ -53,11 +53,9 @@ echo "Installing Claude Code"
 curl -fsSL https://claude.ai/install.sh | bash -s stable
 
 echo "Installing Codex CLI"
-npm i -g @openai/codex
+npm install -g @openai/codex
 
 echo "Installing OpenCode"
-# https://www.reddit.com/r/opencodeCLI/comments/1rel21r/hey_having_issuse_what_is_bun_haha_really_i_tried/
-OPENCODE_DISABLE_AUTOUPDATE=1 \
-	npm install -g opencode-ai@1.2.10
+npm install -g opencode-ai
 
 cleanup
