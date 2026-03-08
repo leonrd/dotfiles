@@ -1,27 +1,23 @@
 #!/usr/bin/env bash
 
 set -E
-trap cleanup SIGINT SIGTERM ERR EXIT
+trap update_packages SIGINT SIGTERM ERR EXIT
 
-cleanup() {
+update_packages() {
 	trap - SIGINT SIGTERM ERR EXIT
 }
 
-# Default arguments
-update=false
-
 usage() {
 	cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-u]
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [--no-color]
 
-A Mac Package Cleanup up Utility based on
-https://github.com/fwartner/mac-cleanup
+An Ubuntu Package Update Utility
 
 Available options:
 
 -h, --help       Print this help and exit
 -v, --verbose    Print script debug info
--u, --update     Run brew update
+--no-color    	 Disable colors
 EOF
 	exit
 }
@@ -47,16 +43,11 @@ die() {
 }
 
 parse_params() {
-	# default values of variables set from params
-	update=false
-
 	while :; do
 		case "${1-}" in
 		-h | --help) usage ;;
 		-v | --verbose) set -x ;;
 		--no-color) NO_COLOR=1 ;;
-		-u | --update) update=true ;; # update flag
-		-n) true ;;                   # This is a legacy option, now default behaviour
 		-?*) die "Unknown option: $1" ;;
 		*) break ;;
 		esac
@@ -79,17 +70,17 @@ while true; do
 	kill -0 "$$" || exit
 done 2>/dev/null &
 
-if type "brew" &>/dev/null; then
-	if [ "$update" = true ]; then
-		msg 'Updating Homebrew Recipes...'
-		brew update
-		msg 'Upgrading and removing outdated formulae...'
-		brew upgrade --greedy
-	fi
-	msg 'Cleaning up Homebrew Cache...'
-	brew cleanup -s &>/dev/null
-	rm -rfv "$(brew --cache)" &>/dev/null
-	brew tap --repair &>/dev/null
+if type "apt-get" &>/dev/null; then
+	msg 'Updating apt Sources...'
+	sudo apt-get update &>/dev/null
+	msg 'Upgrading and removing outdated packages...'
+	sudo apt-get upgrade -y
+	msg 'Cleaning up apt Cache...'
+	sudo apt-get clean -y &>/dev/null
+	sudo apt-get -s clean -y &>/dev/null
+	sudo apt-get clean all -y &>/dev/null
+	sudo apt-get --purge autoremove -y &>/dev/null
+	sudo apt-get autoclean -y &>/dev/null
 fi
 
-cleanup
+update_packages

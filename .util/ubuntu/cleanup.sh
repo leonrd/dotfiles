@@ -7,21 +7,18 @@ cleanup() {
 	trap - SIGINT SIGTERM ERR EXIT
 }
 
-# Default arguments
-update=false
-
 usage() {
 	cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-u]
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [--no-color]
 
-A Ubuntu Cleaning up Utility based on
+An Ubuntu Cleaning up Utility based on
 https://github.com/fwartner/mac-cleanup
 
 Available options:
 
 -h, --help       Print this help and exit
 -v, --verbose    Print script debug info
--u, --update     Run apt update
+--no-color    	 Disable colors
 EOF
 	exit
 }
@@ -47,16 +44,11 @@ die() {
 }
 
 parse_params() {
-	# default values of variables set from params
-	update=false
-
 	while :; do
 		case "${1-}" in
 		-h | --help) usage ;;
 		-v | --verbose) set -x ;;
 		--no-color) NO_COLOR=1 ;;
-		-u | --update) update=true ;; # update flag
-		-n) true ;;                   # This is a legacy option, now default behaviour
 		-?*) die "Unknown option: $1" ;;
 		*) break ;;
 		esac
@@ -82,12 +74,8 @@ bytesToHuman() {
 	msg "$b$d ${S[$s]} of space was cleaned up"
 }
 
-__dir="$(cd "$(dirname "$0")" && pwd)"
-
 # Ask for the administrator password upfront
 sudo -v
-
-HOST=$(whoami)
 
 # Keep-alive sudo until script has finished
 while true; do
@@ -95,6 +83,8 @@ while true; do
 	sleep 60
 	kill -0 "$$" || exit
 done 2>/dev/null &
+
+HOST=$(whoami)
 
 oldAvailable=$(df / | tail -1 | awk '{print $4}')
 
@@ -141,14 +131,6 @@ fi
 # 	rm -rfv ~/.gradle/caches &>/dev/null
 # fi
 
-if type "apt" &>/dev/null; then
-	if [ "$update" = true ]; then
-		bash ${__dir}/cleanup-packages.sh --update
-	else
-		bash ${__dir}/cleanup-packages.sh
-	fi
-fi
-
 if type "gem" &>/dev/null; then
 	msg 'Cleaning up any old versions of gems'
 	gem cleanup &>/dev/null
@@ -177,10 +159,10 @@ fi
 # 	yarn cache clean --force &>/dev/null
 # fi
 
-if type "pod" &>/dev/null; then
-	msg 'Cleaning up Pod Cache...'
-	pod cache clean --all &>/dev/null
-fi
+# if type "pod" &>/dev/null; then
+# 	msg 'Cleaning up Pod Cache...'
+# 	pod cache clean --all &>/dev/null
+# fi
 
 msg "${GREEN}Success!${NOFORMAT}"
 

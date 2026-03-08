@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
+echo "symlinking some .config files to Library/"
+
 # Install the Solarized Dark theme for iTerm
 mkdir -p "${HOME}/Library/Application Support/iTerm2"
 ln -s "${HOME}/.config/macos/Library/Application Support/iTerm2/Solarized Dark.itermcolors" "${HOME}/Library/Application Support/iTerm2/Solarized Dark.itermcolors"
-open "${HOME}/Library/Application Support/iTerm2/Solarized Dark.itermcolors"
 
 # Import iTerm profile
 mkdir -p "${HOME}/Library/Application Support/iTerm2/DynamicProfiles"
@@ -29,4 +30,6 @@ ln -s "${HOME}/.config/macos/Library/Application Support/Spectacle/Shortcuts.jso
 # Install the BTT preset
 mkdir -p "${HOME}/Library/Application Support/BetterTouchTool/"
 ln -s "${HOME}/.config/macos/Library/Application Support/BetterTouchTool/Default.bttpreset" "${HOME}/Library/Application Support/BetterTouchTool/Default.bttpreset"
+
+open "${HOME}/Library/Application Support/iTerm2/Solarized Dark.itermcolors"
 open "${HOME}/Library/Application Support/BetterTouchTool/Default.bttpreset"

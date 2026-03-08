@@ -7,21 +7,17 @@ cleanup() {
 	trap - SIGINT SIGTERM ERR EXIT
 }
 
-# Default arguments
-update=false
-
 usage() {
 	cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-u]
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [--no-color]
 
-A Ubuntu Package Cleaning up Utility based on
-https://github.com/fwartner/mac-cleanup
+An Ubuntu Package Cleaning up Utility
 
 Available options:
 
 -h, --help       Print this help and exit
 -v, --verbose    Print script debug info
--u, --update     Run apt update
+--no-color    	 Disable colors
 EOF
 	exit
 }
@@ -47,16 +43,11 @@ die() {
 }
 
 parse_params() {
-	# default values of variables set from params
-	update=false
-
 	while :; do
 		case "${1-}" in
 		-h | --help) usage ;;
 		-v | --verbose) set -x ;;
 		--no-color) NO_COLOR=1 ;;
-		-u | --update) update=true ;; # update flag
-		-n) true ;;                   # This is a legacy option, now default behaviour
 		-?*) die "Unknown option: $1" ;;
 		*) break ;;
 		esac
@@ -80,12 +71,6 @@ while true; do
 done 2>/dev/null &
 
 if type "apt-get" &>/dev/null; then
-	if [ "$update" = true ]; then
-		msg 'Updating apt Sources...'
-		sudo apt-get update &>/dev/null
-		msg 'Upgrading and removing outdated packages...'
-		sudo apt-get upgrade -y
-	fi
 	msg 'Cleaning up apt Cache...'
 	sudo apt-get clean -y &>/dev/null
 	sudo apt-get -s clean -y &>/dev/null

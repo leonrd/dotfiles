@@ -6,18 +6,19 @@
 
 ### Using Git and the bootstrap script
 
-You can clone the repository wherever you want. The `.config/dotfiles/bin/install.sh` script will copy the files to your home folder.
+You can clone the repository wherever you want. The `.config/dotfiles/bin/dotfiles-install.sh` script will checkout the files to your home folder.
 
 ```bash
-git clone https://<redacted>/dotfiles.git && cd dotfiles && .config/dotfiles/bin/install.sh
+git clone https://<redacted>/dotfiles.git
+cd dotfiles
+.config/dotfiles/bin/dotfiles-install.sh
 ```
 
 If there are any conflict with your current home files, it will do a git stash to them. Apply afterwards with `dotfiles stash pop`
 
-To update, `cd` into your local `dotfiles` repository and then:
+To update:
 
-```bash
-git pull
+```sh
 dotfiles pull
 ```
 
@@ -25,10 +26,10 @@ dotfiles pull
 
 If `~/.path` exists, it will be sourced along with the other files, before any feature testing (such as detecting which version of `ls` is being used) takes place.
 
-Here’s an example `~/.path` file that adds `/usr/local/bin` to the `$PATH`:
+Here’s an example `~/.path` file:
 
-```bash
-export PATH="/usr/local/bin:$PATH"
+```sh
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 ```
 
 ### Add custom commands without creating a new fork
@@ -37,22 +38,43 @@ If `~/.extra` exists, it will be sourced along with the other files. You can use
 
 You could also use `~/.extra` to override settings, functions and aliases from my dotfiles repository. It’s probably better to fork this repository instead, though.
 
-### Install Homebrew formulae
+### Install packages
 
-When setting up a new Mac, you may want to install some common [Homebrew](https://brew.sh/) formulae (and installing Homebrew, of course):
+When setting up a new home, you may want to install/update/cleanup some common packages:
 
-```bash
-.config/macos/install-packages.sh
+```sh
+# On macos
+.util/macos/pkg-install.sh
+.util/macos/pkg-update.sh
+.util/macos/pkg-cleanup.sh
+
+# On Ubuntu
+.util/ubuntu/pkg-install.sh
+.util/ubuntu/pkg-update.sh
+.util/ubuntu/pkg-cleanup.sh
 ```
 
-Some of the functionality of these dotfiles depends on formulae installed by `.config/macos/install-packages.sh`. If you don’t plan to run `.config/macos/install-packages.sh`, you should look carefully through the script and manually install any particularly important ones. A good example is Bash/Git completion: the dotfiles use a special version from Homebrew.
+### Sensible defaults
 
-### Sensible macOS defaults
+When setting up a new home, you may want to set some sensible defaults:
 
-When setting up a new Mac, you may want to set some sensible macOS defaults:
+```sh
+# On macos
+.util/macos/settings.sh
 
-```bash
-.config/macos/settings.sh
+# On Ubuntu
+.util/ubuntu/settings.sh
 ```
+
+### System cleanup
+
+```sh
+# On macos
+.util/macos/cleanup.sh
+
+# On Ubuntu
+.util/ubuntu/cleanup.sh
+```
+
 ## Thanks to…
 * [Mathias Bynens](https://mathiasbynens.be/) and his [dotfiles repository](https://github.com/mathiasbynens/dotfiles)

@@ -7,12 +7,9 @@ cleanup() {
 	trap - SIGINT SIGTERM ERR EXIT
 }
 
-# Default arguments
-update=false
-
 usage() {
 	cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-u]
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [--no-color]
 
 A Mac Cleanup up Utility by fwartner
 https://github.com/fwartner/mac-cleanup
@@ -21,7 +18,7 @@ Available options:
 
 -h, --help       Print this help and exit
 -v, --verbose    Print script debug info
--u, --update     Run brew update
+--no-color    	 Disable colors
 EOF
 	exit
 }
@@ -47,16 +44,11 @@ die() {
 }
 
 parse_params() {
-	# default values of variables set from params
-	update=false
-
 	while :; do
 		case "${1-}" in
 		-h | --help) usage ;;
 		-v | --verbose) set -x ;;
 		--no-color) NO_COLOR=1 ;;
-		-u | --update) update=true ;; # update flag
-		-n) true ;;                   # This is a legacy option, now default behaviour
 		-?*) die "Unknown option: $1" ;;
 		*) break ;;
 		esac
@@ -81,8 +73,6 @@ bytesToHuman() {
 	done
 	msg "$b$d ${S[$s]} of space was cleaned up"
 }
-
-__dir="$(cd "$(dirname "$0")" && pwd)"
 
 # Ask for the administrator password upfront
 sudo -v
@@ -199,14 +189,6 @@ fi
 # 	msg 'Clearing Gradle caches...'
 # 	rm -rfv ~/.gradle/caches &>/dev/null
 # fi
-
-if type "brew" &>/dev/null; then
-	if [ "$update" = true ]; then
-		bash ${__dir}/cleanup-packages.sh --update
-	else
-		bash ${__dir}/cleanup-packages.sh
-	fi
-fi
 
 if type "gem" &>/dev/null; then
 	msg 'Cleaning up any old versions of gems'
