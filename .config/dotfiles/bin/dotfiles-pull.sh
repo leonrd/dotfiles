@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 __dir="$(cd "$(dirname "$0")" && pwd)"
 
 DOTFILES_HOME_DIR="$(cd "${__dir}/../../../" && pwd)"

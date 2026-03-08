@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DOTFILES_HOME_DIR="${DOTFILES_HOME_DIR:-${HOME}}"
 
