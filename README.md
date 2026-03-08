@@ -6,21 +6,31 @@
 
 ### Using Git and the bootstrap script
 
-You can clone the repository wherever you want. The `.config/dotfiles/bin/dotfiles-install.sh` script will checkout the files to your home folder.
+You can clone the repository wherever you want. The `.config/dotfiles/bin/install.sh` script will checkout the files to your `${HOME}` folder.
 
-```bash
-git clone https://<redacted>/dotfiles.git
-cd dotfiles
-.config/dotfiles/bin/dotfiles-install.sh
+```sh
+git clone https://<redacted>/dotfiles.git dotfiles/
+cd dotfiles/
+.config/dotfiles/bin/install.sh
 ```
 
-If there are any conflict with your current home files, it will do a git stash to them. Apply afterwards with `dotfiles stash pop`
+If there are any conflict with your current`${HOME}`files, it will do a `git stash` to them. Apply afterwards with `dotfiles stash apply` or `dotfiles stash pop`
 
-To update:
+## Updates
+
+### Using the `dotfiles` alias loaded from `${HOME}/.config/shell/aliases`
 
 ```sh
 dotfiles pull
 ```
+
+### Using the install path
+
+```sh
+${HOME}/.config/dotfiles/bin/dotfiles pull
+```
+
+## Shell includes
 
 ### Specify the `${PATH}`
 
@@ -36,44 +46,46 @@ export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 
 If `${HOME}/.extra` exists, it will be sourced along with the other files. You can use this to add a few custom commands without the need to fork this entire repository, or to add commands you don’t want to commit to a public repository.
 
-You could also use `${HOME}/.extra` to override settings, functions and aliases from my dotfiles repository. It’s probably better to fork this repository instead, though.
+You could also use `${HOME}/.extra` to override settings, functions and aliases from the dotfiles repository. It’s probably better to fork this repository instead, though.
+
+## Scripts
 
 ### Install packages
 
-When setting up a new home, you may want to install/update/cleanup some common packages:
+When setting up a new `${HOME}`, you may want to install/update/cleanup some common packages:
 
 ```sh
 # On macos
-.util/macos/pkg-install.sh
-.util/macos/pkg-update.sh
-.util/macos/pkg-cleanup.sh
+~/.util/macos/pkg-install.sh
+~/.util/macos/pkg-update.sh
+~/.util/macos/pkg-cleanup.sh
 
 # On Ubuntu
-.util/ubuntu/pkg-install.sh
-.util/ubuntu/pkg-update.sh
-.util/ubuntu/pkg-cleanup.sh
+~/.util/ubuntu/pkg-install.sh
+~/.util/ubuntu/pkg-update.sh
+~/.util/ubuntu/pkg-cleanup.sh
 ```
 
 ### Sensible defaults
 
-When setting up a new home, you may want to set some sensible defaults:
+When setting up a new `${HOME}`, you may want to set some sensible defaults:
 
 ```sh
 # On macos
-.util/macos/settings.sh
+~/.util/macos/settings.sh
 
 # On Ubuntu
-.util/ubuntu/settings.sh
+~/.util/ubuntu/settings.sh
 ```
 
 ### System cleanup
 
 ```sh
 # On macos
-.util/macos/cleanup.sh
+~/.util/macos/cleanup.sh
 
 # On Ubuntu
-.util/ubuntu/cleanup.sh
+~/.util/ubuntu/cleanup.sh
 ```
 
 ## Thanks to…
