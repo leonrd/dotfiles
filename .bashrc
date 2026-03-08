@@ -83,7 +83,7 @@ if [ $(uname -s) = 'Darwin' ]; then
 fi
 
 if command -v rbenv 1>/dev/null 2>&1; then
-	eval "$(rbenv init -)"
+	eval "$(rbenv init - --no-rehash bash)"
 fi
 
 if command -v pyenv 1>/dev/null 2>&1; then
