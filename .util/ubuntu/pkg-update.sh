@@ -2,8 +2,7 @@
 
 __dir="$(cd "$(dirname "$0")" && pwd)"
 
-set -e
-set -o pipefail
+set -euo pipefail
 set -E
 trap update_packages SIGINT SIGTERM ERR EXIT
 

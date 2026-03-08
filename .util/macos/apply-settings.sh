@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 set -x
-set -e
-set -o pipefail
+set -euo pipefail
 
 # Ask for the administrator password upfront
 #sudo -v

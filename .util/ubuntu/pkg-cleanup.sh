@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
-set -o pipefail
+set -euo pipefail
 set -E
 trap cleanup SIGINT SIGTERM ERR EXIT
 
