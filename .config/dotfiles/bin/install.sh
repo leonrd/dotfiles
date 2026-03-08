@@ -21,7 +21,7 @@ if dotfiles checkout; then
 else
   echo "Stashing pre-existing dotfiles."
   dotfiles stash save
-  dotfiles checkout
+  dotfiles checkout "${DOTFILES_HOME_DIR}/"
 fi
 
 dotfiles config status.showUntrackedFiles no
