@@ -90,7 +90,12 @@ alias zshconfig="subl ${HOME}/.zshrc"
 alias ohmyzsh="subl ${HOME}/.oh-my-zsh"
 
 # .dotfiles.git repo management
-alias dotfiles="git --git-dir=${HOME}/.dotfiles.git/ --work-tree=${HOME}"
+dotfiles() {
+  git \
+    --git-dir="${DOTFILES_HOME_DIR:-${HOME}}/.dotfiles.git/" \
+    --work-tree="${DOTFILES_HOME_DIR:-${HOME}}" \
+    "$@"
+}
 
 if [ $(uname -s) = 'Darwin' ]; then
 	# Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages

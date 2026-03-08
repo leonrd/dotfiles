@@ -1,1 +1,12 @@
-git --git-dir="${HOME}/.dotfiles.git/" --work-tree="${HOME}" "$@"
+#!/usr/bin/env sh
+
+DOTFILES_HOME_DIR="${DOTFILES_HOME_DIR:-${HOME}}"
+
+dotfiles() {
+  git \
+    --git-dir="${DOTFILES_HOME_DIR}/.dotfiles.git/" \
+    --work-tree="${DOTFILES_HOME_DIR}" \
+    "$@"
+}
+
+dotfiles "$@"
