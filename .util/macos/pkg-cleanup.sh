@@ -1,16 +1,10 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-set -E
-trap cleanup SIGINT SIGTERM ERR EXIT
-
-cleanup() {
-	trap - SIGINT SIGTERM ERR EXIT
-}
 
 usage() {
 	cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [--no-color]
+Usage: $(basename "$0") [-h] [-v] [--no-color]
 
 A Mac Package Cleaning up Utility
 
@@ -77,5 +71,3 @@ if type "brew" &>/dev/null; then
 	rm -rfv "$(brew --cache)" &>/dev/null
 	brew tap --repair &>/dev/null
 fi
-
-cleanup

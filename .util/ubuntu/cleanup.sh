@@ -1,17 +1,12 @@
 #!/usr/bin/env bash
 
+set -eo pipefail
+
 __dir="$(cd "$(dirname "$0")" && pwd)"
-
-set -E
-trap cleanup SIGINT SIGTERM ERR EXIT
-
-cleanup() {
-	trap - SIGINT SIGTERM ERR EXIT
-}
 
 usage() {
 	cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-d] [--dry-run]
+Usage: $(basename "$0") [-h] [-v] [-d] [--dry-run]
 
 An Ubuntu Cleaning up Utility based on
 https://github.com/fwartner/mac-cleanup
@@ -98,7 +93,16 @@ count_dry() {
 remove_paths() {
   if [ -z "${dry_run}" ]; then
     for path in "${path_list[@]}"; do
-      rm -rfv "${path}" &>/dev/null
+      rm -rfv "${path}" &>/dev/null || true
+    done
+    unset path_list
+  fi
+}
+
+sudo_remove_paths() {
+  if [ -z "${dry_run}" ]; then
+    for path in "${path_list[@]}"; do
+      sudo rm -rfv "${path}" &>/dev/null || true
     done
     unset path_list
   fi
@@ -133,13 +137,13 @@ msg 'Removing old snaps' # TODO add count_dry
 if [ -z "${dry_run}" ]; then
 	snap list --all | awk '/disabled/{print $1, $3}' |
     while read snapname revision; do
-      sudo snap remove "${snapname}" --revision="${revision}"
+      sudo snap remove "${snapname}" --revision="${revision}" || true
     done
 fi
 
 collect_paths /var/log/*gz
 msg 'Clearing System Log Files...'
-remove_paths
+sudo_remove_paths
 
 if [ -d "${HOME}/.cache/google-chrome" ]; then
   collect_paths "${HOME}/.cache/google-chrome/Default/Cache"/*
@@ -150,7 +154,7 @@ fi
 if type "composer" &>/dev/null; then
   msg 'Cleaning up composer...'
   if [ -z "${dry_run}" ]; then
-    composer clearcache --no-interaction &>/dev/null
+    composer clearcache --no-interaction &>/dev/null || true
   else
     collect_paths "${HOME}/.cache/composer"
 		remove_paths
@@ -233,12 +237,10 @@ if [ -d "${HOME}/.gradle" ]; then
   remove_paths
 fi
 
-"${__dir}"/pkg-cleanup.sh
-
 if type "gem" &>/dev/null; then  # TODO add count_dry
   msg 'Cleaning up any old versions of gems'
   if [ -z "${dry_run}" ]; then
-    gem cleanup &>/dev/null
+    gem cleanup &>/dev/null || true
   fi
 fi
 
@@ -247,11 +249,11 @@ if type "docker" &>/dev/null; then  # TODO add count_dry
   if [ -z "${dry_run}" ]; then
     if ! docker ps >/dev/null 2>&1; then
       close_docker=true
-      open --background -a Docker
+      open --background -a Docker || true
     fi
-    docker system prune -af &>/dev/null
+    docker system prune -af &>/dev/null || true
     if [ "${close_docker}" = true ]; then
-      killall Docker
+      killall Docker || true
     fi
   fi
 fi
@@ -265,7 +267,7 @@ fi
 if type "npm" &>/dev/null; then
   msg 'Cleaning up npm cache...'
   if [ -z "${dry_run}" ]; then
-    npm cache clean --force &>/dev/null
+    npm cache clean --force &>/dev/null || true
   else
     collect_paths "${HOME}/.npm"/*
   	remove_paths
@@ -275,7 +277,7 @@ fi
 if type "yarn" &>/dev/null; then
 	msg 'Cleaning up Yarn Cache...'
   if [ -z "${dry_run}" ]; then
-    yarn cache clean --force &>/dev/null
+    yarn cache clean --force &>/dev/null || true
   else
     collect_paths "${HOME}/.cache/yarn"
   	remove_paths
@@ -285,7 +287,7 @@ fi
 if type "pnpm" &>/dev/null; then
   msg 'Cleaning up pnpm Cache...'
   if [ -z "${dry_run}" ]; then
-    pnpm store prune &>/dev/null
+    pnpm store prune &>/dev/null || true
   else
     collect_paths "${HOME}/.pnpm-store"/*
   	remove_paths
@@ -295,7 +297,7 @@ fi
 if type "pod" &>/dev/null; then
   msg 'Cleaning up Pod Cache...'
   if [ -z "${dry_run}" ]; then
-    pod cache clean --all &>/dev/null
+    pod cache clean --all &>/dev/null || true
   else
     collect_paths "${HOME}/.cache/CocoaPods"
   	remove_paths
@@ -305,7 +307,7 @@ fi
 if type "go" &>/dev/null; then
 	msg 'Clearing Go module cache...'
   if [ -z "${dry_run}" ]; then
-    go clean -modcache &>/dev/null
+    go clean -modcache &>/dev/null || true
   else
     if [ -n "${GOPATH}" ]; then
       collect_paths "${GOPATH}/pkg/mod"
@@ -320,6 +322,10 @@ fi
 collect_paths "${HOME}"/*.hprof
 msg 'Deleting Java heap dumps...'
 remove_paths
+
+if [ -z "${dry_run}" ]; then
+  [ -x "${__dir}/pkg-cleanup.sh" ] && "${__dir}"/pkg-cleanup.sh
+fi
 
 # Disables extended regex
 shopt -u extglob
@@ -340,5 +346,3 @@ else
     exec "$0"
   fi
 fi
-
-cleanup

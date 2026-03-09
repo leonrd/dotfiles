@@ -1,17 +1,34 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 __dir="$(cd "$(dirname "$0")" && pwd)"
 
-set -euo pipefail
-set -E
-trap cleanup SIGINT SIGTERM ERR EXIT
-
 cleanup() {
-	trap - SIGINT SIGTERM ERR EXIT
-
-	rm -f /tmp/git-delta.deb
-  ${__dir}/pkg-cleanup.sh
+  [ -x "${__dir}/pkg-cleanup.sh" ] && ${__dir}/pkg-cleanup.sh
+  rm -f /tmp/git-delta.deb
 }
+
+on_exit() {
+  trap - EXIT SIGINT SIGTERM
+  cleanup
+}
+
+on_sigint() {
+  on_exit
+  trap - SIGINT
+  kill -SIGINT $$
+}
+
+on_sigterm() {
+  on_exit
+  trap - SIGTERM
+  kill -SIGTERM $$
+}
+
+trap on_exit EXIT
+trap on_sigint SIGINT
+trap on_sigterm SIGTERM
 
 # Ask for the administrator password upfront
 sudo -v
@@ -158,5 +175,3 @@ wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
 echo "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" \
     | sudo tee /etc/apt/sources.list.d/openresty.list
 sudo apt-get update && sudo apt-get install -y --no-install-recommends openresty
-
-cleanup

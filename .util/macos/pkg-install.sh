@@ -1,16 +1,33 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 __dir="$(cd "$(dirname "$0")" && pwd)"
 
-set -euo pipefail
-set -E
-trap cleanup SIGINT SIGTERM ERR EXIT
-
 cleanup() {
-	trap - SIGINT SIGTERM ERR EXIT
-
-  "${__dir}"/pkg-cleanup.sh
+  [ -x "${__dir}/pkg-cleanup.sh" ] && ${__dir}/pkg-cleanup.sh
 }
+
+on_exit() {
+  trap - EXIT SIGINT SIGTERM
+  cleanup
+}
+
+on_sigint() {
+  on_exit
+  trap - SIGINT
+  kill -SIGINT $$
+}
+
+on_sigterm() {
+  on_exit
+  trap - SIGTERM
+  kill -SIGTERM $$
+}
+
+trap on_exit EXIT
+trap on_sigint SIGINT
+trap on_sigterm SIGTERM
 
 # Ask for the administrator password upfront
 sudo -v
@@ -115,5 +132,3 @@ cp "${HOME}/.local/kitty.app/share/applications/kitty-open.desktop ${HOME}/.loca
 # Update the paths to the kitty and its icon in the kitty.desktop file(s)
 sed -i "s|Icon=kitty|Icon=/home/${USER}/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png"|g "${HOME}/.local/share/applications"/kitty*.desktop
 sed -i "s|Exec=kitty|Exec=/home/${USER}/.local/kitty.app/bin/kitty"|g "${HOME}/.local/share/applications"/kitty*.desktop
-
-cleanup

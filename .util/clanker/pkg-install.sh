@@ -1,14 +1,33 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 __dir="$(cd "$(dirname "$0")" && pwd)"
 
-set -euo pipefail
-set -E
-trap cleanup SIGINT SIGTERM ERR EXIT
-
 cleanup() {
-	trap - SIGINT SIGTERM ERR EXIT
+  [ -x "${__dir}/pkg-cleanup.sh" ] && ${__dir}/pkg-cleanup.sh
 }
+
+on_exit() {
+  trap - EXIT SIGINT SIGTERM
+  cleanup
+}
+
+on_sigint() {
+  on_exit
+  trap - SIGINT
+  kill -SIGINT $$
+}
+
+on_sigterm() {
+  on_exit
+  trap - SIGTERM
+  kill -SIGTERM $$
+}
+
+trap on_exit EXIT
+trap on_sigint SIGINT
+trap on_sigterm SIGTERM
 
 echo "Installing oh-my-zsh"
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -66,5 +85,3 @@ git clone https://github.com/seqis/AI-grep.git "${HOME}/dev/tools/ai-grep/"" \
 	&& chmod +x "${HOME}/dev/tools/ai-grep/ai-grep" \
 	&& mkdir -p "${HOME}/dev/tools/bin" \
 	&& ln -s "${HOME}/dev/tools/ai-grep/ai-grep" "${HOME}/dev/tools/bin/ai-grep"
-
-cleanup

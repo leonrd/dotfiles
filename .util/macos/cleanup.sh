@@ -1,17 +1,10 @@
 #!/usr/bin/env bash
 
-__dir="$(cd "$(dirname "$0")" && pwd)"
-
-set -E
-trap cleanup SIGINT SIGTERM ERR EXIT
-
-cleanup() {
-	trap - SIGINT SIGTERM ERR EXIT
-}
+set -eo pipefail
 
 usage() {
 	cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-d] [--dry-run]
+Usage: $(basename "$0") [-h] [-v] [-d] [--dry-run]
 
 A Mac Cleanup up Utility based on
 https://github.com/fwartner/mac-cleanup
@@ -98,7 +91,16 @@ count_dry() {
 remove_paths() {
   if [ -z "${dry_run}" ]; then
     for path in "${path_list[@]}"; do
-      rm -rfv "${path}" &>/dev/null
+      rm -rfv "${path}" &>/dev/null || true
+    done
+    unset path_list
+  fi
+}
+
+sudo_remove_paths() {
+  if [ -z "${dry_run}" ]; then
+    for path in "${path_list[@]}"; do
+      sudo rm -rfv "${path}" &>/dev/null || true
     done
     unset path_list
   fi
@@ -128,14 +130,14 @@ oldAvailable=$(df / | tail -1 | awk '{print $4}')
 collect_paths /Volumes/*/.Trashes/*
 collect_paths "${HOME}/.Trash"/*
 msg 'Emptying the Trash 🗑 on all mounted volumes and the main HDD...'
-remove_paths
+sudo_remove_paths
 
 collect_paths /Library/Caches/*
 collect_paths /System/Library/Caches/*
 collect_paths "${HOME}/Library/Caches"/*
 collect_paths /private/var/folders/bh/*/*/*/*
 msg 'Clearing System Cache Files...'
-remove_paths
+sudo_remove_paths
 
 collect_paths /private/var/log/asl/*.asl
 collect_paths /Library/Logs/DiagnosticReports/*
@@ -145,7 +147,7 @@ collect_paths /Library/Logs/adobegc.log
 collect_paths "${HOME}/Library/Containers/com.apple.mail/Data/Library/Logs/Mail"/*
 collect_paths "${HOME}/Library/Logs/CoreSimulator"/*
 msg 'Clearing System Log Files...'
-remove_paths
+sudo_remove_paths
 
 if [ -d "${HOME}/Library/Logs/JetBrains/" ]; then
   collect_paths "${HOME}/Library/Logs/JetBrains"/*/
@@ -182,11 +184,11 @@ remove_paths
 # if type "xcrun" &>/dev/null; then
 #   msg 'Cleaning up iOS Simulators...'
 #   if [ -z "${dry_run}" ]; then
-#     osascript -e 'tell application "com.apple.CoreSimulator.CoreSimulatorService" to quit' &>/dev/null
-#     osascript -e 'tell application "iOS Simulator" to quit' &>/dev/null
-#     osascript -e 'tell application "Simulator" to quit' &>/dev/null
-#     xcrun simctl shutdown all &>/dev/null
-#     xcrun simctl erase all &>/dev/null
+#     osascript -e 'tell application "com.apple.CoreSimulator.CoreSimulatorService" to quit' &>/dev/null || true
+#     osascript -e 'tell application "iOS Simulator" to quit' &>/dev/null || true
+#     osascript -e 'tell application "Simulator" to quit' &>/dev/null || true
+#     xcrun simctl shutdown all &>/dev/null || true
+#     xcrun simctl erase all &>/dev/null || true
 #   else
 #     collect_paths "${HOME}/Library/Developer/CoreSimulator/Devices"/*/data/!(Library|var|tmp|Media)
 #     collect_paths "${HOME}/Library/Developer/CoreSimulator/Devices"/*/data/Library/!(PreferencesCaches|Caches|AddressBook)
@@ -213,7 +215,7 @@ fi
 if type "composer" &>/dev/null; then
   msg 'Cleaning up composer...'
   if [ -z "${dry_run}" ]; then
-    composer clearcache --no-interaction &>/dev/null
+    composer clearcache --no-interaction &>/dev/null || true
   else
     collect_paths "${HOME}/Library/Caches/composer"
 		remove_paths
@@ -300,9 +302,9 @@ if type "brew" &>/dev/null; then
   collect_paths "$(brew --cache)"
   msg 'Cleaning up Homebrew Cache...'
   if [ -z "${dry_run}" ]; then
-    brew cleanup -s &>/dev/null
+    brew cleanup -s &>/dev/null || true
     remove_paths
-    brew tap --repair &>/dev/null
+    brew tap --repair &>/dev/null || true
   else
     remove_paths
   fi
@@ -311,7 +313,7 @@ fi
 if type "gem" &>/dev/null; then  # TODO add count_dry
   msg 'Cleaning up any old versions of gems'
   if [ -z "${dry_run}" ]; then
-    gem cleanup &>/dev/null
+    gem cleanup &>/dev/null || true
   fi
 fi
 
@@ -320,11 +322,11 @@ if type "docker" &>/dev/null; then  # TODO add count_dry
   if [ -z "${dry_run}" ]; then
     if ! docker ps >/dev/null 2>&1; then
       close_docker=true
-      open --background -a Docker
+      open --background -a Docker || true
     fi
-    docker system prune -af &>/dev/null
+    docker system prune -af &>/dev/null || true
     if [ "${close_docker}" = true ]; then
-      killall Docker
+      killall Docker || true
     fi
   fi
 fi
@@ -338,7 +340,7 @@ fi
 if type "npm" &>/dev/null; then
   msg 'Cleaning up npm cache...'
   if [ -z "${dry_run}" ]; then
-    npm cache clean --force &>/dev/null
+    npm cache clean --force &>/dev/null || true
   else
     collect_paths "${HOME}/.npm"/*
   	remove_paths
@@ -348,7 +350,7 @@ fi
 if type "yarn" &>/dev/null; then
 	msg 'Cleaning up Yarn Cache...'
   if [ -z "${dry_run}" ]; then
-    yarn cache clean --force &>/dev/null
+    yarn cache clean --force &>/dev/null || true
   else
     collect_paths "${HOME}/Library/Caches/yarn"
   	remove_paths
@@ -358,7 +360,7 @@ fi
 if type "pnpm" &>/dev/null; then
   msg 'Cleaning up pnpm Cache...'
   if [ -z "${dry_run}" ]; then
-    pnpm store prune &>/dev/null
+    pnpm store prune &>/dev/null || true
   else
     collect_paths "${HOME}/.pnpm-store"/*
   	remove_paths
@@ -368,7 +370,7 @@ fi
 if type "pod" &>/dev/null; then
   msg 'Cleaning up Pod Cache...'
   if [ -z "${dry_run}" ]; then
-    pod cache clean --all &>/dev/null
+    pod cache clean --all &>/dev/null || true
   else
     collect_paths "${HOME}/Library/Caches/CocoaPods"
   	remove_paths
@@ -378,7 +380,7 @@ fi
 if type "go" &>/dev/null; then
 	msg 'Clearing Go module cache...'
   if [ -z "${dry_run}" ]; then
-    go clean -modcache &>/dev/null
+    go clean -modcache &>/dev/null || true
   else
     if [ -n "${GOPATH}" ]; then
       collect_paths "${GOPATH}/pkg/mod"
@@ -422,13 +424,13 @@ remove_paths
 
 msg 'Cleaning up DNS cache...'
 if [ -z "${dry_run}" ]; then
-  sudo dscacheutil -flushcache &>/dev/null
-  sudo killall -HUP mDNSResponder &>/dev/null
+  sudo dscacheutil -flushcache &>/dev/null || true
+  sudo killall -HUP mDNSResponder &>/dev/null || true
 fi
 
 msg 'Purging inactive memory...'
 if [ -z "${dry_run}" ]; then
-  sudo purge &>/dev/null
+  sudo purge &>/dev/null || true
 fi
 
 # Disables extended regex
@@ -450,5 +452,3 @@ else
     exec "$0"
   fi
 fi
-
-cleanup

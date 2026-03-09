@@ -1,20 +1,37 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 __dir="$(cd "$(dirname "$0")" && pwd)"
 
-set -euo pipefail
-set -E
-trap update_packages SIGINT SIGTERM ERR EXIT
-
 cleanup() {
-	trap - SIGINT SIGTERM ERR EXIT
-
-  "${__dir}"/pkg-cleanup.sh
+  [ -x "${__dir}/pkg-cleanup.sh" ] && ${__dir}/pkg-cleanup.sh
 }
+
+on_exit() {
+  trap - EXIT SIGINT SIGTERM
+  cleanup
+}
+
+on_sigint() {
+  on_exit
+  trap - SIGINT
+  kill -SIGINT $$
+}
+
+on_sigterm() {
+  on_exit
+  trap - SIGTERM
+  kill -SIGTERM $$
+}
+
+trap on_exit EXIT
+trap on_sigint SIGINT
+trap on_sigterm SIGTERM
 
 usage() {
 	cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [--no-color]
+Usage: $(basename "$0") [-h] [-v] [--no-color]
 
 A Mac Package Update Utility
 
@@ -80,10 +97,4 @@ if type "brew" &>/dev/null; then
 	brew update
 	msg 'Upgrading and removing outdated formulae...'
 	brew upgrade --greedy
-	msg 'Cleaning up Homebrew Cache...'
-	brew cleanup -s &>/dev/null
-	rm -rfv "$(brew --cache)" &>/dev/null
-	brew tap --repair &>/dev/null
 fi
-
-cleanup

@@ -1,16 +1,10 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-set -E
-trap cleanup SIGINT SIGTERM ERR EXIT
-
-cleanup() {
-	trap - SIGINT SIGTERM ERR EXIT
-}
 
 usage() {
 	cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [--no-color]
+Usage: $(basename "$0") [-h] [-v] [--no-color]
 
 An Ubuntu Package Cleaning up Utility
 
@@ -79,5 +73,3 @@ if type "apt-get" &>/dev/null; then
 	sudo apt-get --purge autoremove -y &>/dev/null
 	sudo apt-get autoclean -y &>/dev/null
 fi
-
-cleanup

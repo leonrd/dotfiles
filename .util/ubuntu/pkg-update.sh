@@ -1,20 +1,37 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 __dir="$(cd "$(dirname "$0")" && pwd)"
 
-set -euo pipefail
-set -E
-trap update_packages SIGINT SIGTERM ERR EXIT
-
 cleanup() {
-	trap - SIGINT SIGTERM ERR EXIT
-
-  "${__dir}"/pkg-cleanup.sh
+  [ -x "${__dir}/pkg-cleanup.sh" ] && ${__dir}/pkg-cleanup.sh
 }
+
+on_exit() {
+  trap - EXIT SIGINT SIGTERM
+  cleanup
+}
+
+on_sigint() {
+  on_exit
+  trap - SIGINT
+  kill -SIGINT $$
+}
+
+on_sigterm() {
+  on_exit
+  trap - SIGTERM
+  kill -SIGTERM $$
+}
+
+trap on_exit EXIT
+trap on_sigint SIGINT
+trap on_sigterm SIGTERM
 
 usage() {
 	cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [--no-color]
+Usage: $(basename "$0") [-h] [-v] [--no-color]
 
 An Ubuntu Package Update Utility
 
@@ -80,12 +97,4 @@ if type "apt-get" &>/dev/null; then
 	sudo apt-get update &>/dev/null
 	msg 'Upgrading and removing outdated packages...'
 	sudo apt-get upgrade -y
-	msg 'Cleaning up apt Cache...'
-	sudo apt-get clean -y &>/dev/null
-	sudo apt-get -s clean -y &>/dev/null
-	sudo apt-get clean all -y &>/dev/null
-	sudo apt-get --purge autoremove -y &>/dev/null
-	sudo apt-get autoclean -y &>/dev/null
 fi
-
-cleanup
