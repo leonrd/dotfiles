@@ -50,8 +50,8 @@ else
 fi
 
 # for wget
-http_proxy=$HTTP_PROXY
-https_proxy=$HTTPS_PROXY
+export http_proxy=$HTTP_PROXY
+export https_proxy=$HTTPS_PROXY
 
 # Python
 
