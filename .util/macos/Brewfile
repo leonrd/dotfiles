@@ -30,7 +30,6 @@ brew "imagemagick"
 #brew "imagemagick@6"
 brew ios-webkit-debug-proxy
 brew "jq"
-brew "kitty"
 brew "less"
 brew "libimobiledevice"
 #brew "llvm"
@@ -100,4 +99,3 @@ cask "teamviewer"
 cask "visual-studio-code"
 cask "vlc"
 cask "xquartz"
-
