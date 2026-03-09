@@ -91,14 +91,14 @@ gsettings set org.gnome.shell.keybindings toggle-message-tray "['<Super>m']"
 
 # Dock
 gsettings set org.gnome.shell.extensions.dash-to-dock multi-monitor true
-gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
-gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'LEFT'
+gsettings set org.gnome.shell.extensions.dash-to-dock extend-height true
 gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-network false
 gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true
 gsettings set org.gnome.shell.extensions.dash-to-dock animation-time 0.0
-gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
+gsettings set org.gnome.shell.extensions.dash-to-dock autohide false
 gsettings set org.gnome.shell.extensions.dash-to-dock autohide-in-fullscreen true
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'google-chrome.desktop', 'kitty.desktop', 'spotify_spotify.desktop', 'code_code.desktop', 'sublime_text.desktop', 'sublime_merge.desktop', 'slack_slack.desktop', 'vlc_vlc.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.Settings.desktop', 'org.gnome.SystemMonitor.desktop', 'google-chrome.desktop', 'spotify.desktop', 'kitty.desktop', 'code.desktop', 'sublime_text.desktop', 'sublime_merge.desktop', 'slack.desktop', 'vlc.desktop']"
 gsettings set org.gnome.shell.extensions.dash-to-dock application-counter-overrides-notifications true
 gsettings set org.gnome.shell.extensions.dash-to-dock show-icons-notifications-counter false
 
