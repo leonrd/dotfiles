@@ -129,48 +129,55 @@ n lts
 echo "Installing yarn"
 npm install -g yarn
 
-# Install Kitty
+echo "Installing kitty"
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-# Create a symbolic link to add kitty to PATH (assuming ${HOME}/.local/bin is in
+# Create symbolic links to add kitty and kitten to PATH (assuming "${HOME}"/.local/bin is in
 # your system-wide PATH)
-ln -s "${HOME}/.local/kitty.app/bin/kitty ${HOME}/.local/bin/"
+ln -sf "${HOME}"/.local/kitty.app/bin/kitty "${HOME}"/.local/kitty.app/bin/kitten "${HOME}"/.local/bin/
 # Place the kitty.desktop file somewhere it can be found by the OS
-cp "${HOME}/.local/kitty.app/share/applications/kitty.desktop ${HOME}/.local/share/applications/"
+cp "${HOME}"/.local/kitty.app/share/applications/kitty.desktop "${HOME}"/.local/share/applications/
 # If you want to open text files and images in kitty via your file manager also add the kitty-open.desktop file
-cp "${HOME}/.local/kitty.app/share/applications/kitty-open.desktop ${HOME}/.local/share/applications/"
-# Update the paths to the kitty and its icon in the kitty.desktop file(s)
-sed -i "s|Icon=kitty|Icon=/home/${USER}/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png"|g "${HOME}/.local/share/applications"/kitty*.desktop
-sed -i "s|Exec=kitty|Exec=/home/${USER}/.local/kitty.app/bin/kitty"|g "${HOME}/.local/share/applications"/kitty*.desktop
+cp "${HOME}"/.local/kitty.app/share/applications/kitty-open.desktop "${HOME}"/.local/share/applications/
+# Update the paths to the kitty and its icon in the kitty desktop file(s)
+sed -i "s|Icon=kitty|Icon=/home/${USER}/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" "${HOME}"/.local/share/applications/kitty*.desktop
+sed -i "s|Exec=kitty|Exec=/home/${USER}/.local/kitty.app/bin/kitty|g" "${HOME}"/.local/share/applications/kitty*.desktop
+# Make xdg-terminal-exec (and hence desktop environments that support it use kitty)
+echo 'kitty.desktop' > "${HOME}"/.config/xdg-terminals.list
 
-# Make kitty the default terminal emulator
-sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator `which kitty` 50
-
+echo "Installing sublime-text and sublime-merge"
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg \
 	&& echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list \
 	&& sudo apt-get update \
 	&& sudo apt-get install -y --no-install-recommends sublime-text sublime-merge
 
+echo "Installing gthumb"
 sudo apt-get install -y --no-install-recommends gthumb
 
+echo "Installing Google Chrome"
 curl -sLO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo dpkg -i google-chrome-stable_current_amd64.deb && rm -f google-chrome-stable_current_amd64.deb
 
+echo "Installing tailscale"
 curl -fsSL https://tailscale.com/install.sh | sh
 
+echo "Installing vscode"
 echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
 sudo apt-get update && sudo apt-get install -y --no-install-recommends code
 
+echo "Installing Spotify"
 curl -sS https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
 echo "deb https://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
 sudo apt-get update && sudo apt-get install -y --no-install-recommends spotify-client
 
+echo "Installing dbeaver"
 sudo add-apt-repository ppa:serge-rider/dbeaver-ce
 sudo apt-get install -y --no-install-recommends dbeaver-ce
 
+echo "Installing android-studio"
 sudo apt-get install -y --no-install-recommends openjdk-11-jdk
 sudo add-apt-repository -y ppa:maarten-fonville/android-studio
 sudo apt-get update && sudo apt-get install -y --no-install-recommends android-studio
 
-# Install OpenResty
+echo "Installing OpenResty"
 wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
 echo "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" \
     | sudo tee /etc/apt/sources.list.d/openresty.list
