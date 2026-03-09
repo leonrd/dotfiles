@@ -48,20 +48,6 @@ parse_params() {
 
 parse_params "$@"
 
-deleteCaches() {
-	local cacheName=$1
-	shift
-	local paths=("$@")
-	echo "Initiating cleanup ${cacheName} cache..."
-	for folderPath in "${paths[@]}"; do
-		if [[ -d "${folderPath}" ]]; then
-			dirSize=$(du -hs "${folderPath}" | awk '{print $1}')
-			echo "Deleting ${folderPath} to free up ${dirSize}..."
-			rm -rfv "${folderPath}"
-		fi
-	done
-}
-
 bytesToHuman() {
 	b=${1:-0}
 	d=''
