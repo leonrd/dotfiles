@@ -1,10 +1,8 @@
-export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
-
-export PATH="${HOME}/.rbenv/bin:${PATH}"
+export PATH="${HOME}/.local/bin:${PATH}"
 
 # Set NPM prefix
 export NPM_PREFIX="${HOME}/.npm-global"
-# Set N home
+# Set N prefix
 export N_PREFIX="${HOME}/.n"
 
 # Android SDK
@@ -12,18 +10,33 @@ export ANDROID_HOME="${HOME}/dev/tools/android-sdk"
 export ANDROID_SDK_ROOT="${HOME}/dev/tools/android-sdk"
 export ANDROID_AVD_HOME="${HOME}/.android/avd"
 
+# Dev tools
+export DEV_TOOLS_PATH="${HOME}/dev/tools/bin"
+
+# Adjust "${PATH}"
+
+# Add rbenv
+export PATH="${HOME}/.rbenv/bin:${PATH}"
+
+# Add npm global
 export PATH="$NPM_PREFIX/bin:${PATH}"
+
+# Add n
 export PATH="$N_PREFIX/bin:${PATH}"
 
-export DEV_TOOLS_PATH="${HOME}/dev/tools/bin"
+# Add dev tools
 export PATH="$DEV_TOOLS_PATH:${PATH}"
 
+# Add flutter
 export PATH="${HOME}/dev/tools/flutter/bin:${PATH}"
 export PATH="${HOME}/dev/space/flutter/framework/bin:${PATH}"
 export PATH="${HOME}/dev/space/flutter/devtools/tool/bin:${PATH}"
 
-# Android tools
+# Add Android tools
 export PATH="$ANDROID_SDK_ROOT/platform-tools:${PATH}"
 export PATH="$ANDROID_SDK_ROOT/tools:${PATH}"
 export PATH="$ANDROID_SDK_ROOT/tools/bin:${PATH}"
 export PATH="$ANDROID_SDK_ROOT/emulator:${PATH}"
+
+# Add "${HOME}/bin"
+export PATH="${HOME}/bin:${PATH}"
