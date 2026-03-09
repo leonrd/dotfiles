@@ -16,7 +16,7 @@ else
 fi
 
 # * ~/.config/shell/extra can be used for other settings you don’t want to commit.
-for file in "${HOME}/.config/shell/exports" "${HOME}/.config/shell/aliases" "${HOME}/.config/shell/extra"; do
+for file in "${HOME}/.config/shell/exports" "${HOME}/.config/shell/aliases" "${HOME}/.config/shell/functions" "${HOME}/.config/shell/extra"; do
 	[ -r "${file}" ] && [ -f "${file}" ] && . "${file}"
 done
 unset file
