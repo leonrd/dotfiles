@@ -17,6 +17,7 @@ if [ -n "$HISTDIR" ]; then
       sh | dash | ash) HISTFILE="$HISTDIR/.history" ;;
       *)               HISTFILE="$HISTDIR/.${shell_name}_history" ;;
     esac
+    unset shell_name
   fi
   export HISTFILE
 fi
