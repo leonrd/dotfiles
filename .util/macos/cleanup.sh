@@ -2,7 +2,6 @@
 
 __dir="$(cd "$(dirname "$0")" && pwd)"
 
-set -euo pipefail
 set -E
 trap cleanup SIGINT SIGTERM ERR EXIT
 
