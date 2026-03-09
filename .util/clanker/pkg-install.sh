@@ -58,4 +58,13 @@ npm install -g @openai/codex
 echo "Installing OpenCode"
 npm install -g opencode-ai
 
+echo "Installing depgraph"
+curl -fsSL https://raw.githubusercontent.com/henryhale/depgraph/master/scripts/install.sh | 
+
+echo "Installing ai-grep"
+git clone https://github.com/seqis/AI-grep.git "${HOME}/dev/tools/ai-grep/"" \
+	&& chmod +x "${HOME}/dev/tools/ai-grep/ai-grep" \
+	&& mkdir -p "${HOME}/dev/tools/bin" \
+	&& ln -s "${HOME}/dev/tools/ai-grep/ai-grep" "${HOME}/dev/tools/bin/ai-grep"
+
 cleanup
