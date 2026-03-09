@@ -7,8 +7,6 @@ trap cleanup SIGINT SIGTERM ERR EXIT
 
 cleanup() {
 	trap - SIGINT SIGTERM ERR EXIT
-
-  "${__dir}"/pkg-cleanup.sh
 }
 
 usage() {
@@ -234,6 +232,8 @@ if [ -d "${HOME}/.gradle" ]; then
   msg 'Clearing Gradle caches...'
   remove_paths
 fi
+
+"${__dir}"/pkg-cleanup.sh
 
 if type "gem" &>/dev/null; then  # TODO add count_dry
   msg 'Cleaning up any old versions of gems'

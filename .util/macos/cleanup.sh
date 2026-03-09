@@ -7,8 +7,6 @@ trap cleanup SIGINT SIGTERM ERR EXIT
 
 cleanup() {
 	trap - SIGINT SIGTERM ERR EXIT
-
-  "${__dir}"/pkg-cleanup.sh
 }
 
 usage() {
