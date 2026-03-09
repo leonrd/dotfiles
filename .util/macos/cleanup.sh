@@ -175,28 +175,28 @@ collect_paths "${HOME}/Library/Application Support/MobileSync/Backup"/*
 msg 'Removing iOS Device Backups...'
 remove_paths
 
-# collect_paths "${HOME}/Library/Developer/Xcode/DerivedData"/*
-# collect_paths "${HOME}/Library/Developer/Xcode/Archives"/*
-# collect_paths "${HOME}/Library/Developer/Xcode/iOS Device Logs"/*
-# msg 'Cleaning up XCode Derived Data and Archives...'
-# remove_paths
+collect_paths "${HOME}/Library/Developer/Xcode/DerivedData"/*
+collect_paths "${HOME}/Library/Developer/Xcode/Archives"/*
+collect_paths "${HOME}/Library/Developer/Xcode/iOS Device Logs"/*
+msg 'Cleaning up XCode Derived Data and Archives...'
+remove_paths
 
-# if type "xcrun" &>/dev/null; then
-#   msg 'Cleaning up iOS Simulators...'
-#   if [ -z "${dry_run}" ]; then
-#     osascript -e 'tell application "com.apple.CoreSimulator.CoreSimulatorService" to quit' &>/dev/null || true
-#     osascript -e 'tell application "iOS Simulator" to quit' &>/dev/null || true
-#     osascript -e 'tell application "Simulator" to quit' &>/dev/null || true
-#     xcrun simctl shutdown all &>/dev/null || true
-#     xcrun simctl erase all &>/dev/null || true
-#   else
-#     collect_paths "${HOME}/Library/Developer/CoreSimulator/Devices"/*/data/!(Library|var|tmp|Media)
-#     collect_paths "${HOME}/Library/Developer/CoreSimulator/Devices"/*/data/Library/!(PreferencesCaches|Caches|AddressBook)
-#     collect_paths "${HOME}/Library/Developer/CoreSimulator/Devices"/*/data/Library/Caches/*
-#     collect_paths "${HOME}/Library/Developer/CoreSimulator/Devices"/*/data/Library/AddressBook/AddressBook*
-# 		remove_paths
-#   fi
-# fi
+if type "xcrun" &>/dev/null; then
+  msg 'Cleaning up iOS Simulators...'
+  if [ -z "${dry_run}" ]; then
+    osascript -e 'tell application "com.apple.CoreSimulator.CoreSimulatorService" to quit' &>/dev/null || true
+    osascript -e 'tell application "iOS Simulator" to quit' &>/dev/null || true
+    osascript -e 'tell application "Simulator" to quit' &>/dev/null || true
+    xcrun simctl shutdown all &>/dev/null || true
+    xcrun simctl erase all &>/dev/null || true
+  else
+    collect_paths "${HOME}/Library/Developer/CoreSimulator/Devices"/*/data/!(Library|var|tmp|Media)
+    collect_paths "${HOME}/Library/Developer/CoreSimulator/Devices"/*/data/Library/!(PreferencesCaches|Caches|AddressBook)
+    collect_paths "${HOME}/Library/Developer/CoreSimulator/Devices"/*/data/Library/Caches/*
+    collect_paths "${HOME}/Library/Developer/CoreSimulator/Devices"/*/data/Library/AddressBook/AddressBook*
+		remove_paths
+  fi
+fi
 
 # support deleting Dropbox Cache if they exist
 if [ -d "/Users/${HOST}/Dropbox" ]; then
