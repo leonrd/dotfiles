@@ -292,11 +292,11 @@ fi
 
 # Clears Gradle caches
 # -Astro
-# if [ -d "${HOME}/.gradle" ]; then
-#   collect_paths "${HOME}/.gradle/caches"
-#   msg 'Clearing Gradle caches...'
-#   remove_paths
-# fi
+if [ -d "${HOME}/.gradle" ]; then
+  collect_paths "${HOME}/.gradle/caches"
+  msg 'Clearing Gradle caches...'
+  remove_paths
+fi
 
 if type "brew" &>/dev/null; then
   collect_paths "$(brew --cache)"
@@ -317,19 +317,19 @@ if type "gem" &>/dev/null; then  # TODO add count_dry
   fi
 fi
 
-# if type "docker" &>/dev/null; then  # TODO add count_dry
-#   msg 'Cleaning up Docker'
-#   if [ -z "${dry_run}" ]; then
-#     if ! docker ps >/dev/null 2>&1; then
-#       close_docker=true
-#       open --background -a Docker
-#     fi
-#     docker system prune -af &>/dev/null
-#     if [ "${close_docker}" = true ]; then
-#       killall Docker
-#     fi
-#   fi
-# fi
+if type "docker" &>/dev/null; then  # TODO add count_dry
+  msg 'Cleaning up Docker'
+  if [ -z "${dry_run}" ]; then
+    if ! docker ps >/dev/null 2>&1; then
+      close_docker=true
+      open --background -a Docker
+    fi
+    docker system prune -af &>/dev/null
+    if [ "${close_docker}" = true ]; then
+      killall Docker
+    fi
+  fi
+fi
 
 if [ "${PYENV_VIRTUALENV_CACHE_PATH}" ]; then
   collect_paths "${PYENV_VIRTUALENV_CACHE_PATH}"
@@ -337,45 +337,45 @@ if [ "${PYENV_VIRTUALENV_CACHE_PATH}" ]; then
   remove_paths
 fi
 
-# if type "npm" &>/dev/null; then
-#   msg 'Cleaning up npm cache...'
-#   if [ -z "${dry_run}" ]; then
-#     npm cache clean --force &>/dev/null
-#   else
-#     collect_paths "${HOME}/.npm"/*
-#   	remove_paths
-#   fi
-# fi
+if type "npm" &>/dev/null; then
+  msg 'Cleaning up npm cache...'
+  if [ -z "${dry_run}" ]; then
+    npm cache clean --force &>/dev/null
+  else
+    collect_paths "${HOME}/.npm"/*
+  	remove_paths
+  fi
+fi
 
-# if type "yarn" &>/dev/null; then
-# 	msg 'Cleaning up Yarn Cache...'
-#   if [ -z "${dry_run}" ]; then
-#     yarn cache clean --force &>/dev/null
-#   else
-#     collect_paths "${HOME}/Library/Caches/yarn"
-#   	remove_paths
-#   fi
-# fi
+if type "yarn" &>/dev/null; then
+	msg 'Cleaning up Yarn Cache...'
+  if [ -z "${dry_run}" ]; then
+    yarn cache clean --force &>/dev/null
+  else
+    collect_paths "${HOME}/Library/Caches/yarn"
+  	remove_paths
+  fi
+fi
 
-# if type "pnpm" &>/dev/null; then
-#   msg 'Cleaning up pnpm Cache...'
-#   if [ -z "${dry_run}" ]; then
-#     pnpm store prune &>/dev/null
-#   else
-#     collect_paths "${HOME}/.pnpm-store"/*
-#   	remove_paths
-#   fi
-# fi
+if type "pnpm" &>/dev/null; then
+  msg 'Cleaning up pnpm Cache...'
+  if [ -z "${dry_run}" ]; then
+    pnpm store prune &>/dev/null
+  else
+    collect_paths "${HOME}/.pnpm-store"/*
+  	remove_paths
+  fi
+fi
 
-# if type "pod" &>/dev/null; then
-#   msg 'Cleaning up Pod Cache...'
-#   if [ -z "${dry_run}" ]; then
-#     pod cache clean --all &>/dev/null
-#   else
-#     collect_paths "${HOME}/Library/Caches/CocoaPods"
-#   	remove_paths
-#   fi
-# fi
+if type "pod" &>/dev/null; then
+  msg 'Cleaning up Pod Cache...'
+  if [ -z "${dry_run}" ]; then
+    pod cache clean --all &>/dev/null
+  else
+    collect_paths "${HOME}/Library/Caches/CocoaPods"
+  	remove_paths
+  fi
+fi
 
 if type "go" &>/dev/null; then
 	msg 'Clearing Go module cache...'
