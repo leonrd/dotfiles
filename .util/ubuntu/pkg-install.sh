@@ -114,18 +114,8 @@ uv self update
 echo "Installing latest python via uv"
 uv python install --default
 
-echo "Installing node lts via n script"
-curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | bash -s install lts
-
-echo "Setting npm prefix"
-npm config set prefix "${NPM_PREFIX}"
-
-echo "Installing n"
-npm install -g n
-
-echo "Installing node lts via n"
-n lts
-
+echo "Installing n and node lts via n-install"
+curl -L https://bit.ly/n-install | bash -s -- -y -n
 echo "Installing yarn"
 npm install -g yarn
 

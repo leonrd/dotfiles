@@ -1,7 +1,5 @@
 export PATH="${HOME}/.local/bin:${PATH}"
 
-# Set NPM prefix
-export NPM_PREFIX="${HOME}/.npm-global"
 # Set N prefix
 export N_PREFIX="${HOME}/.n"
 
@@ -17,9 +15,6 @@ export DEV_TOOLS_PATH="${HOME}/dev/tools/bin"
 
 # Add rbenv
 export PATH="${HOME}/.rbenv/bin:${PATH}"
-
-# Add npm global
-export PATH="$NPM_PREFIX/bin:${PATH}"
 
 # Add n
 export PATH="$N_PREFIX/bin:${PATH}"
