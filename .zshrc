@@ -1,3 +1,5 @@
+# zmodload zsh/zprof
+
 # If you come from bash you might have to change your `${PATH}`.
 # export PATH="${HOME}/bin:${HOME}/.local/bin:/usr/local/bin:${PATH}"
 
@@ -13,6 +15,13 @@ for file in "${HOME}/.config/shell"/{exports,functions,extra}; do
 	[ -r "${file}" ] && [ -f "${file}" ] && source "${file}";
 done;
 unset file;
+
+export ZSH_CACHE_DIR="${HOME}/.cache/zsh"
+mkdir -p "${ZSH_CACHE_DIR}"
+
+export ZSH_COMPDUMP_DIR="${ZSH_CACHE_DIR}"
+mkdir -p "${ZSH_COMPDUMP_DIR}"
+export ZSH_COMPDUMP="${ZSH_COMPDUMP_DIR}/zcompdump"
 
 # Path to your Oh My Zsh installation.
 if [ -d "${HOME}/.oh-my-zsh" ]; then
@@ -92,19 +101,16 @@ if [ -d "${HOME}/.oh-my-zsh" ]; then
 
 	source "${ZSH}/oh-my-zsh.sh"
 else
-	autoload -Uz promptinit
-	promptinit
-
-	# Use modern completion system
-	autoload -Uz compinit
-	compinit
+	autoload -Uz promptinit compinit
 
 	zstyle ':completion:*' auto-description 'specify: %d'
 	zstyle ':completion:*' completer _expand _complete _correct _approximate
 	zstyle ':completion:*' format 'Completing %d'
 	zstyle ':completion:*' group-name ''
 	zstyle ':completion:*' menu select=2
-	eval "$(dircolors -b)"
+	if command -v dircolors 1>/dev/null 2>&1; then
+		eval "$(dircolors -b)"
+	fi
 	zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 	zstyle ':completion:*' list-colors ''
 	zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -116,6 +122,10 @@ else
 
 	zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 	zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+	promptinit
+
+	# Load only from secure directories
+	compinit -i -d "$ZSH_COMPDUMP"
 fi
 
 # User configuration
@@ -169,9 +179,6 @@ bindkey "\e[1;3C" forward-word
 # Use Alt/Meta + Delete to delete the preceding word
 bindkey "\e[3;3~" kill-word
 
-# Fzf completion
-[ -f "${HOME}/.fzf.zsh" ] && source "${HOME}/.fzf.zsh"
-
 # Other
 
 if [ $(uname -s) = 'Darwin' ]; then
@@ -205,3 +212,6 @@ fi
 if command -v uvx 1>/dev/null 2>&1; then
  eval "$(uvx --generate-shell-completion zsh)"
 fi
+
+# zprof
+# zmodload -u zsh/zprof
