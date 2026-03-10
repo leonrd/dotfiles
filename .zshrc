@@ -93,7 +93,7 @@ if [ -d "${HOME}/.oh-my-zsh" ]; then
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Example format: plugins=(rails git textmate ruby lighthouse)
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(fzf-tab zsh-autosuggestions zsh-navigation-tools git-flow sublime postgres)
+	plugins=(fzf-tab zsh-autosuggestions zsh-navigation-tools)
 	fpath+="${ZSH_CUSTOM:-${ZSH:-${HOME}/.oh-my-zsh}/custom}/plugins/zsh-completions/src"
 	if [ $(uname -s) = 'Darwin' ]; then
 		plugins+=(macos brew )
