@@ -104,7 +104,7 @@ if [ -d "${HOME}/.oh-my-zsh" ]; then
 	plugins=(fzf-tab zsh-autosuggestions zsh-navigation-tools)
 	fpath+="${ZSH_CUSTOM:-${ZSH:-${HOME}/.oh-my-zsh}/custom}/plugins/zsh-completions/src"
 	if [ $(uname -s) = 'Darwin' ]; then
-		plugins+=(macos brew )
+		plugins+=(macos )
 	fi
 
 	source "${ZSH}/oh-my-zsh.sh"
