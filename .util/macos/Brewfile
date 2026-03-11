@@ -1,4 +1,4 @@
-cask_args appdir: "~/Applications"
+cask_args appdir: "~/Applications", greedy: true
 
 brew "bash"
 brew "bash-completion@2"
@@ -75,7 +75,7 @@ cask "google-chrome"
 # cask "ngrok"
 #cask "openemu"
 cask "pgadmin4"
-#cask "postgres", args: { appdir: "/Applications" }
+#cask "postgres"
 #cask "processing"
 #cask "racket"
 #cask "sketch"
