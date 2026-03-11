@@ -65,7 +65,7 @@ while true; do
 	kill -0 "$$" || exit
 done 2>/dev/null &
 
-if type "apt-get" &>/dev/null; then
+if command -v "apt-get" 1>/dev/null 2>&1; then
 	msg 'Cleaning up apt Cache...'
 	sudo apt-get clean -y &>/dev/null
 	sudo apt-get -s clean -y &>/dev/null

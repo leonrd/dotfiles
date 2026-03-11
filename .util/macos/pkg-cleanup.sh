@@ -65,7 +65,7 @@ while true; do
 	kill -0 "$$" || exit
 done 2>/dev/null &
 
-if type "brew" &>/dev/null; then
+if command -v brew 1>/dev/null 2>&1; then
 	msg 'Cleaning up Homebrew Cache...'
 	brew cleanup -s &>/dev/null
 	rm -rfv "$(brew --cache)" &>/dev/null

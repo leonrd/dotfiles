@@ -92,7 +92,7 @@ while true; do
 	kill -0 "$$" || exit
 done 2>/dev/null &
 
-if type "brew" &>/dev/null; then
+if command -v brew 1>/dev/null 2>&1; then
 	msg 'Updating Homebrew Recipes...'
 	brew update
 	msg 'Upgrading and removing outdated formulae...'

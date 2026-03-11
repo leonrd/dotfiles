@@ -167,7 +167,7 @@ collect_paths "${HOME}/Library/Developer/Xcode/iOS Device Logs"/*
 msg 'Cleaning up XCode Derived Data and Archives...'
 remove_paths
 
-if type "xcrun" &>/dev/null; then
+if command -v xcrun 1>/dev/null 2>&1; then
   msg 'Cleaning up iOS Simulators...'
   if [ -z "${dry_run}" ]; then
     osascript -e 'tell application "com.apple.CoreSimulator.CoreSimulatorService" to quit' &>/dev/null || true
@@ -198,7 +198,7 @@ if [ -d "${HOME}/Library/Application Support/Google/DriveFS/" ]; then
   remove_paths
 fi
 
-if type "composer" &>/dev/null; then
+if command -v composer 1>/dev/null 2>&1; then
   msg 'Cleaning up composer...'
   if [ -z "${dry_run}" ]; then
     composer clearcache --no-interaction &>/dev/null || true
@@ -284,7 +284,7 @@ if [ -d "${HOME}/.gradle" ]; then
   remove_paths
 fi
 
-if type "brew" &>/dev/null; then
+if command -v brew 1>/dev/null 2>&1; then
   collect_paths "$(brew --cache)"
   msg 'Cleaning up Homebrew Cache...'
   if [ -z "${dry_run}" ]; then
@@ -296,14 +296,14 @@ if type "brew" &>/dev/null; then
   fi
 fi
 
-if type "gem" &>/dev/null; then  # TODO add count_dry
+if command -v gem 1>/dev/null 2>&1; then  # TODO add count_dry
   msg 'Cleaning up any old versions of gems'
   if [ -z "${dry_run}" ]; then
     gem cleanup &>/dev/null || true
   fi
 fi
 
-if type "docker" &>/dev/null; then  # TODO add count_dry
+if command -v docker 1>/dev/null 2>&1; then  # TODO add count_dry
   msg 'Cleaning up Docker'
   if [ -z "${dry_run}" ]; then
     if ! docker ps >/dev/null 2>&1; then
@@ -323,7 +323,7 @@ if [ "${PYENV_VIRTUALENV_CACHE_PATH}" ]; then
   remove_paths
 fi
 
-if type "npm" &>/dev/null; then
+if command -v npm 1>/dev/null 2>&1; then
   msg 'Cleaning up npm cache...'
   if [ -z "${dry_run}" ]; then
     npm cache clean --force &>/dev/null || true
@@ -333,7 +333,7 @@ if type "npm" &>/dev/null; then
   fi
 fi
 
-if type "yarn" &>/dev/null; then
+if command -v yarn 1>/dev/null 2>&1; then
 	msg 'Cleaning up Yarn Cache...'
   if [ -z "${dry_run}" ]; then
     yarn cache clean --force &>/dev/null || true
@@ -343,7 +343,7 @@ if type "yarn" &>/dev/null; then
   fi
 fi
 
-if type "pnpm" &>/dev/null; then
+if command -v pnpm 1>/dev/null 2>&1; then
   msg 'Cleaning up pnpm Cache...'
   if [ -z "${dry_run}" ]; then
     pnpm store prune &>/dev/null || true
@@ -353,7 +353,7 @@ if type "pnpm" &>/dev/null; then
   fi
 fi
 
-if type "pod" &>/dev/null; then
+if command -v pod 1>/dev/null 2>&1; then
   msg 'Cleaning up Pod Cache...'
   if [ -z "${dry_run}" ]; then
     pod cache clean --all &>/dev/null || true
@@ -363,7 +363,7 @@ if type "pod" &>/dev/null; then
   fi
 fi
 
-if type "go" &>/dev/null; then
+if command -v go 1>/dev/null 2>&1; then
 	msg 'Clearing Go module cache...'
   if [ -z "${dry_run}" ]; then
     go clean -modcache &>/dev/null || true

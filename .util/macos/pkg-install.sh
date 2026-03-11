@@ -33,7 +33,7 @@ echo "Installing Xcode Command Line Tools"
 xcode-select --install
 
  # Make sure we’re using the latest Homebrew.
-if test ! $(which brew); then
+if ! command -v brew 1>/dev/null 2>&1; then
   echo "Installing Homebrew"
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
