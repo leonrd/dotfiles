@@ -29,16 +29,6 @@ trap on_exit EXIT
 trap on_sigint SIGINT
 trap on_sigterm SIGTERM
 
-# Ask for the administrator password upfront
-sudo -v
-
-# Keep-alive sudo until script has finished
-while true; do
-	sudo -n true
-	sleep 60
-	kill -0 "$$" || exit
-done 2>/dev/null &
-
 echo "Installing Xcode Command Line Tools"
 xcode-select --install
 
@@ -77,12 +67,6 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
 mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
 
-if ! fgrep -q "${SHELL}" /etc/shells; then
-  echo "Setting new zsh as default shell"
-  echo "${SHELL}" | sudo tee -a /etc/shells
-  chsh -s "${SHELL}"
-fi;
-
 echo "Installing rbenv"
 git clone https://github.com/rbenv/rbenv.git "${HOME}/.rbenv"
 git clone https://github.com/rbenv/ruby-build.git "${HOME}/.rbenv/plugins/ruby-build"
@@ -107,3 +91,9 @@ curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 # Create symbolic links to add kitty and kitten to PATH (assuming "${HOME}"/.local/bin is in
 # your system-wide PATH)
 ln -sf "${HOME}"/.local/kitty.app/bin/kitty "${HOME}"/.local/kitty.app/bin/kitten "${HOME}"/.local/bin/
+
+if ! fgrep -q "${SHELL}" /etc/shells; then
+  echo "Setting new zsh as default shell"
+  echo "${SHELL}" | sudo tee -a /etc/shells
+  chsh -s "${SHELL}"
+fi;
