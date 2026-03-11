@@ -1,7 +1,3 @@
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
-
 cask_args appdir: "~/Applications"
 
 brew "bash"
@@ -28,7 +24,7 @@ brew "grep"
 brew "htop"
 brew "imagemagick"
 #brew "imagemagick@6"
-brew ios-webkit-debug-proxy
+brew "ios-webkit-debug-proxy"
 brew "jq"
 brew "less"
 brew "libimobiledevice"
@@ -39,7 +35,7 @@ brew "make"
 brew "man-db"
 brew "mas"
 #brew "maven"
-#brew "nano"
+brew "nano"
 #brew "neovim"
 #brew "nginx"
 #brew "openssh"
@@ -52,7 +48,7 @@ brew "ripgrep"
 brew "rlwrap"
 brew "screen"
 brew "sox"
-#brew "sqlite"
+brew "sqlite"
 #brew "ssh-copy-id"
 #brew "switchjdk"
 brew "transmission-cli"
@@ -62,7 +58,7 @@ brew "unzip"
 brew "vim"
 brew "watchman"
 brew "wget"
-brew "woff2"
+# brew "woff2"
 brew "zsh"
 cask "android-studio"
 cask "beardedspice"
@@ -72,7 +68,7 @@ cask "bettertouchtool"
 #cask "filezilla"
 cask "google-chrome"
 # cask "iterm2"
-cask "java"
+# cask "java"
 #cask "java6"
 #cask "kodi"
 # cask "multipass"
@@ -99,3 +95,15 @@ cask "teamviewer"
 cask "visual-studio-code"
 cask "vlc"
 cask "xquartz"
+mas "AdGuard Mini", id: 1440147259
+mas "DevCleaner", id: 1388020431
+mas "HP", id: 1474276998
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Tailscale", id: 1475387142
+mas "Transporter", id: 1450874784
+mas "Windows App", id: 1295203466
+mas "Xcode", id: 497799835
+vscode "dbaeumer.vscode-eslint"
