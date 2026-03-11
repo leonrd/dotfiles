@@ -19,9 +19,6 @@ export PATH="${HOME}/.rbenv/bin:${PATH}"
 # Add n
 export PATH="$N_PREFIX/bin:${PATH}"
 
-# Add dev tools
-export PATH="$DEV_TOOLS_PATH:${PATH}"
-
 # Add flutter
 export PATH="${HOME}/dev/tools/flutter/bin:${PATH}"
 export PATH="${HOME}/dev/space/flutter/framework/bin:${PATH}"
@@ -32,6 +29,9 @@ export PATH="$ANDROID_SDK_ROOT/platform-tools:${PATH}"
 export PATH="$ANDROID_SDK_ROOT/tools:${PATH}"
 export PATH="$ANDROID_SDK_ROOT/tools/bin:${PATH}"
 export PATH="$ANDROID_SDK_ROOT/emulator:${PATH}"
+
+# Add dev tools
+export PATH="$DEV_TOOLS_PATH:${PATH}"
 
 # Add "${HOME}/bin"
 export PATH="${HOME}/bin:${PATH}"
