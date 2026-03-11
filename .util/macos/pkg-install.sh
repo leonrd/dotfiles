@@ -48,7 +48,7 @@ echo "Upgrading outdated formulae"
 brew upgrade --greedy
 
 # Save Homebrew’s installed location.
-BREW_PREFIX=$(brew --prefix)
+export BREW_PREFIX=$(brew --prefix)
 
 echo "Installing packages from Brewfile"
 brew bundle install
