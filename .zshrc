@@ -83,6 +83,8 @@ if [ -d "${ZSH}" ]; then
 		plugins+=(macos )
 	fi
 
+	zstyle ':omz:update' zcompdump-file "${ZSH_COMPDUMP}"
+
 	source "${ZSH}/oh-my-zsh.sh"
 else
 	autoload -Uz promptinit compinit
