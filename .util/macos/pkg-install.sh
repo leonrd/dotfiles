@@ -30,7 +30,7 @@ trap on_sigint SIGINT
 trap on_sigterm SIGTERM
 
 echo "Installing Xcode Command Line Tools"
-xcode-select --install
+xcode-select --install || true
 
  # Make sure we’re using the latest Homebrew.
 if ! command -v brew 1>/dev/null 2>&1; then
@@ -42,7 +42,7 @@ else
 fi
 
 echo "Running brew doctor"
-brew doctor
+brew doctor || true
 
 echo "Upgrading outdated formulae"
 brew upgrade --greedy
@@ -51,7 +51,7 @@ brew upgrade --greedy
 export BREW_PREFIX=$(brew --prefix)
 
 echo "Installing packages from Brewfile"
-brew bundle install
+brew bundle install --file "${__dir}/Brewfile"
 
 echo "Reloading SHELL"
 SHELL=$(which zsh)
