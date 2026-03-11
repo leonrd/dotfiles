@@ -196,12 +196,12 @@ if [ $(uname -s) = 'Darwin' ]; then
 
 	# Homebrew OCLP patch - auto-reapply after brew update
 	brew() {
-	    command brew "$@"
-	    local ret=$?
-	    if [[ "$1" == "update" ]]; then
-	        curl -sL "https://raw.githubusercontent.com/ajorpheus/homebrew-oclp-patches/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo "OCLP patches restored"
-	    fi
-	    return "${ret}"
+		command brew "$@"
+		local ret=$?
+		if [[ "$1" == "update" ]]; then
+				curl -sL "https://raw.githubusercontent.com/ajorpheus/homebrew-oclp-patches/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo "OCLP patches restored"
+		fi
+		return "${ret}"
 	}
 fi
 
