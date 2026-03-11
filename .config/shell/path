@@ -1,3 +1,5 @@
+# ~/.config/shell/path: executed by the command interpreter for login shells.
+
 export PATH="${HOME}/.local/bin:${PATH}"
 
 # Set N prefix

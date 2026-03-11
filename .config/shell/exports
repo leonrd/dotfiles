@@ -1,3 +1,5 @@
+# ~/.config/shell/exports: executed by the command interpreter for login shells.
+
 # Increase history size. Allow 32³ entries; the default is 500.
 export HISTSIZE='32768';
 export SAVEHIST='32768';
@@ -50,6 +52,11 @@ else
 fi
 
 # oh-my-zsh
+export ZSH_CACHE_DIR="${HOME}/.cache/zsh"
+export ZSH_COMPDUMP_DIR="${ZSH_CACHE_DIR}"
+export ZSH_COMPDUMP="${ZSH_COMPDUMP_DIR}/zcompdump"
+
+# Path to your Oh My Zsh installation.
 export ZSH="${ZSH:-${HOME}/.config/oh-my-zsh}"
 export ZSH_CUSTOM="${ZSH_CUSTOM:-${HOME}/.config/oh-my-zsh-custom}"
 
@@ -73,15 +80,14 @@ export NODE_REPL_HISTORY_SIZE='32768';
 # Use sloppy mode by default, matching web browsers.
 export NODE_REPL_MODE='sloppy';
 
+# Hide the “default interactive shell is now zsh” warning on macOS.
+export BASH_SILENCE_DEPRECATION_WARNING=1;
+
 # macos
 if [ $(uname -s) = 'Darwin' ]; then
-  export IS_DARWIN=true
-  
   # Avoid issues with `gpg` as installed via Homebrew.
   # https://stackoverflow.com/a/42265848/96656
   export GPG_TTY=$(tty);
-  # Hide the “default interactive shell is now zsh” warning on macOS.
-  export BASH_SILENCE_DEPRECATION_WARNING=1;
 
   # Chrome
   export CHROME_EXECUTABLE="${HOME}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"

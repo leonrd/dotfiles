@@ -1,35 +1,10 @@
 # zmodload zsh/zprof
 
-if command -v brew 1>/dev/null 2>&1; then
-	eval "$(brew shellenv)"
-	# some brew vars for 3rdparty scripts
-	export BREW_PREFIX="${HOMEBREW_PREFIX}"
-	export BREW_CELLAR="${HOMEBREW_CELLAR}"
-	export BREW_REPOSITORY="${HOMEBREW_REPOSITORY}"
-fi
-
-# If you come from bash you might have to change your `${PATH}`.
-# export PATH="${HOME}/bin:${HOME}/.local/bin:/usr/local/bin:${PATH}"
-
-# * ~/.path can be used to extend `${PATH}`.
-if [ -f "${HOME}/.config/shell/path" ]; then
-  source "${HOME}/.config/shell/path"
-else
-	export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
-fi
-
-# * ~/.extra can be used for other settings you don't want to commit.
-for file in "${HOME}/.config/shell"/{exports,functions,extra}; do
-	[ -r "${file}" ] && [ -f "${file}" ] && source "${file}";
-done;
-unset file;
-
-export ZSH_CACHE_DIR="${HOME}/.cache/zsh"
+export ZSH_CACHE_DIR="${ZSH_CACHE_DIR:-${HOME}/.cache/zsh}"
 mkdir -p "${ZSH_CACHE_DIR}"
-
-export ZSH_COMPDUMP_DIR="${ZSH_CACHE_DIR}"
+export ZSH_COMPDUMP_DIR="${ZSH_COMPDUMP_DIR:-${ZSH_CACHE_DIR}}"
 mkdir -p "${ZSH_COMPDUMP_DIR}"
-export ZSH_COMPDUMP="${ZSH_COMPDUMP_DIR}/zcompdump"
+export ZSH_COMPDUMP="${ZSH_COMPDUMP:-${ZSH_COMPDUMP_DIR}/zcompdump}"
 
 # Path to your Oh My Zsh installation.
 export ZSH="${ZSH:-${HOME}/.config/oh-my-zsh}"
@@ -166,10 +141,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bold,underline"
 # alias zshconfig="vim ${HOME}/.zshrc"
 # alias ohmyzsh="vim ${HOME}/.oh-my-zsh"
 
-if [ -f "${HOME}/.config/shell/aliases" ]; then
-  source "${HOME}/.config/shell/aliases"
-fi
-
 # Input
 
 # Use the text that has already been typed as the prefix for searching through
@@ -206,14 +177,6 @@ if [ $(uname -s) = 'Darwin' ]; then
 	}
 fi
 
-if command -v rbenv 1>/dev/null 2>&1; then
-	eval "$(rbenv init - --no-rehash zsh)"
-fi
-
-if command -v pyenv 1>/dev/null 2>&1; then
-	eval "$(pyenv init - zsh)"
-fi
-
 if command -v uv 1>/dev/null 2>&1; then
  eval "$(uv generate-shell-completion zsh)"
 fi
@@ -221,6 +184,12 @@ fi
 if command -v uvx 1>/dev/null 2>&1; then
  eval "$(uvx --generate-shell-completion zsh)"
 fi
+
+# * ~/.config/shell/extra can be used for other settings you don’t want to commit.
+for file in "${HOME}/.config/shell"/{aliases,functions,extra}; do
+	[ -r "${file}" ] && [ -f "${file}" ] && . "${file}";
+done;
+unset file;
 
 # zprof
 # zmodload -u zsh/zprof

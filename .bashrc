@@ -1,24 +1,3 @@
-if command -v brew 1>/dev/null 2>&1; then
-	eval "$(brew shellenv)"
-	# some brew vars for 3rdparty scripts
-	export BREW_PREFIX="${HOMEBREW_PREFIX}"
-	export BREW_CELLAR="${HOMEBREW_CELLAR}"
-	export BREW_REPOSITORY="${HOMEBREW_REPOSITORY}"
-fi
-
-# * ~/.config/shell/path can be used to extend `${PATH}`.
-if [ -f "${HOME}/.config/shell/path" ]; then
-  source "${HOME}/.config/shell/path"
-else
-	export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
-fi
-
-# * ~/.config/shell/extra can be used for other settings you don’t want to commit.
-for file in "${HOME}/.config/shell"/{exports,aliases,functions,extra}; do
-	[ -r "${file}" ] && [ -f "${file}" ] && . "${file}";
-done;
-unset file;
-
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
 
@@ -90,14 +69,6 @@ if [ $(uname -s) = 'Darwin' ]; then
 	}
 fi
 
-if command -v rbenv 1>/dev/null 2>&1; then
-	eval "$(rbenv init - --no-rehash bash)"
-fi
-
-if command -v pyenv 1>/dev/null 2>&1; then
-	eval "$(pyenv init - bash)"
-fi
-
 if command -v uv 1>/dev/null 2>&1; then
  eval "$(uv generate-shell-completion bash)"
 fi
@@ -105,3 +76,9 @@ fi
 if command -v uvx 1>/dev/null 2>&1; then
  eval "$(uvx --generate-shell-completion bash)"
 fi
+
+# * ~/.config/shell/extra can be used for other settings you don’t want to commit.
+for file in "${HOME}/.config/shell"/{aliases,functions,extra}; do
+	[ -r "${file}" ] && [ -f "${file}" ] && . "${file}";
+done;
+unset file;
