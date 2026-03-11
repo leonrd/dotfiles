@@ -97,8 +97,15 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
 mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
 
-echo "Making zsh the default shell"
-chsh -s $(which zsh)
+echo "reloading SHELL"
+SHELL=$(which zsh)
+export SHELL; exec "${SHELL}" -l
+
+if ! fgrep -q "${SHELL}" /etc/shells; then
+  echo "Setting new zsh as default shell"
+  echo "${SHELL}" | sudo tee -a /etc/shells
+  chsh -s "${SHELL}"
+fi;
 
 echo "Installing rbenv"
 git clone https://github.com/rbenv/rbenv.git "${HOME}/.rbenv"

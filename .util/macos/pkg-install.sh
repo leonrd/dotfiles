@@ -63,14 +63,9 @@ BREW_PREFIX=$(brew --prefix)
 echo "Installing packages from Brewfile"
 brew bundle install
 
-if which brew &> /dev/null && [ -x $(brew --prefix)/bin/zsh ]; then
-  case $- in
-    *i*)
-      echo "Setting brew provided zsh as SHELL"
-      SHELL=$(brew --prefix)/bin/zsh; export SHELL; exec $SHELL -l
-      ;;
-  esac
-fi
+echo "reloading SHELL"
+SHELL=$(which zsh)
+export SHELL; exec "${SHELL}" -l
 
 echo "Installing zsh plugins"
 git clone https://github.com/zsh-users/zsh-completions "${ZSH_CUSTOM:-${ZSH:-${HOME}/.oh-my-zsh}/custom}/plugins/zsh-completions"
@@ -82,14 +77,11 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
 mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
 
-if ! fgrep -q "${BREW_PREFIX}/bin/zsh" /etc/shells; then
-  echo "Setting brew provided zsh as default shell"
-  echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells;
-  chsh -s "${BREW_PREFIX}/bin/zsh";
+if ! fgrep -q "${SHELL}" /etc/shells; then
+  echo "Setting new zsh as default shell"
+  echo "${SHELL}" | sudo tee -a /etc/shells
+  chsh -s "${SHELL}"
 fi;
-
-# Fix oh-my-zsh warnings
-compaudit | xargs chmod g-w
 
 echo "Installing rbenv"
 git clone https://github.com/rbenv/rbenv.git "${HOME}/.rbenv"
