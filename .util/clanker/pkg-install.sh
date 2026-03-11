@@ -39,10 +39,6 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
 mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
 
-echo "Reloading SHELL"
-SHELL=$(which zsh)
-export SHELL; exec "${SHELL}" -l
-
 echo "Installing rbenv"
 git clone https://github.com/rbenv/rbenv.git "${HOME}/.rbenv"
 git clone https://github.com/rbenv/ruby-build.git "${HOME}/.rbenv/plugins/ruby-build"
@@ -80,5 +76,6 @@ git clone https://github.com/seqis/AI-grep.git "${HOME}/dev/tools/ai-grep/" \
 	&& mkdir -p "${HOME}/dev/tools/bin" \
 	&& ln -s "${HOME}/dev/tools/ai-grep/ai-grep" "${HOME}/dev/tools/bin/ai-grep"
 
-echo "Done. Final SHELL reload"
+echo "Done. Reloading SHELL"
+SHELL=$(which zsh)
 export SHELL; exec "${SHELL}" -l

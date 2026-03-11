@@ -97,10 +97,6 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
 mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
 
-echo "Reloading SHELL"
-SHELL=$(which zsh)
-export SHELL; exec "${SHELL}" -l
-
 if ! fgrep -q "${SHELL}" /etc/shells; then
   echo "Setting new zsh as default shell"
   echo "${SHELL}" | sudo tee -a /etc/shells
@@ -180,5 +176,6 @@ echo "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" \
     | sudo tee /etc/apt/sources.list.d/openresty.list
 sudo apt-get update && sudo apt-get install -y --no-install-recommends openresty
 
-echo "Done. Final SHELL reload"
+echo "Done. Reloading SHELL"
+SHELL=$(which zsh)
 export SHELL; exec "${SHELL}" -l

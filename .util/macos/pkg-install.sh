@@ -53,10 +53,6 @@ export BREW_PREFIX=$(brew --prefix)
 echo "Installing packages from Brewfile"
 brew bundle install --file "${__dir}/Brewfile"
 
-echo "Reloading SHELL"
-SHELL=$(which zsh)
-export SHELL; exec "${SHELL}" -l
-
 echo "Installing zsh plugins"
 git clone https://github.com/zsh-users/zsh-completions "${ZSH_CUSTOM:-${ZSH:-${HOME}/.oh-my-zsh}/custom}/plugins/zsh-completions"
 git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
@@ -98,5 +94,6 @@ if ! fgrep -q "${SHELL}" /etc/shells; then
   chsh -s "${SHELL}"
 fi;
 
-echo "Done. Final SHELL reload"
+echo "Done. Reloading SHELL"
+SHELL=$(which zsh)
 export SHELL; exec "${SHELL}" -l
