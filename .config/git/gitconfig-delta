@@ -1,7 +1,7 @@
 [core]
-    pager = delta
+    pager = sh -c 'command -v delta >/dev/null 2>&1 && delta "$@" || less -F -X -R "$@"' --
 [interactive]
-    diffFilter = delta --color-only
+    diffFilter = sh -c 'command -v delta >/dev/null 2>&1 && delta --color-only "$@" || cat "$@"' --
 [delta]
     navigate = true
     light = false
