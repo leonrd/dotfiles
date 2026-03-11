@@ -32,7 +32,7 @@ unset file
 # Other
 
 f [ $(uname -s) = 'Darwin' ]; then
-	[ -f "${HOME}/.iterm2_shell_integration.sh" ] && source "${HOME}/.iterm2_shell_integration.sh"
+	[ -f "${HOME}/.config/iterm2/iterm2_shell_integration.sh" ] && source "${HOME}/.config/iterm2/iterm2_shell_integration.sh"
 
 	alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 

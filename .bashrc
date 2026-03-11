@@ -75,7 +75,7 @@ fi;
 # Other
 
 if [ $(uname -s) = 'Darwin' ]; then
-	[ -f "${HOME}/.iterm2_shell_integration.bash" ] && source "${HOME}/.iterm2_shell_integration.bash"
+	[ -f "${HOME}/.config/iterm2/iterm2_shell_integration.bash" ] && source "${HOME}/.config/iterm2/iterm2_shell_integration.bash"
 
 	alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 

@@ -190,7 +190,7 @@ bindkey "\e[3;3~" kill-word
 # Other
 
 if [ $(uname -s) = 'Darwin' ]; then
-	[ -f "${HOME}/.iterm2_shell_integration.zsh" ] && source "${HOME}/.iterm2_shell_integration.zsh"
+	[ -f "${HOME}/.config/iterm2/iterm2_shell_integration.zsh" ] && source "${HOME}/.config/iterm2/iterm2_shell_integration.zsh"
 
 	alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
