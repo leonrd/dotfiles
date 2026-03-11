@@ -76,8 +76,6 @@ if [ $(uname -s) = 'Darwin' ]; then
   export GPG_TTY=$(tty);
   # Hide the “default interactive shell is now zsh” warning on macOS.
   export BASH_SILENCE_DEPRECATION_WARNING=1;
-  # Set Casks to install into ~/Applications
-  export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications"
 
   # Chrome
   export CHROME_EXECUTABLE="${HOME}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
