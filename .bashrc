@@ -78,7 +78,7 @@ if command -v uvx 1>/dev/null 2>&1; then
 fi
 
 # * ~/.config/shell/extra can be used for other settings you don’t want to commit.
-for file in "${HOME}/.config/shell"/{aliases,functions,extra}; do
+for file in "${HOME}/.config/shell"/{bash_prompt,aliases,functions,extra}; do
 	[ -r "${file}" ] && [ -f "${file}" ] && . "${file}";
 done;
 unset file;
