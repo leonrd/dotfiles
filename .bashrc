@@ -1,3 +1,5 @@
+# ~/.bashrc: executed by bash(1) for interactive shells.
+
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
 

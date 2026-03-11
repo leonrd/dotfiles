@@ -98,6 +98,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
 mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
 
+SHELL=$(which zsh)
 if ! fgrep -q "${SHELL}" /etc/shells; then
   echo "Setting new zsh as default shell"
   echo "${SHELL}" | sudo tee -a /etc/shells

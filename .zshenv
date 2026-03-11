@@ -1,4 +1,4 @@
-# Called on every shell session by zsh(1)
+# ~/.zshenv: called on every shell session by zsh(1)
 
 # ubuntu: prevents /etc/zsh/zshrc calling compinit, since we are doing it in ~/.zshrc. See /etc/zsh/zshrc
 export skip_global_compinit=1

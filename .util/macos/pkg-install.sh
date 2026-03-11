@@ -89,6 +89,8 @@ curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 # your system-wide PATH)
 ln -sf "${HOME}"/.local/kitty.app/bin/kitty "${HOME}"/.local/kitty.app/bin/kitten "${HOME}"/.local/bin/
 
+SHELL=$(which zsh)
+
 if ! fgrep -q "${SHELL}" /etc/shells; then
   echo "Setting new zsh as default shell"
   echo "${SHELL}" | sudo tee -a /etc/shells

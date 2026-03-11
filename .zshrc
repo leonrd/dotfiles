@@ -1,4 +1,8 @@
+# ~/.zshrc: executed by zsh(1) for interactive shells.
 # zmodload zsh/zprof
+
+# deduplicate fpath (bug due to homebrew)
+typeset -U fpath
 
 export ZSH_CACHE_DIR="${ZSH_CACHE_DIR:-${HOME}/.cache/zsh}"
 mkdir -p "${ZSH_CACHE_DIR}"
@@ -77,8 +81,7 @@ if [ -d "${ZSH}" ]; then
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Example format: plugins=(rails git textmate ruby lighthouse)
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(fzf-tab zsh-autosuggestions zsh-navigation-tools)
-	fpath+="${ZSH_CUSTOM}/plugins/zsh-completions/src"
+	plugins=(fzf-tab zsh-autosuggestions zsh-navigation-tools zsh-completions)
 	if [ $(uname -s) = 'Darwin' ]; then
 		plugins+=(macos )
 	fi
