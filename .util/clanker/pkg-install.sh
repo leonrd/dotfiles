@@ -29,15 +29,15 @@ trap on_exit EXIT
 trap on_sigint SIGINT
 trap on_sigterm SIGTERM
 
-echo "Installing oh-my-zsh"
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
-mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
-
 echo "Installing zsh plugins"
 git clone https://github.com/zsh-users/zsh-completions "${ZSH_CUSTOM:-${ZSH:-${HOME}/.oh-my-zsh}/custom}/plugins/zsh-completions"
 git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
 git clone https://github.com/Aloxaf/fzf-tab "${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/fzf-tab"
+
+echo "Installing oh-my-zsh"
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
+mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
 
 echo "Installing rbenv"
 git clone https://github.com/rbenv/rbenv.git "${HOME}/.rbenv"
