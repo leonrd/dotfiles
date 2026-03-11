@@ -32,9 +32,10 @@ mkdir -p "${ZSH_COMPDUMP_DIR}"
 export ZSH_COMPDUMP="${ZSH_COMPDUMP_DIR}/zcompdump"
 
 # Path to your Oh My Zsh installation.
-if [ -d "${HOME}/.oh-my-zsh" ]; then
-	export ZSH="${HOME}/.oh-my-zsh"
+export ZSH="${ZSH:-${HOME}/.config/oh-my-zsh}"
+export ZSH_CUSTOM="${ZSH_CUSTOM:-${HOME}/.config/oh-my-zsh-custom}"
 
+if [ -d "${ZSH}" ]; then
 	# Set name of the theme to load --- if set to "random", it will
 	# load a random theme each time Oh My Zsh is loaded, in which case,
 	# to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -102,7 +103,7 @@ if [ -d "${HOME}/.oh-my-zsh" ]; then
 	# Example format: plugins=(rails git textmate ruby lighthouse)
 	# Add wisely, as too many plugins slow down shell startup.
 	plugins=(fzf-tab zsh-autosuggestions zsh-navigation-tools)
-	fpath+="${ZSH_CUSTOM:-${ZSH:-${HOME}/.oh-my-zsh}/custom}/plugins/zsh-completions/src"
+	fpath+="${ZSH_CUSTOM}/plugins/zsh-completions/src"
 	if [ $(uname -s) = 'Darwin' ]; then
 		plugins+=(macos )
 	fi

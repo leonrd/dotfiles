@@ -49,6 +49,10 @@ else
   fi
 fi
 
+# oh-my-zsh
+export ZSH="${ZSH:-${HOME}/.config/oh-my-zsh}"
+export ZSH_CUSTOM="${ZSH_CUSTOM:-${HOME}/.config/oh-my-zsh-custom}"
+
 # for wget
 export http_proxy=$HTTP_PROXY
 export https_proxy=$HTTPS_PROXY
