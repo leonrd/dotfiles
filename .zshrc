@@ -181,8 +181,12 @@ bindkey "\e[3;3~" kill-word
 
 # Other
 
+if command -v brew 1>/dev/null 2>&1; then
+	eval "$(brew shellenv)"
+fi
+
 if [ $(uname -s) = 'Darwin' ]; then
-	test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+	[ -f "${HOME}/.iterm2_shell_integration.zsh" ] && source "${HOME}/.iterm2_shell_integration.zsh"
 
 	alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 

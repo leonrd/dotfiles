@@ -21,6 +21,28 @@ for file in "${HOME}/.config/shell/exports" "${HOME}/.config/shell/aliases" "${H
 done
 unset file
 
+# Other
+
+if command -v brew 1>/dev/null 2>&1; then
+	eval "$(brew shellenv)"
+fi
+
+f [ $(uname -s) = 'Darwin' ]; then
+	[ -f "${HOME}/.iterm2_shell_integration.sh" ] && source "${HOME}/.iterm2_shell_integration.sh"
+
+	alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+
+	# Homebrew OCLP patch - auto-reapply after brew update
+	brew() {
+	    command brew "$@"
+	    local ret=$?
+	    if [[ "$1" == "update" ]]; then
+	        curl -sL "https://raw.githubusercontent.com/ajorpheus/homebrew-oclp-patches/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo "OCLP patches restored"
+	    fi
+	    return "${ret}"
+	}
+fi
+
 if command -v rbenv 1>/dev/null 2>&1; then
 	eval "$(rbenv init - --no-rehash sh)"
 fi
