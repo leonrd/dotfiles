@@ -1,5 +1,13 @@
 # zmodload zsh/zprof
 
+if command -v brew 1>/dev/null 2>&1; then
+	eval "$(brew shellenv)"
+	# some brew vars for 3rdparty scripts
+	export BREW_PREFIX="${HOMEBREW_PREFIX}"
+	export BREW_CELLAR="${HOMEBREW_CELLAR}"
+	export BREW_REPOSITORY="${HOMEBREW_REPOSITORY}"
+fi
+
 # If you come from bash you might have to change your `${PATH}`.
 # export PATH="${HOME}/bin:${HOME}/.local/bin:/usr/local/bin:${PATH}"
 
@@ -180,10 +188,6 @@ bindkey "\e[1;3C" forward-word
 bindkey "\e[3;3~" kill-word
 
 # Other
-
-if command -v brew 1>/dev/null 2>&1; then
-	eval "$(brew shellenv)"
-fi
 
 if [ $(uname -s) = 'Darwin' ]; then
 	[ -f "${HOME}/.iterm2_shell_integration.zsh" ] && source "${HOME}/.iterm2_shell_integration.zsh"

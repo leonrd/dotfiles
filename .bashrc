@@ -1,3 +1,11 @@
+if command -v brew 1>/dev/null 2>&1; then
+	eval "$(brew shellenv)"
+	# some brew vars for 3rdparty scripts
+	export BREW_PREFIX="${HOMEBREW_PREFIX}"
+	export BREW_CELLAR="${HOMEBREW_CELLAR}"
+	export BREW_REPOSITORY="${HOMEBREW_REPOSITORY}"
+fi
+
 # * ~/.config/shell/path can be used to extend `${PATH}`.
 if [ -f "${HOME}/.config/shell/path" ]; then
   source "${HOME}/.config/shell/path"
@@ -65,10 +73,6 @@ fi;
 [ -f "${HOME}/.fzf.bash" ] && source "${HOME}/.fzf.bash"
 
 # Other
-
-if command -v brew 1>/dev/null 2>&1; then
-	eval "$(brew shellenv)"
-fi
 
 if [ $(uname -s) = 'Darwin' ]; then
 	[ -f "${HOME}/.iterm2_shell_integration.bash" ] && source "${HOME}/.iterm2_shell_integration.bash"

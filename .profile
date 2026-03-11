@@ -8,6 +8,14 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+if command -v brew 1>/dev/null 2>&1; then
+	eval "$(brew shellenv)"
+	# some brew vars for 3rdparty scripts
+	export BREW_PREFIX="${HOMEBREW_PREFIX}"
+	export BREW_CELLAR="${HOMEBREW_CELLAR}"
+	export BREW_REPOSITORY="${HOMEBREW_REPOSITORY}"
+fi
+
 # * ~/.config/shell/path can be used to extend `${PATH}`.
 if [ -f "${HOME}/.config/shell/path" ]; then
     . "${HOME}/.config/shell/path"
@@ -22,10 +30,6 @@ done
 unset file
 
 # Other
-
-if command -v brew 1>/dev/null 2>&1; then
-	eval "$(brew shellenv)"
-fi
 
 f [ $(uname -s) = 'Darwin' ]; then
 	[ -f "${HOME}/.iterm2_shell_integration.sh" ] && source "${HOME}/.iterm2_shell_integration.sh"
