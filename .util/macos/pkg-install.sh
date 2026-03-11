@@ -53,7 +53,7 @@ export BREW_PREFIX=$(brew --prefix)
 echo "Installing packages from Brewfile"
 brew bundle install
 
-echo "reloading SHELL"
+echo "Reloading SHELL"
 SHELL=$(which zsh)
 export SHELL; exec "${SHELL}" -l
 
@@ -97,3 +97,6 @@ if ! fgrep -q "${SHELL}" /etc/shells; then
   echo "${SHELL}" | sudo tee -a /etc/shells
   chsh -s "${SHELL}"
 fi;
+
+echo "Done. Final SHELL reload"
+export SHELL; exec "${SHELL}" -l

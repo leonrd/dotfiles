@@ -97,7 +97,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
 mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
 
-echo "reloading SHELL"
+echo "Reloading SHELL"
 SHELL=$(which zsh)
 export SHELL; exec "${SHELL}" -l
 
@@ -179,3 +179,6 @@ wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
 echo "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" \
     | sudo tee /etc/apt/sources.list.d/openresty.list
 sudo apt-get update && sudo apt-get install -y --no-install-recommends openresty
+
+echo "Done. Final SHELL reload"
+export SHELL; exec "${SHELL}" -l
