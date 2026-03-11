@@ -45,7 +45,7 @@ xcode-select --install
  # Make sure we’re using the latest Homebrew.
 if test ! $(which brew); then
   echo "Installing Homebrew"
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
   echo "Updating Homebrew"
   brew update
