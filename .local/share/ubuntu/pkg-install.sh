@@ -98,13 +98,6 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh
 mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
 mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
 
-SHELL=$(which zsh)
-if ! fgrep -q "${SHELL}" /etc/shells; then
-  echo "Setting new zsh as default shell"
-  echo "${SHELL}" | sudo tee -a /etc/shells
-  chsh -s "${SHELL}"
-fi;
-
 echo "Installing rbenv"
 git clone https://github.com/rbenv/rbenv.git "${HOME}/.rbenv"
 git clone https://github.com/rbenv/ruby-build.git "${HOME}/.rbenv/plugins/ruby-build"
@@ -177,6 +170,14 @@ wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
 echo "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" \
     | sudo tee /etc/apt/sources.list.d/openresty.list
 sudo apt-get update && sudo apt-get install -y --no-install-recommends openresty
+
+SHELL=$(which zsh)
+
+if ! fgrep -q "${SHELL}" /etc/shells; then
+  echo "Setting new zsh as default shell"
+  echo "${SHELL}" | sudo tee -a /etc/shells
+  chsh -s "${SHELL}"
+fi;
 
 echo "Done. Reloading SHELL"
 SHELL=$(which zsh)

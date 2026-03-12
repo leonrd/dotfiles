@@ -73,3 +73,9 @@ if command -v "apt-get" 1>/dev/null 2>&1; then
 	sudo apt-get --purge autoremove -y &>/dev/null
 	sudo apt-get autoclean -y &>/dev/null
 fi
+
+msg 'Removing old snaps'
+snap list --all | awk '/disabled/{print $1, $3}' |
+	while read snapname revision; do
+		sudo snap remove "${snapname}" --revision="${revision}" || true
+	done

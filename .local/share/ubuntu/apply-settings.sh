@@ -6,6 +6,13 @@ set -euo pipefail
 # Ask for the administrator password upfront
 sudo -v
 
+# Keep-alive sudo until script has finished
+while true; do
+	sudo -n true
+	sleep 60
+	kill -0 "$$" || exit
+done 2>/dev/null &
+
 # Turn off apt news
 sudo pro config set apt_news=false
 

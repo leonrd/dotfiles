@@ -99,8 +99,6 @@ collect_paths() {
 # Ask for the administrator password upfront
 sudo -v
 
-HOST=$(whoami)
-
 # Keep-alive sudo until script has finished
 while true; do
 	sudo -n true
@@ -113,27 +111,21 @@ shopt -s extglob
 
 oldAvailable=$(df / | tail -1 | awk '{print $4}')
 
-collect_paths /Volumes/*/.Trashes/*
+# USER stuff
+
 collect_paths "${HOME}/.Trash"/*
-msg 'Emptying the Trash 🗑 on all mounted volumes and the main HDD...'
-sudo_remove_paths
+msg 'Emptying the User Trash 🗑...'
+remove_paths
 
-collect_paths /Library/Caches/*
-collect_paths /System/Library/Caches/*
+collect_paths "${HOME}/.cache"/*
 collect_paths "${HOME}/Library/Caches"/*
-collect_paths /private/var/folders/bh/*/*/*/*
-msg 'Clearing System Cache Files...'
-sudo_remove_paths
+msg 'Clearing User Cache Files...'
+remove_paths
 
-collect_paths /private/var/log/asl/*.asl
-collect_paths /Library/Logs/DiagnosticReports/*
-collect_paths /Library/Logs/CreativeCloud/*
-collect_paths /Library/Logs/Adobe/*
-collect_paths /Library/Logs/adobegc.log
 collect_paths "${HOME}/Library/Containers/com.apple.mail/Data/Library/Logs/Mail"/*
 collect_paths "${HOME}/Library/Logs/CoreSimulator"/*
-msg 'Clearing System Log Files...'
-sudo_remove_paths
+msg 'Clearing User Log Files...'
+remove_paths
 
 if [ -d "${HOME}/Library/Logs/JetBrains/" ]; then
   collect_paths "${HOME}/Library/Logs/JetBrains"/*/
@@ -185,7 +177,7 @@ if command -v xcrun 1>/dev/null 2>&1; then
 fi
 
 # support deleting Dropbox Cache if they exist
-if [ -d "/Users/${HOST}/Dropbox" ]; then
+if [ -d "${HOME}/Dropbox" ]; then
   collect_paths "${HOME}/Dropbox/.dropbox.cache"/*
   msg 'Clearing Dropbox 📦 Cache Files...'
   remove_paths
@@ -198,14 +190,23 @@ if [ -d "${HOME}/Library/Application Support/Google/DriveFS/" ]; then
   remove_paths
 fi
 
-if command -v composer 1>/dev/null 2>&1; then
-  msg 'Cleaning up composer...'
-  if [ -z "${dry_run}" ]; then
-    composer clearcache --no-interaction &>/dev/null || true
-  else
-    collect_paths "${HOME}/Library/Caches/composer"
-		remove_paths
-  fi
+# Deletes all Microsoft Teams Caches and resets it to default - can fix also some performance issues
+# -Astro
+if [ -d "${HOME}/Library/Application Support/Microsoft/Teams" ]; then
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/IndexedDB"
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/Cache"
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/Application Cache"
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/Code Cache"
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/blob_storage"
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/databases"
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/gpucache"
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/Local Storage"
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/tmp"
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams"/*logs*.txt
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/watchdog"
+  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams"/*watchdog*.json
+  msg 'Deleting Microsoft Teams logs and caches...'
+  remove_paths
 fi
 
 # Deletes Steam caches, logs, and temp files
@@ -284,18 +285,6 @@ if [ -d "${HOME}/.gradle" ]; then
   remove_paths
 fi
 
-if command -v brew 1>/dev/null 2>&1; then
-  collect_paths "$(brew --cache)"
-  msg 'Cleaning up Homebrew Cache...'
-  if [ -z "${dry_run}" ]; then
-    brew cleanup -s &>/dev/null || true
-    remove_paths
-    brew tap --repair &>/dev/null || true
-  else
-    remove_paths
-  fi
-fi
-
 if command -v gem 1>/dev/null 2>&1; then  # TODO add count_dry
   msg 'Cleaning up any old versions of gems'
   if [ -z "${dry_run}" ]; then
@@ -333,32 +322,12 @@ if command -v npm 1>/dev/null 2>&1; then
   fi
 fi
 
-if command -v yarn 1>/dev/null 2>&1; then
-	msg 'Cleaning up Yarn Cache...'
-  if [ -z "${dry_run}" ]; then
-    yarn cache clean --force &>/dev/null || true
-  else
-    collect_paths "${HOME}/Library/Caches/yarn"
-  	remove_paths
-  fi
-fi
-
 if command -v pnpm 1>/dev/null 2>&1; then
   msg 'Cleaning up pnpm Cache...'
   if [ -z "${dry_run}" ]; then
     pnpm store prune &>/dev/null || true
   else
     collect_paths "${HOME}/.pnpm-store"/*
-  	remove_paths
-  fi
-fi
-
-if command -v pod 1>/dev/null 2>&1; then
-  msg 'Cleaning up Pod Cache...'
-  if [ -z "${dry_run}" ]; then
-    pod cache clean --all &>/dev/null || true
-  else
-    collect_paths "${HOME}/Library/Caches/CocoaPods"
   	remove_paths
   fi
 fi
@@ -377,36 +346,38 @@ if command -v go 1>/dev/null 2>&1; then
   fi
 fi
 
-# Deletes all Microsoft Teams Caches and resets it to default - can fix also some performance issues
-# -Astro
-if [ -d "${HOME}/Library/Application Support/Microsoft/Teams" ]; then
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/IndexedDB"
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/Cache"
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/Application Cache"
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/Code Cache"
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/blob_storage"
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/databases"
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/gpucache"
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/Local Storage"
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/tmp"
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams"/*logs*.txt
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams/watchdog"
-  collect_paths "${HOME}/Library/Application Support/Microsoft/Teams"/*watchdog*.json
-  msg 'Deleting Microsoft Teams logs and caches...'
-  remove_paths
-fi
-
-# Deletes Poetry cache
-if [ -d "${HOME}/Library/Caches/pypoetry" ]; then
-  collect_paths "${HOME}/Library/Caches/pypoetry"
-  msg 'Deleting Poetry cache...'
-  remove_paths
-fi
-
-# Removes Java heap dumps
 collect_paths "${HOME}"/*.hprof
 msg 'Deleting Java heap dumps...'
 remove_paths
+
+# SYSTEM stuff
+
+if command -v brew 1>/dev/null 2>&1; then
+  collect_paths "$(brew --cache)"
+  msg 'Cleaning up Homebrew Cache...'
+  if [ -z "${dry_run}" ]; then
+    brew cleanup -s &>/dev/null || true
+    remove_paths
+    brew tap --repair &>/dev/null || true
+  else
+    remove_paths
+  fi
+fi
+
+collect_paths /Volumes/*/.Trashes/*
+msg 'Emptying the Trash 🗑 on all mounted volumes and the main HDD...'
+sudo_remove_paths
+
+collect_paths /Library/Caches/*
+collect_paths /System/Library/Caches/*
+collect_paths /private/var/folders/bh/*/*/*/*
+msg 'Clearing System Cache Files...'
+sudo_remove_paths
+
+collect_paths /private/var/log/*
+collect_paths /Library/Logs/*
+msg 'Clearing System Log Files...'
+sudo_remove_paths
 
 msg 'Cleaning up DNS cache...'
 if [ -z "${dry_run}" ]; then
@@ -418,6 +389,8 @@ msg 'Purging inactive memory...'
 if [ -z "${dry_run}" ]; then
   sudo purge &>/dev/null || true
 fi
+
+# END
 
 # Disables extended regex
 shopt -u extglob

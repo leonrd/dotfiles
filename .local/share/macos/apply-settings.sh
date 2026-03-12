@@ -4,7 +4,14 @@ set -x
 set -euo pipefail
 
 # Ask for the administrator password upfront
-#sudo -v
+sudo -v
+
+# Keep-alive sudo until script has finished
+while true; do
+	sudo -n true
+	sleep 60
+	kill -0 "$$" || exit
+done 2>/dev/null &
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change

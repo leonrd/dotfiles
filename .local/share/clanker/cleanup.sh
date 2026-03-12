@@ -87,32 +87,16 @@ collect_paths() {
   path_list+=("$@")
 }
 
-HOST=$(whoami)
-
 # Enable extended regex
 shopt -s extglob
 
 oldAvailable=$(df / | tail -1 | awk '{print $4}')
 
-collect_paths "${HOME}/.cache/thumbnails"/*
-msg 'Clearing thumbnail Cache'
+# USER stuff
+
+collect_paths "${HOME}/.cache"/*
+msg 'Clearing User Cache Files...'
 remove_paths
-
-if [ -d "${HOME}/.cache/google-chrome" ]; then
-  collect_paths "${HOME}/.cache/google-chrome/Default/Cache"/*
-  msg 'Clearing Google Chrome Cache Files...'
-	remove_paths
-fi
-
-if command -v composer 1>/dev/null 2>&1; then
-  msg 'Cleaning up composer...'
-  if [ -z "${dry_run}" ]; then
-    composer clearcache --no-interaction &>/dev/null || true
-  else
-    collect_paths "${HOME}/.cache/composer"
-		remove_paths
-  fi
-fi
 
 # Deletes Steam caches, logs, and temp files
 # -Astro
@@ -204,7 +188,7 @@ if command -v docker 1>/dev/null 2>&1; then  # TODO add count_dry
       close_docker=true
       open --background -a Docker || true
     fi
-    docker system prune -af &>/dev/null
+    docker system prune -af &>/dev/null || true
     if [ "${close_docker}" = true ]; then
       killall Docker || true
     fi
@@ -227,32 +211,12 @@ if command -v npm 1>/dev/null 2>&1; then
   fi
 fi
 
-if command -v yarn 1>/dev/null 2>&1; then
-	msg 'Cleaning up Yarn Cache...'
-  if [ -z "${dry_run}" ]; then
-    yarn cache clean --force &>/dev/null || true
-  else
-    collect_paths "${HOME}/.cache/yarn"
-  	remove_paths
-  fi
-fi
-
 if command -v pnpm 1>/dev/null 2>&1; then
   msg 'Cleaning up pnpm Cache...'
   if [ -z "${dry_run}" ]; then
     pnpm store prune &>/dev/null || true
   else
     collect_paths "${HOME}/.pnpm-store"/*
-  	remove_paths
-  fi
-fi
-
-if command -v pod 1>/dev/null 2>&1; then
-  msg 'Cleaning up Pod Cache...'
-  if [ -z "${dry_run}" ]; then
-    pod cache clean --all &>/dev/null || true
-  else
-    collect_paths "${HOME}/.cache/CocoaPods"
   	remove_paths
   fi
 fi
@@ -271,10 +235,11 @@ if command -v go 1>/dev/null 2>&1; then
   fi
 fi
 
-# Removes Java heap dumps
 collect_paths "${HOME}"/*.hprof
 msg 'Deleting Java heap dumps...'
 remove_paths
+
+# END
 
 # Disables extended regex
 shopt -u extglob

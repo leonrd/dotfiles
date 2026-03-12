@@ -101,8 +101,6 @@ collect_paths() {
 # Ask for the administrator password upfront
 sudo -v
 
-HOST=$(whoami)
-
 # Keep-alive sudo until script has finished
 while true; do
 	sudo -n true
@@ -115,37 +113,11 @@ shopt -s extglob
 
 oldAvailable=$(df / | tail -1 | awk '{print $4}')
 
-collect_paths "${HOME}/.cache/thumbnails"/*
-msg 'Clearing thumbnail Cache'
+# USER stuff
+
+collect_paths "${HOME}/.cache"/*
+msg 'Clearing User Cache Files...'
 remove_paths
-
-msg 'Removing old snaps' # TODO add count_dry
-if [ -z "${dry_run}" ]; then
-	snap list --all | awk '/disabled/{print $1, $3}' |
-    while read snapname revision; do
-      sudo snap remove "${snapname}" --revision="${revision}" || true
-    done
-fi
-
-collect_paths /var/log/*gz
-msg 'Clearing System Log Files...'
-sudo_remove_paths
-
-if [ -d "${HOME}/.cache/google-chrome" ]; then
-  collect_paths "${HOME}/.cache/google-chrome/Default/Cache"/*
-  msg 'Clearing Google Chrome Cache Files...'
-	remove_paths
-fi
-
-if command -v composer 1>/dev/null 2>&1; then
-  msg 'Cleaning up composer...'
-  if [ -z "${dry_run}" ]; then
-    composer clearcache --no-interaction &>/dev/null || true
-  else
-    collect_paths "${HOME}/.cache/composer"
-		remove_paths
-  fi
-fi
 
 # Deletes Steam caches, logs, and temp files
 # -Astro
@@ -260,32 +232,12 @@ if command -v npm 1>/dev/null 2>&1; then
   fi
 fi
 
-if command -v yarn 1>/dev/null 2>&1; then
-	msg 'Cleaning up Yarn Cache...'
-  if [ -z "${dry_run}" ]; then
-    yarn cache clean --force &>/dev/null || true
-  else
-    collect_paths "${HOME}/.cache/yarn"
-  	remove_paths
-  fi
-fi
-
 if command -v pnpm 1>/dev/null 2>&1; then
   msg 'Cleaning up pnpm Cache...'
   if [ -z "${dry_run}" ]; then
     pnpm store prune &>/dev/null || true
   else
     collect_paths "${HOME}/.pnpm-store"/*
-  	remove_paths
-  fi
-fi
-
-if command -v pod 1>/dev/null 2>&1; then
-  msg 'Cleaning up Pod Cache...'
-  if [ -z "${dry_run}" ]; then
-    pod cache clean --all &>/dev/null || true
-  else
-    collect_paths "${HOME}/.cache/CocoaPods"
   	remove_paths
   fi
 fi
@@ -304,14 +256,21 @@ if command -v go 1>/dev/null 2>&1; then
   fi
 fi
 
-# Removes Java heap dumps
 collect_paths "${HOME}"/*.hprof
 msg 'Deleting Java heap dumps...'
 remove_paths
 
+# SYSTEM stuff
+
 if [ -z "${dry_run}" ]; then
   [ -x "${__dir}/pkg-cleanup.sh" ] && "${__dir}"/pkg-cleanup.sh
 fi
+
+collect_paths /var/log/*gz
+msg 'Clearing System Log Files...'
+sudo_remove_paths
+
+# END
 
 # Disables extended regex
 shopt -u extglob
