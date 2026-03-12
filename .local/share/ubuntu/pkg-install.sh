@@ -94,7 +94,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM}/plugin
 git clone https://github.com/Aloxaf/fzf-tab "${ZSH_CUSTOM}/plugins/fzf-tab"
 
 echo "Installing oh-my-zsh"
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)" "" --unattended
 mv "${HOME}/.zshrc" "${HOME}/.zshrc.post-oh-my-zsh"
 mv "${HOME}/.zshrc.pre-oh-my-zsh" "${HOME}/.zshrc"
 

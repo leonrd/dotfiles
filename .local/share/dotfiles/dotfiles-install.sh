@@ -28,5 +28,5 @@ dotfiles checkout "${DOTFILES_HOME_DIR}/"
 dotfiles config status.showUntrackedFiles no
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  "${DOTFILES_HOME_DIR}/.config/dotfiles/macos/symlink-configs.sh"
+  "${__dir}"/macos/symlink-configs.sh
 fi

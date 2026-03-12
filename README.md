@@ -6,12 +6,12 @@
 
 ### Using Git and the bootstrap script
 
-You can clone the repository wherever you want. The `.config/dotfiles/bin/install.sh` script will checkout the files to your `${HOME}` folder.
+You can clone the repository wherever you want. The `.local/share/dotfiles/dotfiles-install.sh` script will checkout the files to your `${HOME}` folder.
 
 ```sh
 git clone https://github.com/leonrd/dotfiles.git dotfiles/
 cd dotfiles/
-.config/dotfiles/bin/install.sh
+.local/share/dotfiles/dotfiles-install.sh
 ```
 
 Or, if you want to install it in a different `${HOME}`:
@@ -19,13 +19,13 @@ Or, if you want to install it in a different `${HOME}`:
 ```sh
   git clone https://github.com/leonrd/dotfiles.git dotfiles/
   cd dotfiles/
-  DOTFILES_HOME_DIR="/home/someotheruser" .config/dotfiles/bin/install.sh
+  DOTFILES_HOME_DIR="/home/someotheruser" .local/share/dotfiles/dotfiles-install.sh
 ```
 
 ### Using the bootstrap script url
 
 ```sh
-  curl -fsSL https://raw.githubusercontent.com/leonrd/dotfiles/refs/heads/main/.config/dotfiles/bin/install.sh \
+  curl -fsSL https://raw.githubusercontent.com/leonrd/dotfiles/HEAD/.local/share/dotfiles/dotfiles-install.sh \
   | DOTFILES_REPO="https://github.com/leonrd/dotfiles.git" \
     sh
 ```
@@ -33,7 +33,7 @@ Or, if you want to install it in a different `${HOME}`:
 Or, if you want to install it in a different `${HOME}`:
 
 ```sh
-  curl -fsSL https://raw.githubusercontent.com/leonrd/dotfiles/refs/heads/main/.config/dotfiles/bin/install.sh \
+  curl -fsSL https://raw.githubusercontent.com/leonrd/dotfiles/HEAD/.local/share/dotfiles/dotfiles-install.sh \
   | DOTFILES_REPO="https://github.com/leonrd/dotfiles.git" \
     DOTFILES_HOME_DIR="/home/someotheruser" \
     sh
@@ -43,16 +43,10 @@ If there are any conflict with your current`${HOME}`files, it will do a `git sta
 
 ## Updates
 
-### Using the `dotfiles` alias loaded from `${HOME}/.config/shell/aliases`
+NOTE: Assuming `${HOME}/.local/bin` is in `${PATH}`
 
 ```sh
 dotfiles pull
-```
-
-### Using the install path
-
-```sh
-${HOME}/.config/dotfiles/bin/dotfiles pull
 ```
 
 ## Shell includes
@@ -81,14 +75,14 @@ When setting up a new `${HOME}`, you may want to install/update/cleanup some com
 
 ```sh
 # On macos
-~/.util/macos/pkg-install.sh
-~/.util/macos/pkg-update.sh
-~/.util/macos/pkg-cleanup.sh
+~/.local/share/macos/pkg-install.sh
+~/.local/share/macos/pkg-update.sh
+~/.local/share/macos/pkg-cleanup.sh
 
 # On Ubuntu
-~/.util/ubuntu/pkg-install.sh
-~/.util/ubuntu/pkg-update.sh
-~/.util/ubuntu/pkg-cleanup.sh
+~/.local/share/ubuntu/pkg-install.sh
+~/.local/share/ubuntu/pkg-update.sh
+~/.local/share/ubuntu/pkg-cleanup.sh
 ```
 
 ### Sensible defaults
@@ -97,20 +91,20 @@ When setting up a new `${HOME}`, you may want to set some sensible defaults:
 
 ```sh
 # On macos
-~/.util/macos/settings.sh
+~/.local/share/macos/apply-settings.sh
 
 # On Ubuntu
-~/.util/ubuntu/settings.sh
+~/.local/share/ubuntu/apply-settings.sh
 ```
 
 ### System cleanup
 
 ```sh
 # On macos
-~/.util/macos/cleanup.sh
+~/.local/share/macos/cleanup.sh
 
 # On Ubuntu
-~/.util/ubuntu/cleanup.sh
+~/.local/share/ubuntu/cleanup.sh
 ```
 
 ## Thanks to…
