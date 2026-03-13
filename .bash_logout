@@ -3,14 +3,13 @@
 # echo '.bash_logout enter'
 
 # when leaving the console clear the screen to increase privacy
-
 if [ "$SHLVL" = 1 ]; then
-	if [ -x /usr/bin/clear_console ]; then 
-		/usr/bin/clear_console -q
-	elif command -v clear 1>/dev/null 2>&1; then
+	if command -v clear 1>/dev/null 2>&1; then
 		clear
 		# wipe scrollback on macOS/other systems
     printf '\033[3J'
+	elif [ -x /usr/bin/clear_console ]; then 
+		/usr/bin/clear_console -q
 	fi
 fi
 
