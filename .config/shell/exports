@@ -90,5 +90,5 @@ if [ $(uname -s) = 'Darwin' ]; then
   export GPG_TTY="$(tty)";
 
   # Chrome
-  export CHROME_EXECUTABLE="${HOME}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  export CHROME_EXECUTABLE="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 fi

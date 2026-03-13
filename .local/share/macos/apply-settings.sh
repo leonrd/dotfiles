@@ -439,8 +439,8 @@ defaults write com.apple.dock show-recents -bool false
 find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
 
 # Add iOS & Watch Simulator to Launchpad
-ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "${HOME}/Applications/Simulator.app"
-ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "${HOME}/Applications/Simulator (Watch).app"
+ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"
+ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "/Applications/Simulator (Watch).app"
 
 # Add a spacer to the left side of the Dock (where the applications are)
 defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'

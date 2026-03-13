@@ -1,6 +1,6 @@
 tap "openresty/brew"
 
-cask_args appdir: "~/Applications", force: true
+cask_args appdir: "/Applications", force: true
 
 brew "bash"
 brew "bash-completion@2"
