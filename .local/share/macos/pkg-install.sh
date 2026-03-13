@@ -87,7 +87,7 @@ echo "Installing kitty"
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 # Create symbolic links to add kitty and kitten to PATH (assuming "${HOME}"/.local/bin is in
 # your system-wide PATH)
-ln -sf "${HOME}"/.local/kitty.app/bin/kitty "${HOME}"/.local/kitty.app/bin/kitten "${HOME}"/.local/bin/
+ln -sf "/Applications/kitty.app/Contents/MacOS/kitty" "/Applications/kitty.app/Contents/MacOS/kitten" "${HOME}"/.local/bin/
 
 SHELL=$(which zsh)
 
