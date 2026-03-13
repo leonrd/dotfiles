@@ -5,9 +5,9 @@
 typeset -U fpath
 
 export ZSH_CACHE_DIR="${ZSH_CACHE_DIR:-${HOME}/.cache/zsh}"
-mkdir -p "${ZSH_CACHE_DIR}"
+[ -d "${ZSH_CACHE_DIR}" ] || mkdir -p "${ZSH_CACHE_DIR}"
 export ZSH_COMPDUMP_DIR="${ZSH_COMPDUMP_DIR:-${ZSH_CACHE_DIR}}"
-mkdir -p "${ZSH_COMPDUMP_DIR}"
+[ -d "${ZSH_COMPDUMP_DIR}" ] || mkdir -p "${ZSH_COMPDUMP_DIR}"
 export ZSH_COMPDUMP="${ZSH_COMPDUMP:-${ZSH_COMPDUMP_DIR}/zcompdump}"
 
 # Path to your Oh My Zsh installation.
@@ -19,7 +19,7 @@ if [ -d "${ZSH}" ]; then
 	# load a random theme each time Oh My Zsh is loaded, in which case,
 	# to know which specific one was loaded, run: echo $RANDOM_THEME
 	# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-	ZSH_THEME="robbyrussell"
+	ZSH_THEME='robbyrussell'
 
 	# Set list of themes to pick from when loading at random
 	# Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -88,7 +88,7 @@ if [ -d "${ZSH}" ]; then
 
 	zstyle ':omz:update' zcompdump-file "${ZSH_COMPDUMP}"
 
-	source "${ZSH}/oh-my-zsh.sh"
+	source "${ZSH}"/oh-my-zsh.sh
 else
 	autoload -Uz promptinit compinit
 
@@ -114,7 +114,7 @@ else
 	promptinit
 
 	# Load only from secure directories
-	compinit -i -d "$ZSH_COMPDUMP"
+	compinit -i -d "${ZSH_COMPDUMP}"
 fi
 
 # User configuration
@@ -167,16 +167,16 @@ bindkey "\e[3;3~" kill-word
 # Other
 
 if [ $(uname -s) = 'Darwin' ]; then
-	[ -f "${HOME}/.config/iterm2/iterm2_shell_integration.zsh" ] && source "${HOME}/.config/iterm2/iterm2_shell_integration.zsh"
+	[ -f "${HOME}"/.config/iterm2/iterm2_shell_integration.zsh ] && source "${HOME}"/.config/iterm2/iterm2_shell_integration.zsh
 
-	alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+	alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
 
 	# Homebrew OCLP patch - auto-reapply after brew update
 	brew() {
 		command brew "$@"
 		local ret=$?
 		if [[ "$1" == "update" ]]; then
-				curl -sL "https://raw.githubusercontent.com/ajorpheus/homebrew-oclp-patches/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo "OCLP patches restored"
+				curl -sL "https://raw.githubusercontent.com/ajorpheus/homebrew-oclp-patches/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo 'OCLP patches restored'
 		fi
 		return "${ret}"
 	}
@@ -191,7 +191,7 @@ if command -v uvx 1>/dev/null 2>&1; then
 fi
 
 # * ~/.config/shell/extra can be used for other settings you don’t want to commit.
-for file in "${HOME}/.config/shell"/{aliases,functions,extra}; do
+for file in "${HOME}"/.config/shell/{aliases,functions,extra}; do
 	[ -r "${file}" ] && [ -f "${file}" ] && . "${file}";
 done;
 unset file;

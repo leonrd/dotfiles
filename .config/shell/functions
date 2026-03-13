@@ -12,16 +12,16 @@ cdf() {
 targz() {
 	local tmpFile
 	tmpFile="${1%/}.tar"
-	tar -cvf "${tmpFile}" --exclude=".DS_Store" "$@" || return 1
+	tar -cvf "${tmpFile}" --exclude='.DS_Store' "$@" || return 1
 
 	local size
 	size=$(stat -f"%z" "${tmpFile}" 2>/dev/null || stat -c"%s" "${tmpFile}" 2>/dev/null)
 
-	local cmd=""
+	local cmd=''
 	if command -v pigz >/dev/null 2>&1; then
-		cmd="pigz"
+		cmd='pigz'
 	else
-		cmd="gzip"
+		cmd='gzip'
 	fi
 
 	echo "Compressing .tar ($((size / 1000)) kB) using \`${cmd}\`…"
@@ -130,7 +130,7 @@ getcertnames() {
 }
 
 # Normalize `open` across Linux, macOS, and Windows.
-if [ ! "$(uname -s)" = "Darwin" ]; then
+if [ ! "$(uname -s)" = 'Darwin' ]; then
 	if grep -q Microsoft /proc/version 2>/dev/null; then
 		alias open='explorer.exe'
 	else

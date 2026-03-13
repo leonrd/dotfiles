@@ -6,18 +6,18 @@ export SAVEHIST='32768';
 export HISTFILESIZE="${HISTSIZE}";
 # Omit duplicates and commands that begin with a space from history.
 export HISTCONTROL='ignoreboth';
-if [ -n "$HISTDIR" ]; then
-  if [ -n "$ZSH_VERSION" ]; then
-    HISTFILE="$HISTDIR/.zsh_history"
-  elif [ -n "$BASH_VERSION" ]; then
-    HISTFILE="$HISTDIR/.bash_history"
-  elif [ -n "$KSH_VERSION" ]; then
-    HISTFILE="$HISTDIR/.sh_history"
+if [ -n "${HISTDIR}" ]; then
+  if [ -n "${ZSH_VERSION}" ]; then
+    HISTFILE="${HISTDIR}/.zsh_history"
+  elif [ -n "${BASH_VERSION}" ]; then
+    HISTFILE="${HISTDIR}/.bash_history"
+  elif [ -n "${KSH_VERSION}" ]; then
+    HISTFILE="${HISTDIR}/.sh_history"
   else
     shell_name=$(basename "${0#-}")  # strip leading '-' from login shells
     case "$shell_name" in
-      sh | dash | ash) HISTFILE="$HISTDIR/.history" ;;
-      *)               HISTFILE="$HISTDIR/.${shell_name}_history" ;;
+      sh | dash | ash) HISTFILE="${HISTDIR}/.history" ;;
+      *)               HISTFILE="${HISTDIR}/.${shell_name}_history" ;;
     esac
     unset shell_name
   fi
@@ -61,8 +61,8 @@ export ZSH="${ZSH:-${HOME}/.config/oh-my-zsh}"
 export ZSH_CUSTOM="${ZSH_CUSTOM:-${HOME}/.config/oh-my-zsh-custom}"
 
 # for wget
-export http_proxy=$HTTP_PROXY
-export https_proxy=$HTTPS_PROXY
+export http_proxy="${HTTP_PROXY}"
+export https_proxy="${HTTPS_PROXY}"
 
 # Python
 
@@ -87,7 +87,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1;
 if [ $(uname -s) = 'Darwin' ]; then
   # Avoid issues with `gpg` as installed via Homebrew.
   # https://stackoverflow.com/a/42265848/96656
-  export GPG_TTY=$(tty);
+  export GPG_TTY="$(tty)";
 
   # Chrome
   export CHROME_EXECUTABLE="${HOME}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"

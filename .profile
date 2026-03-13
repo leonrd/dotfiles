@@ -21,10 +21,10 @@ if command -v brew 1>/dev/null 2>&1; then
 fi
 
 # * ~/.config/shell/path can be used to extend `${PATH}`.
-. "${HOME}/.config/shell/path"
+. "${HOME}"/.config/shell/path
 
 # * ~/.config/shell/path can be used to extend `${PATH}`.
-. "${HOME}/.config/shell/exports"
+. "${HOME}"/.config/shell/exports
 
 # Other
 
