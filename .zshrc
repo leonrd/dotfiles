@@ -1,4 +1,6 @@
 # ~/.zshrc: executed by zsh(1) for interactive shells.
+
+# echo '.zshrc enter'
 # zmodload zsh/zprof
 
 # deduplicate fpath (bug due to homebrew)
@@ -196,5 +198,5 @@ for file in "${HOME}"/.config/shell/{aliases,functions,extra}; do
 done;
 unset file;
 
-# zprof
-# zmodload -u zsh/zprof
+# zprof; zmodload -u zsh/zprof
+# echo '.zshrc exit'

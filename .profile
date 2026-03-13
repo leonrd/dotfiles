@@ -12,6 +12,8 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+# echo '.profile enter'
+
 if command -v brew 1>/dev/null 2>&1; then
 	eval "$(brew shellenv)"
 	# some brew vars for 3rdparty scripts
@@ -35,3 +37,5 @@ fi
 if command -v pyenv 1>/dev/null 2>&1; then
 	eval "$(pyenv init - sh)"
 fi
+
+# echo '.profile exit'

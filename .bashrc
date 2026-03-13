@@ -1,5 +1,7 @@
 # ~/.bashrc: executed by bash(1) for interactive shells.
 
+# echo '.bashrc enter'
+
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
 
@@ -84,3 +86,5 @@ for file in "${HOME}"/.config/shell/{bash_prompt,aliases,functions,extra}; do
 	[ -r "${file}" ] && [ -f "${file}" ] && . "${file}";
 done;
 unset file;
+
+# echo '.bashrc exit'
