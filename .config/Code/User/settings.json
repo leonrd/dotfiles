@@ -1,5 +1,6 @@
 {
   "telemetry.telemetryLevel": "off",
+  "telemetry.feedback.enabled": false,
   "window.titleBarStyle": "native",
   "window.nativeTabs": true,
   "window.restoreWindows": "none",
