@@ -2,6 +2,9 @@
 
 echo "symlinking some .config files to Library/"
 
+# Install Spotlight /Applications & ~/Applications reindexer
+ln -s "${HOME}/.config/macos/Library/LaunchAgents/com.user.spotlight.applications.plist" "${HOME}/Library/LaunchAgents/com.user.spotlight.applications.plist"
+
 # Install the Solarized Dark theme for iTerm
 mkdir -p "${HOME}/Library/Application Support/iTerm2"
 ln -s "${HOME}/.config/macos/Library/Application Support/iTerm2/Solarized Dark.itermcolors" "${HOME}/Library/Application Support/iTerm2/Solarized Dark.itermcolors"
