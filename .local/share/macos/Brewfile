@@ -61,9 +61,9 @@ brew "watchman"
 brew "wget"
 # brew "woff2"
 brew "zsh"
-cask "android-studio"
+# cask "android-studio"
 cask "beardedspice"
-cask "bettertouchtool"
+# cask "bettertouchtool"
 # cask "brave"
 cask "coconutbattery"
 cask "dbeaver-community"
@@ -95,21 +95,21 @@ cask "transmission"
 # cask "tunnelblick"
 cask "visual-studio-code"
 cask "vlc"
-mas "AdGuard Mini", id: 1440147259
-mas "DevCleaner", id: 1388020431
-mas "HP", id: 1474276998
-mas "iMovie", id: 408981434
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "Tailscale", id: 1475387142
-mas "Transporter", id: 1450874784
-mas "Windows App", id: 1295203466
-mas "Xcode", id: 497799835
 vscode "dbaeumer.vscode-eslint"
+# mas "AdGuard Mini"
+# mas "DevCleaner"
+# mas "HP"
+# mas "iMovie"
+# mas "Keynote"
+# mas "Numbers"
+# mas "Pages"
+# mas "Tailscale"
+# mas "Transporter"
+# mas "Windows App"
+# mas "Xcode"
 
 # Requires sudo
 
-cask "teamviewer"
-cask "virtualbox"
-cask "xquartz"
+# cask "teamviewer"
+# cask "virtualbox"
+# cask "xquartz"

@@ -3,6 +3,7 @@
 echo "symlinking some .config files to Library/"
 
 # Install Spotlight /Applications & ~/Applications reindexer
+mkdir -p "${HOME}/Library/LaunchAgents"
 ln -s "${HOME}/.config/macos/Library/LaunchAgents/com.user.spotlight.applications.plist" "${HOME}/Library/LaunchAgents/com.user.spotlight.applications.plist"
 
 # Install the Solarized Dark theme for iTerm
@@ -34,5 +35,5 @@ ln -s "${HOME}/.config/macos/Library/Application Support/Spectacle/Shortcuts.jso
 mkdir -p "${HOME}/Library/Application Support/BetterTouchTool/"
 ln -s "${HOME}/.config/macos/Library/Application Support/BetterTouchTool/Default.bttpreset" "${HOME}/Library/Application Support/BetterTouchTool/Default.bttpreset"
 
-open "${HOME}/Library/Application Support/iTerm2/Solarized Dark.itermcolors"
-open "${HOME}/Library/Application Support/BetterTouchTool/Default.bttpreset"
+open "${HOME}/Library/Application Support/iTerm2/Solarized Dark.itermcolors" || true
+open "${HOME}/Library/Application Support/BetterTouchTool/Default.bttpreset" || true

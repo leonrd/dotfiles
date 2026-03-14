@@ -29,6 +29,16 @@ trap on_exit EXIT
 trap on_sigint SIGINT
 trap on_sigterm SIGTERM
 
+# Ask for the administrator password upfront
+sudo -v
+
+# Keep-alive sudo until script has finished
+while true; do
+	sudo -n true
+	sleep 60
+	kill -0 "$$" || exit
+done 2>/dev/null &
+
 echo "Installing Xcode Command Line Tools"
 xcode-select --install || true
 
