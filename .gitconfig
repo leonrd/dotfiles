@@ -79,8 +79,8 @@
 	sort = -committerdate
 
 [core]
-	# Use Sublime as default editor
-	editor = subl -n -w
+	# Use vi as default editor
+	editor = vi
 
 	# Use custom `.gitignore` and `.gitattributes`.
 	excludesfile = ~/.gitignore_global

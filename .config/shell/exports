@@ -37,16 +37,21 @@ export MANPAGER='less -X';
 # Preferred editor for local and remote sessions
 if [ -n "$SSH_CONNECTION" ]; then
   if command -v vim 1>/dev/null 2>&1; then
+    export GIT_EDITOR='vim'
     export EDITOR='vim'
   else
+    export GIT_EDITOR='vi'
     export EDITOR='vi'
   fi
 else
   if command -v subl 1>/dev/null 2>&1; then
+    export GIT_EDITOR='subl -w'
     export EDITOR='subl'
   elif command -v vim 1>/dev/null 2>&1; then
+    export GIT_EDITOR='vim'
     export EDITOR='vim'
   else
+    export GIT_EDITOR='vi'
     export EDITOR='vi'
   fi
 fi
