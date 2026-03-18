@@ -44,7 +44,7 @@ sudo apt-get update -y
 
 # Install basic tools
 sudo apt-get install -y --no-install-recommends \
-	man-db less sed curl wget git vim nano make bash tmux unzip gnupg gnupg2
+	man-db less sed curl wget git vim nano make bash tmux dtach unzip gnupg gnupg2
 
 # Install awesome tools
 sudo apt-get install -y --no-install-recommends \
