@@ -97,4 +97,8 @@ if command -v "apt-get" 1>/dev/null 2>&1; then
 	sudo apt-get update &>/dev/null
 	msg 'Upgrading and removing outdated packages...'
 	sudo apt-get upgrade -y
+	msg "Installing Google Chrome"
+	curl -sLO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+		&& sudo dpkg -i google-chrome-stable_current_amd64.deb \
+		&& rm -f google-chrome-stable_current_amd64.deb
 fi
