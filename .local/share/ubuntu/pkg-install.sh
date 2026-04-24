@@ -133,7 +133,7 @@ sed -i "s|Exec=kitty|Exec=/home/${USER}/.local/kitty.app/bin/kitty|g" "${HOME}"/
 echo 'kitty.desktop' > "${HOME}"/.config/xdg-terminals.list
 
 echo "Installing sublime-text and sublime-merge"
-wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg \
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublime-text.gpg \
 	&& echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list \
 	&& sudo apt-get update \
 	&& sudo apt-get install -y --no-install-recommends sublime-text sublime-merge
@@ -142,7 +142,10 @@ echo "Installing gthumb"
 sudo apt-get install -y --no-install-recommends gthumb
 
 echo "Installing Google Chrome"
-curl -sLO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo dpkg -i google-chrome-stable_current_amd64.deb && rm -f google-chrome-stable_current_amd64.deb
+curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg \
+	&& ARCH=$(dpkg --print-architecture) echo "deb [arch=${ARCH} signed-by=/etc/apt/trusted.gpg.d/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list \
+	&& sudo apt-get update \
+	&& sudo apt-get install -y --no-install-recommends google-chrome-stable
 
 echo "Installing tailscale"
 curl -fsSL https://tailscale.com/install.sh | sh
