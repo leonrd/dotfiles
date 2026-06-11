@@ -30,6 +30,7 @@ brew "ios-webkit-debug-proxy"
 brew "jq"
 brew "less"
 brew "libimobiledevice"
+brew "libyaml" # Needed for rbenv / building ruby
 # brew "llvm"
 # brew "lua"
 # brew "luajit"
