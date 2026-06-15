@@ -163,11 +163,6 @@ echo "Installing dbeaver"
 sudo add-apt-repository ppa:serge-rider/dbeaver-ce
 sudo apt-get install -y --no-install-recommends dbeaver-ce
 
-echo "Installing android-studio"
-sudo apt-get install -y --no-install-recommends openjdk-11-jdk
-sudo add-apt-repository -y ppa:maarten-fonville/android-studio
-sudo apt-get update && sudo apt-get install -y --no-install-recommends android-studio
-
 echo "Installing OpenResty"
 wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
 echo "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" \
