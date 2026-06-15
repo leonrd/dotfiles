@@ -78,5 +78,7 @@
   "mdb.confirmRunAll": false,
   "mdb.useDefaultTemplateForPlayground": false,
   "mdb.mcp.server": "prompt",
-  "[swift]": {}
+  "[swift]": {},
+  "extensions.ignoreRecommendations": true,
+  "editor.accessibilitySupport": "off"
 }
