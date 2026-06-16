@@ -19,3 +19,7 @@ export PATH="${HOME}/bin:${PATH}"
 
 # Add dev tools to $PATH
 export PATH="$DEV_TOOLS_PATH:${PATH}"
+
+# Android SDK
+export ANDROID_HOME="${HOME}/dev/tools/android-sdk"
+export PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools"
