@@ -80,5 +80,8 @@
   "mdb.mcp.server": "prompt",
   "[swift]": {},
   "extensions.ignoreRecommendations": true,
-  "editor.accessibilitySupport": "off"
+  "editor.accessibilitySupport": "off",
+  "chat.titleBar.signIn.enabled": false,
+  "chat.titleBar.openInAgentsWindow.enabled": false,
+  "chat.disableAIFeatures": true
 }
