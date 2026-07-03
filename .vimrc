@@ -61,7 +61,7 @@ if count(g:vimified_packages, 'general')
     Plug 'tpope/vim-eunuch'
     Plug 'tpope/vim-vinegar'
 
-    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
     " Disable the scrollbars (NERDTree)
     set guioptions-=r
     set guioptions-=L
