@@ -3,10 +3,8 @@
 plugged/
 
 *.swp
-
-!tmp/backup/.gitkeep
-!tmp/swap/.gitkeep
-!tmp/undo/.gitkeep
+/tmp/**
+!/tmp/**/.gitkeep
 
 .netrwhist
 
