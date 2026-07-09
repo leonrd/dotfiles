@@ -178,7 +178,10 @@ if [ $(uname -s) = 'Darwin' ]; then
 		command brew "$@"
 		local ret=$?
 		if [[ "$1" == "update" ]]; then
-				curl -sL "https://raw.githubusercontent.com/ajorpheus/homebrew-oclp-patches/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo 'OCLP patches restored'
+				curl -sL "https://raw.githubusercontent.com/realizelol/homebrew-oclp-patches/refs/heads/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo 'OCLP patches restored'
+				git -C /usr/local/Homebrew update-index --assume-unchanged Library/Homebrew/cask/utils/copy-xattrs.swift
+        git -C /usr/local/Homebrew update-index --assume-unchanged Library/Homebrew/cask/utils/quarantine.swift
+        git -C /usr/local/Homebrew update-index --assume-unchanged Library/Homebrew/cask/utils/trash.swift
 		fi
 		return "${ret}"
 	}
