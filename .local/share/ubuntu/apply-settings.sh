@@ -117,3 +117,6 @@ gsettings set org.gtk.Settings.FileChooser show-hidden true
 # Set kitty as default terminal app
 gsettings set org.gnome.desktop.default-applications.terminal exec kitty
 gsettings set org.gnome.desktop.default-applications.terminal exec-arg ""
+
+# Disable online search result collection (collects queries)
+gsettings set com.canonical.Unity.Lenses remote-content-search none
