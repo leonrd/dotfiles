@@ -30,7 +30,6 @@ x-scheme-handler/about=google-chrome.desktop
 x-scheme-handler/http=google-chrome.desktop
 x-scheme-handler/https=google-chrome.desktop
 x-scheme-handler/mailto=google-chrome.desktop
-x-scheme-handler/unknown=google-chrome.desktop
 video/vnd.avi=vlc.desktop
 video/x-ms-wmv=vlc.desktop
 x-scheme-handler/slack=slack.desktop
