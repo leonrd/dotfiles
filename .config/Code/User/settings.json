@@ -2,7 +2,6 @@
   "telemetry.telemetryLevel": "off",
   "telemetry.feedback.enabled": false,
   "window.titleBarStyle": "native",
-  "window.nativeTabs": true,
   "window.restoreWindows": "none",
   "window.newWindowDimensions": "maximized",
   "window.openFilesInNewWindow": "default",
@@ -14,9 +13,11 @@
   "explorer.confirmDragAndDrop": false,
   "editor.accessibilitySupport": "off",
   "editor.folding": true,
+  "editor.insertSpaces": true,
   "editor.minimap.enabled": false,
   "editor.multiCursorModifier": "alt",
   "editor.suggestSelection": "first",
+  "editor.tabSize": 2,
   "terminal.external.osxExec": "kitty.app",
   "debug.console.historySuggestions": true,
   "diffEditor.renderSideBySide": false,
@@ -25,5 +26,23 @@
   "chat.titleBar.openInAgentsWindow.enabled": false,
   "chat.disableAIFeatures": true,
   "js/ts.updateImportsOnFileMove.enabled": "always",
-  "js/ts.preferences.importModuleSpecifier": "non-relative"
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
 }
