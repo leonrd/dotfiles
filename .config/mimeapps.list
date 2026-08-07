@@ -35,12 +35,13 @@ video/x-ms-wmv=vlc.desktop
 x-scheme-handler/slack=slack.desktop
 text/vnd.trolltech.linguist=sublime_text.desktop
 video/quicktime=vlc.desktop
+application/pdf=com.github.xournalpp.xournalpp.desktop
 
 [Added Associations]
 application/illustrator=org.gnome.gThumb.desktop;
 application/json=sublime_text.desktop;
 application/octet-stream=sublime_text.desktop;
-application/pdf=org.gnome.gThumb.desktop;
+application/pdf=org.gnome.gThumb.desktop;com.github.xournalpp.xournalpp.desktop;
 application/sql=sublime_text.desktop;
 application/vnd.debian.binary-package=snap-store_ubuntu-software-local-file.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=org.gnome.Evince.desktop;
