@@ -168,10 +168,6 @@ bindkey "\e[3;3~" kill-word
 
 # Other
 
-if [ $(uname -s) = 'Darwin' ]; then
-	[ -f "${HOME}"/.config/iterm2/iterm2_shell_integration.zsh ] && source "${HOME}"/.config/iterm2/iterm2_shell_integration.zsh
-fi
-
 if command -v uv 1>/dev/null 2>&1; then
  eval "$(uv generate-shell-completion zsh)"
 fi
