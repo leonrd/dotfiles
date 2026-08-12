@@ -172,19 +172,6 @@ if [ $(uname -s) = 'Darwin' ]; then
 	[ -f "${HOME}"/.config/iterm2/iterm2_shell_integration.zsh ] && source "${HOME}"/.config/iterm2/iterm2_shell_integration.zsh
 
 	alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
-
-	# Homebrew OCLP patch - auto-reapply after brew update
-	brew() {
-		command brew "$@"
-		local ret=$?
-		if [[ "$1" == "update" ]]; then
-				curl -sL "https://raw.githubusercontent.com/realizelol/homebrew-oclp-patches/refs/heads/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo 'OCLP patches restored'
-				git -C /usr/local/Homebrew update-index --assume-unchanged Library/Homebrew/cask/utils/copy-xattrs.swift
-        git -C /usr/local/Homebrew update-index --assume-unchanged Library/Homebrew/cask/utils/quarantine.swift
-        git -C /usr/local/Homebrew update-index --assume-unchanged Library/Homebrew/cask/utils/trash.swift
-		fi
-		return "${ret}"
-	}
 fi
 
 if command -v uv 1>/dev/null 2>&1; then
