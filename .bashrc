@@ -57,22 +57,6 @@ fi;
 
 # Other
 
-if [ $(uname -s) = 'Darwin' ]; then
-	[ -f "${HOME}"/.config/iterm2/iterm2_shell_integration.bash ] && source "${HOME}"/.config/iterm2/iterm2_shell_integration.bash
-
-	alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
-
-	# Homebrew OCLP patch - auto-reapply after brew update
-	brew() {
-	    command brew "$@"
-	    local ret=$?
-	    if [[ "$1" == "update" ]]; then
-	        curl -sL "https://raw.githubusercontent.com/ajorpheus/homebrew-oclp-patches/master/homebrew-oclp.patch" | git -C /usr/local/Homebrew apply 2>/dev/null && echo 'OCLP patches restored'
-	    fi
-	    return "${ret}"
-	}
-fi
-
 if command -v uv 1>/dev/null 2>&1; then
  eval "$(uv generate-shell-completion bash)"
 fi
