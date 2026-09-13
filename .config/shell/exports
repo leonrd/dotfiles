@@ -59,10 +59,6 @@ else
   fi
 fi
 
-# for wget
-export http_proxy="${HTTP_PROXY}"
-export https_proxy="${HTTPS_PROXY}"
-
 # oh-my-zsh
 export ZSH_CACHE_DIR="${HOME}/.cache/zsh"
 export ZSH_COMPDUMP_DIR="${ZSH_CACHE_DIR}"
