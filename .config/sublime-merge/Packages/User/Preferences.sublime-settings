@@ -1,6 +1,6 @@
 {
 	"diff_style": "inline",
-	"theme": "Merge Dark.sublime-theme",
+	"theme": "auto",
 	"side_bar_layout": "columns",
 	"always_show_command_status": true,
 	"ignore_diff_white_space": false,
@@ -9,4 +9,5 @@
 	"expand_merge_commits_by_default": true,
 	"update_check": false,
 	"font_size": 9,
+	"hardware_acceleration": "opengl",
 }
