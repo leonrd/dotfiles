@@ -3,6 +3,19 @@
 HISTFILE="${HISTFILE:-${HOME}/.zsh_history}"
 
 cp "${HISTFILE}" "${HISTFILE}".pre-dedup \
-  && cat -n "${HISTFILE}" | tac | sort -t ';' -s -uk2 | sort -nk1 | cut -f2- \
+  && tac "${HISTFILE}" | LC_ALL=C awk -F';' '
+      {
+        idx = index($0, ";")
+        if (idx > 0) {
+          prefix = substr($0, 1, idx)
+          key = substr($0, idx + 1)
+        } else {
+          prefix = ""
+          key = $0
+        }
+        gsub(/^[ \t]+|[ \t]+$/, "", key)
+        if (!seen[key]++) print prefix key
+      }
+    ' | tac \
     > "${HISTFILE}".dedup \
   && mv "${HISTFILE}".dedup "${HISTFILE}"
