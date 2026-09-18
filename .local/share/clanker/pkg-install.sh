@@ -59,23 +59,23 @@ curl -L https://bit.ly/n-install | bash -s -- -y -n
 echo "Installing yarn"
 npm install -g yarn
 
-echo "Installing Claude Code"
-curl -fsSL https://claude.ai/install.sh | bash -s stable
+echo "Install pi"
+npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+pi install npm:pi-smart-fetch
+pi install npm:pi-smart-web-search
+pi install npm:@plannotator/pi-extension
+npm install -g --allow-scripts=tilth tilth
+tilth install pi --edit
+npx skills add jahala/tilth
 
-echo "Installing Codex CLI"
-npm install -g @openai/codex
+# echo "Installing Claude Code"
+# curl -fsSL https://claude.ai/install.sh | bash -s stable
 
-echo "Installing OpenCode"
-npm install -g opencode-ai
+# echo "Installing Codex CLI"
+# npm install -g @openai/codex
 
-echo "Installing depgraph"
-curl -fsSL https://raw.githubusercontent.com/henryhale/depgraph/HEAD/scripts/install.sh | 
-
-echo "Installing ai-grep"
-git clone https://github.com/seqis/AI-grep.git "${HOME}/dev/tools/ai-grep/" \
-	&& chmod +x "${HOME}/dev/tools/ai-grep/ai-grep" \
-	&& mkdir -p "${HOME}/dev/tools/bin" \
-	&& ln -s "${HOME}/dev/tools/ai-grep/ai-grep" "${HOME}/dev/tools/bin/ai-grep"
+# echo "Installing OpenCode"
+# npm install -g opencode-ai
 
 echo "Done. Reloading SHELL"
 SHELL=$(which zsh)
