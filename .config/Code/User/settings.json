@@ -8,7 +8,6 @@
   "window.openFoldersInNewWindow": "on",
   "workbench.editor.enablePreview": true,
   "workbench.statusBar.visible": true,
-  "workbench.sideBar.location": "left",
   "workbench.colorTheme": "Solarized Dark",
   "explorer.confirmDragAndDrop": false,
   "editor.accessibilitySupport": "off",
@@ -48,4 +47,5 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
+  "tauren.blockHttpsImages": false,
 }

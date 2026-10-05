@@ -21,7 +21,7 @@ image/x-portable-pixmap=org.gnome.gThumb.desktop
 image/x-xbitmap=org.gnome.gThumb.desktop
 image/x-xpixmap=org.gnome.gThumb.desktop
 text/csv=sublime_text.desktop
-text/html=com.google.Chrome.desktop
+text/html=google-chrome.desktop
 text/plain=sublime_text.desktop
 text/x-csrc=sublime_text.desktop
 video/mp4=vlc.desktop
@@ -37,6 +37,7 @@ text/vnd.trolltech.linguist=sublime_text.desktop
 video/quicktime=vlc.desktop
 application/pdf=com.github.xournalpp.xournalpp.desktop
 text/javascript=sublime_text.desktop
+x-scheme-handler/magnet=google-chrome.desktop
 
 [Added Associations]
 application/illustrator=org.gnome.gThumb.desktop;
