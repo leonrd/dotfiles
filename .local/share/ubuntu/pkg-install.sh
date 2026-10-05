@@ -64,8 +64,8 @@ sudo apt-get install -y --no-install-recommends \
 
 # Install git-delta
 GIT_DELTA_VERSION=0.18.2 \
-ARCH=$(dpkg --print-architecture) \
-	wget -q -O /tmp/git-delta.deb \
+  && ARCH=$(dpkg --print-architecture) \
+	&& wget -q -O /tmp/git-delta.deb \
 		"https://github.com/dandavison/delta/releases/download/${GIT_DELTA_VERSION}/git-delta_${GIT_DELTA_VERSION}_${ARCH}.deb" \
 	&& sudo dpkg -i /tmp/git-delta.deb \
 	&& rm -f /tmp/git-delta.deb
@@ -143,7 +143,7 @@ sudo apt-get install -y --no-install-recommends gthumb
 
 echo "Installing Google Chrome"
 curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg \
-	&& ARCH=$(dpkg --print-architecture) echo "deb [arch=${ARCH} signed-by=/etc/apt/trusted.gpg.d/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list \
+	&& ARCH=$(dpkg --print-architecture) && echo "deb [arch=${ARCH} signed-by=/etc/apt/trusted.gpg.d/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list \
 	&& sudo apt-get update \
 	&& sudo apt-get install -y --no-install-recommends google-chrome-stable
 
@@ -151,7 +151,8 @@ echo "Installing tailscale"
 curl -fsSL https://tailscale.com/install.sh | sh
 
 echo "Installing vscode"
-echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
+curl -sS https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/microsoft.gpg \
+  && ARCH=$(dpkg --print-architecture) && echo "deb [arch=${ARCH} signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
 sudo apt-get update && sudo apt-get install -y --no-install-recommends code
 
 echo "Installing Spotify"
@@ -160,14 +161,8 @@ echo "deb https://repository.spotify.com stable non-free" | sudo tee /etc/apt/so
 sudo apt-get update && sudo apt-get install -y --no-install-recommends spotify-client
 
 echo "Installing dbeaver"
-sudo add-apt-repository ppa:serge-rider/dbeaver-ce
+sudo add-apt-repository -y ppa:serge-rider/dbeaver-ce
 sudo apt-get install -y --no-install-recommends dbeaver-ce
-
-echo "Installing OpenResty"
-wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
-echo "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" \
-    | sudo tee /etc/apt/sources.list.d/openresty.list
-sudo apt-get update && sudo apt-get install -y --no-install-recommends openresty
 
 SHELL=$(which zsh)
 
