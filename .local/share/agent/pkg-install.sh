@@ -58,9 +58,13 @@ echo "Installing n and node lts via n-install"
 curl -L https://bit.ly/n-install | bash -s -- -y -n
 echo "Installing yarn"
 npm install -g yarn
+npm config set allow-scripts=tilth,yarn,esbuild,@google/genai,protobufjs --location=user
+
+echo "Install herdr"
+curl -fsSL https://herdr.dev/install.sh | sh
 
 echo "Install pi"
-npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+curl -fsSL https://pi.dev/install.sh | sh
 pi install npm:pi-smart-fetch
 pi install npm:pi-smart-web-search
 pi install npm:@plannotator/pi-extension
