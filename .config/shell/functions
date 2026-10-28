@@ -154,3 +154,24 @@ o() {
 tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX
 }
+
+unlock_keyring() {
+  printf 'Password: '
+  stty -echo
+  IFS= read -r pass
+  stty echo
+  printf '\n'
+
+  # Intentionally unquoted: the daemon prints KEY=VALUE lines to be split
+  export $(printf '%s' "$pass" | gnome-keyring-daemon --replace --unlock)
+  unset pass
+}
+
+unlock_rdp() {
+  echo "! Unlock keyring..."
+  unlock_keyring
+  echo "Keyring unlocked"
+  echo "! Restarting service: gnome-remote-desktop..."
+  systemctl --user restart gnome-remote-desktop
+  echo "Service restarted: gnome-remote-desktop"
+}
