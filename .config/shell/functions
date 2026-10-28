@@ -158,8 +158,10 @@ tre() {
 unlock_keyring() {
   printf 'Password: '
   stty -echo
+  trap 'stty echo' INT TERM
   IFS= read -r pass
   stty echo
+  trap - INT TERM
   printf '\n'
 
   # Intentionally unquoted: the daemon prints KEY=VALUE lines to be split
